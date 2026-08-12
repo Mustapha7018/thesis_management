@@ -19,6 +19,7 @@ yarn-error.log*
 .idea
 
 # Local documents & generated artifacts (kept out of git)
-docs/
+# (markdown files in docs/, e.g. DEVELOPMENT_LOG.md, ARE tracked)
+docs/*.docx
 synthetic_data/thesis_management.db
 synthetic_data/validation_report.md

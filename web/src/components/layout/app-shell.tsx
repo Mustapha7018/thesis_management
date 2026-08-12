@@ -13,7 +13,7 @@ import {
 import { SidebarNav } from "@/components/layout/sidebar-nav"
 import { Topbar } from "@/components/layout/topbar"
 import { useAuth } from "@/context/auth-context"
-import { resetDemoData } from "@/lib/services/db/store"
+import { resetDemoData } from "@/lib/services/admin.service"
 
 export function AppShell() {
   const { session } = useAuth()
@@ -45,8 +45,7 @@ export function AppShell() {
             confirmLabel="Reset"
             destructive
             onConfirm={() => {
-              resetDemoData()
-              window.location.reload()
+              void resetDemoData().then(() => window.location.reload())
             }}
           />
         </SidebarFooter>

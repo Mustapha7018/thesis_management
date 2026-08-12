@@ -4,7 +4,7 @@ import type { AuthSession } from "@/lib/types/dto"
 
 interface AuthContextValue {
   session: AuthSession | null
-  login: (email: string) => Promise<AuthSession>
+  login: (email: string, password: string) => Promise<AuthSession>
   logout: () => void
 }
 
@@ -16,8 +16,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const value = useMemo<AuthContextValue>(
     () => ({
       session,
-      login: async (email: string) => {
-        const s = await loginService(email)
+      login: async (email: string, password: string) => {
+        const s = await loginService(email, password)
         setSession(s)
         return s
       },

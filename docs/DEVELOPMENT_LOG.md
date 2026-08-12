@@ -150,12 +150,82 @@ browser: live progress + mid-run cancel (nothing persisted), CSV exports well-fo
 published GA run visible to students/supervisors with per-pairing explanations
 (FR-ALLOC-06/07).
 
+## 2026-08-12 — Backend: Fastify REST API + PostgreSQL (O4; FR-API-01..04, FR-AUTH-01..07)
+
+**What:** The real backend replacing the localStorage mock: a new `server/` package
+(Node + Fastify + TypeScript) exposing a **versioned REST JSON API at `/api/v1` that is
+the sole writer to a PostgreSQL database** — the architecture §2.1 commits to. The web
+client now talks exclusively to public API endpoints (FR-API-01 acceptance criterion);
+the browser-side store, fixtures, mock allocator and demo-account picker were removed
+from the app bundle.
+
+**Stack decision (no framework was committed in any planning document):** Node/Fastify
+chosen over Python/FastAPI and BaaS options because the GA engine, entity types, zod
+validation and CSV parser are already TypeScript — the server imports them **directly
+from `web/src/lib` via tsconfig paths** (single source of truth, no port, no drift).
+PostgreSQL was selected as the live development database (NFR-PORT-01 names it as the
+production target); Drizzle ORM provides the schema-as-code and parameterised queries
+only (NFR-SEC-03).
+
+**Database:** the 13 baseline tables from `synthetic_data/schema.sql` translated to
+PostgreSQL plus the additive portal tables the baseline anticipated: `accounts` (merging
+the former users directory + demo accounts; argon2 password hashes, lockout counters),
+`allocation_runs` (with `params` JSONB and a **partial unique index enforcing exactly one
+published run at the database level**), append-only `audit_log`, `preference_window`,
+and review/attachment columns (`at_risk_flags.reviewed_at/reviewed_by/cleared_note`
+formalise what was previously client-only state). Seeded from the checked-in synthetic
+dataset; the seed is idempotent and also backs `POST /admin/reset-demo`.
+
+**Auth (FR-AUTH-02/03/04/05):** email+password login (shared demo password, argon2-hashed;
+directory-only students have no hash and cannot authenticate), expiring JWTs, lockout
+after 5 consecutive failures (15-min window, `account_locked` audit event), and
+**deny-by-default authorisation**: a global hook rejects any request without a valid
+token unless the route is explicitly public; role guards + resource-ownership checks
+("self or admin") run per route. The login screen lost the demo-account browser and
+gained a password field. Password-reset-by-email deferred (Should) — documented stub.
+
+**GA as a batch process beside the API:** `POST /allocation-runs {algorithm:"ga"}`
+returns 202 + job id; the shared engine runs in a **worker_threads** worker; the client
+polls `GET /allocation-jobs/:id` for generation/fitness progress (driving the existing
+progress bar) and `DELETE` cancels. Persistence (allocations + run + audit) is one
+transaction on completion — cancellation writes nothing. Baselines run synchronously
+in-request (~3 ms). **Determinism evidence:** seed 12345 produced best fitness 0.7827
+in 108 generations in both the browser engine and the server worker — byte-identical
+results across environments, strengthening the FR-ALLOC-01 reproducibility claim.
+
+**Other server-side obligations:** preference-window enforcement and the
+exactly-5-distinct-preferences rule now hold against any client (FR-PROF-02/05);
+milestone overdue is computed on read (satisfies FR-AGILE-05's 24 h criterion without a
+scheduler — documented); per-user **ICS calendar feed** served with signed feed tokens
+plus single-meeting ICS downloads (FR-MEET-03); cohort CSV import re-validated
+server-side and applied atomically in a transaction (FR-PROF-06); flag review/clear now
+records actor + timestamp; OpenAPI docs generated from the zod schemas at `/api/docs`
+(FR-API-02).
+
+**Testing & CI (NFR-MAIN-01):** 36 integration tests over the full app via
+`app.inject()` against a dedicated auto-migrated test database — login/lockout, the
+RBAC matrix including the explicit *"student token on an admin endpoint → 403"*
+acceptance check, business rules, admin guards, publish exclusivity, atomic import
+rejection, and the GA job lifecycle incl. same-seed reproducibility. Coverage:
+**82% statements / 87% lines** (target ≥70%). New GitHub Actions workflow runs
+lint + typecheck + tests + build for both packages, with a PostgreSQL 18 service
+container for the server suite. Web suite (14 GA engine tests) unchanged and green.
+
+**Verified end-to-end in the browser** against the running server: password login,
+admin dashboard/cohort/users/audit pages all served from PostgreSQL, GA run through the
+job API from the UI (500/500 allocated, 0 violations), compare/publish views, CSV
+exports. Deferred to a later iteration: cloud deployment (env-driven config, CORS,
+bundled build and backup strategy documented in `server/README.md`), notifications
+(FR-ALLOC-06/FR-MEET-04), load testing (NFR-PERF-03).
+
 ---
 
 ## Planned / next
 
-- **Backend (FR-API module):** replace the localStorage store behind the existing async
-  service layer with a real API + database (schema already defined in
-  `synthetic_data/schema.sql`); provisioning and real authentication (FR-AUTH-01..05).
+- Cloud deployment of API + PostgreSQL + web app (O4 "secure cloud database"); set real
+  `JWT_SECRET`, `ALLOW_DEMO_RESET=false`, TLS.
 - GA parameter-sensitivity experiments for O6 (params are persisted per run to support this).
 - Manual baseline entry UI (FR-ALLOC-04) and sandbox/what-if runs (FR-ALLOC-08, Could).
+- Email notifications: password reset (FR-AUTH-05), publish notification (FR-ALLOC-06),
+  meeting reminders (FR-MEET-04).
+- Latency measurement for NFR-PERF-02/03 evidence (p95 targets, 300 concurrent users).

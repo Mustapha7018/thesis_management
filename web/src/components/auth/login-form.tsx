@@ -24,6 +24,7 @@ const schema = z.object({
     .refine(isValidUniversityEmail, {
       message: "Use a Sunderland account: students @student.sunderland.ac.uk, staff firstname.lastname@sunderland.ac.uk.",
     }),
+  password: z.string().min(1, "Password is required."),
 })
 
 export function LoginForm({ prefillEmail }: { prefillEmail?: string }) {
@@ -33,13 +34,13 @@ export function LoginForm({ prefillEmail }: { prefillEmail?: string }) {
 
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
-    values: { email: prefillEmail ?? "" },
+    values: { email: prefillEmail ?? "", password: "" },
   })
 
   async function onSubmit(values: z.infer<typeof schema>) {
     setFormError(null)
     try {
-      const session = await login(values.email)
+      const session = await login(values.email, values.password)
       navigate(homeForRole(session.role), { replace: true })
     } catch (err) {
       setFormError(err instanceof Error ? err.message : "Login failed.")
@@ -57,6 +58,19 @@ export function LoginForm({ prefillEmail }: { prefillEmail?: string }) {
               <FormLabel>University email</FormLabel>
               <FormControl>
                 <Input placeholder="ab1cd2@student.sunderland.ac.uk" autoComplete="email" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input type="password" autoComplete="current-password" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

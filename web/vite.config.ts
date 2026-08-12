@@ -12,6 +12,11 @@ export default defineConfig({
       "@": path.resolve(import.meta.dirname, "./src"),
     },
   },
+  server: {
+    proxy: {
+      "/api": "http://localhost:3001",
+    },
+  },
   test: {
     environment: "node",
     include: ["src/**/*.test.ts"],

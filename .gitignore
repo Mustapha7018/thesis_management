@@ -8,6 +8,12 @@ web/dist-ssr
 web/*.local
 web/.vite
 
+# Node / server
+server/node_modules
+server/dist
+server/.env
+server/coverage
+
 # Logs
 npm-debug.log*
 yarn-debug.log*

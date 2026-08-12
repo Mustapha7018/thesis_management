@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Progress } from "@/components/ui/progress"
 import { getQuotaViolations, runAllocation } from "@/lib/services/allocation.service"
-import { buildGaInstance, findInfeasibleQuotaMins, runGaAllocation } from "@/lib/services/ga/ga.service"
+import { checkQuotaMinFeasibility, runGaAllocation } from "@/lib/services/ga/ga.service"
 import type { GaRunHandle } from "@/lib/services/ga/ga.service"
 import type { GaParams, GaProgress } from "@/lib/services/ga/types"
 import { DEFAULT_GA_PARAMS } from "@/lib/services/ga/types"
@@ -83,7 +83,7 @@ export function RunAllocationPanel({ onRunComplete }: { onRunComplete: () => voi
       toast.error(params)
       return
     }
-    const infeasible = findInfeasibleQuotaMins(buildGaInstance())
+    const infeasible = await checkQuotaMinFeasibility()
     if (infeasible.length > 0) {
       toast.warning(
         `Supervisor${infeasible.length === 1 ? "" : "s"} ${infeasible.join(", ")} ha${infeasible.length === 1 ? "s" : "ve"} fewer applicants than their quota_min — the minimum cannot be met.`,

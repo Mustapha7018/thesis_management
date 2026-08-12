@@ -15,6 +15,7 @@ const EVENT_VARIANT: Record<string, string> = {
   cohort_import: "bg-warning text-warning-foreground border-transparent",
   account_created: "bg-success text-success-foreground border-transparent",
   account_deleted: "bg-destructive text-destructive-foreground border-transparent",
+  allocation_run: "bg-secondary text-secondary-foreground border-transparent",
 }
 
 export function AuditLogPage() {

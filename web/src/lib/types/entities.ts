@@ -184,6 +184,7 @@ export interface AuditLogEntry {
     | "cohort_import"
     | "account_created"
     | "account_deleted"
+    | "allocation_run"
   actor_email: string
   detail: string
 }
@@ -205,4 +206,6 @@ export interface AllocationRun {
   instance_size: number
   /** null for "manual" runs — there's no algorithm runtime for a human-entered baseline. */
   runtime_ms: number | null
+  /** GA runs only: the exact hyperparameters used, for parameter-sensitivity analysis (O6). */
+  params?: import("@/lib/services/ga/types").GaParams
 }

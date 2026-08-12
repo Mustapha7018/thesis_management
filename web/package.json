@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
+    "test": "vitest run",
     "preview": "vite preview",
     "fixtures:build": "tsx scripts/build-fixtures.ts",
     "seed:build": "tsx scripts/build-seed.ts"
@@ -49,6 +50,7 @@
     "oxlint": "^1.75.0",
     "tsx": "^4.23.5",
     "typescript": "~6.0.2",
-    "vite": "^8.2.0"
+    "vite": "^8.2.0",
+    "vitest": "^4.1.10"
   }
 }

@@ -1,4 +1,6 @@
-import { runMockAllocation, checkQuotaViolations } from "./mock-allocation-algorithm"
+import { runMockAllocation } from "./mock-allocation-algorithm"
+import { checkQuotaViolations } from "./quota-check"
+import { getSession } from "./auth.service"
 import { getDb, saveDb, nextId } from "./db/store"
 import { paginate } from "./db/query-helpers"
 import type {
@@ -107,11 +109,13 @@ function computeBenchmark(db: ReturnType<typeof getDb>, run: (typeof db.allocati
 
   const meanSatisfiedRank = ranks.length > 0 ? ranks.reduce((sum, r) => sum + r, 0) / ranks.length : null
 
+  // Variance over ALL supervisors — a zero-load supervisor is real imbalance,
+  // not an absent data point.
   const countsBySupervisor = new Map<number, number>()
   for (const a of runAllocations) {
     countsBySupervisor.set(a.supervisor_id, (countsBySupervisor.get(a.supervisor_id) ?? 0) + 1)
   }
-  const counts = [...countsBySupervisor.values()]
+  const counts = db.supervisors.map((s) => countsBySupervisor.get(s.supervisor_id) ?? 0)
   const meanCount = counts.length > 0 ? counts.reduce((s, c) => s + c, 0) / counts.length : 0
   const workloadVariance =
     counts.length > 0 ? counts.reduce((s, c) => s + (c - meanCount) ** 2, 0) / counts.length : 0
@@ -143,6 +147,28 @@ export async function getQuotaViolations(runId: string) {
   return checkQuotaViolations(runId)
 }
 
+/** Flat rows for the per-run allocations CSV export (FR-API-04). */
+export async function getRunAllocationRows(runId: string) {
+  const db = getDb()
+  return db.allocations
+    .filter((a) => a.run_id === runId)
+    .map((a) => ({
+      run_id: a.run_id,
+      algorithm: a.algorithm,
+      student_id: a.student_id,
+      student_name: studentName(db, a.student_id),
+      supervisor_id: a.supervisor_id,
+      supervisor_name: supervisorName(db, a.supervisor_id),
+      student_rank:
+        db.studentPreferences.find((p) => p.student_id === a.student_id && p.supervisor_id === a.supervisor_id)
+          ?.rank ?? "",
+      supervisor_score:
+        db.supervisorPreferences.find((sp) => sp.supervisor_id === a.supervisor_id && sp.student_id === a.student_id)
+          ?.score ?? "",
+      objective_score: a.objective_score ?? "",
+    }))
+}
+
 export async function publishRun(runId: string): Promise<void> {
   const db = getDb()
   const run = db.allocationRuns.find((r) => r.run_id === runId)
@@ -153,7 +179,7 @@ export async function publishRun(runId: string): Promise<void> {
     entry_id: nextId(db.auditLog, "entry_id"),
     occurred_at: new Date().toISOString(),
     event_type: "role_change",
-    actor_email: "admin",
+    actor_email: getSession()?.email ?? "admin",
     detail: `Published allocation run ${runId}.`,
   })
   saveDb()

@@ -1,0 +1,501 @@
+student_id,first_name,last_name,email,programme,mode,entry_year,entry_qualification,prior_avg_mark,created_at
+1,Duc,Fraser,gvn1d6@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,First,73.7,2026-07-09T00:00:00Z
+2,Samuel,Zhang,holnhl@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,International equivalent,67.7,2026-07-09T00:00:00Z
+3,Kwame,Novak,czmzi9@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,68.9,2026-07-09T00:00:00Z
+4,Emeka,MacDonald,v8kbqc@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,First,88.3,2026-07-09T00:00:00Z
+5,Emeka,Ali,wkp26d@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,66.7,2026-07-09T00:00:00Z
+6,Omar,Garcia,oz3uzi@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,64.8,2026-07-09T00:00:00Z
+7,Jack,Singh,y0vzy4@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,First,77.1,2026-07-09T00:00:00Z
+8,Lucia,Wang,fnfyko@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,First,71.9,2026-07-09T00:00:00Z
+9,Duc,Murphy,q5j6ut@student.sunderland.ac.uk,MSc Computer Science,FT,2025,International equivalent,66.1,2026-07-09T00:00:00Z
+10,Emeka,Abubakar,ezfjb4@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:2,58.3,2026-07-09T00:00:00Z
+11,Aarav,Tran,ibk33u@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:2,53.8,2026-07-09T00:00:00Z
+12,Camila,Doyle,kirpxf@student.sunderland.ac.uk,MSc Data Science,PT,2025,International equivalent,54.9,2026-07-09T00:00:00Z
+13,Li,Pham,malbku@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,International equivalent,68.0,2026-07-09T00:00:00Z
+14,Nadia,Murphy,x2pjpm@student.sunderland.ac.uk,MSc Data Science,PT,2025,2:1,63.6,2026-07-09T00:00:00Z
+15,Lucy,Singh,khmibt@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,61.6,2026-07-09T00:00:00Z
+16,Ethan,Diallo,uq3tfw@student.sunderland.ac.uk,MSc Computer Science,FT,2025,First,70.8,2026-07-09T00:00:00Z
+17,Mei,Santos,n2j8ln@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:2,54.0,2026-07-09T00:00:00Z
+18,Somchai,Wang,hi5ljz@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,First,70.6,2026-07-09T00:00:00Z
+19,Vikram,Li,m3u311@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,2:2,57.6,2026-07-09T00:00:00Z
+20,Tunde,Osei,cfubs2@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,65.0,2026-07-09T00:00:00Z
+21,Linh,Singh,rthcbh@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,62.7,2026-07-09T00:00:00Z
+22,Jin,Thomas,dz1iy3@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,2:1,66.6,2026-07-09T00:00:00Z
+23,Yan,Liu,xdhw35@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:2,58.2,2026-07-09T00:00:00Z
+24,Noah,Doyle,ue3ov7@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,2:1,65.0,2026-07-09T00:00:00Z
+25,Grace,Nowak,j0k9jx@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:2,62.7,2026-07-09T00:00:00Z
+26,Matteo,Brown,rl293o@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,61.9,2026-07-09T00:00:00Z
+27,Valentina,Hussain,i5q4j0@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,2:1,64.0,2026-07-09T00:00:00Z
+28,Thomas,Roberts,ogs38a@student.sunderland.ac.uk,MSc Applied Cybersecurity,PT,2025,First,66.4,2026-07-09T00:00:00Z
+29,Maya,Rahman,guhno6@student.sunderland.ac.uk,MSc Data Science,FT,2025,First,77.3,2026-07-09T00:00:00Z
+30,Mohammed,White,r609d6@student.sunderland.ac.uk,MSc Computer Science with Data Science,PT,2025,International equivalent,68.3,2026-07-09T00:00:00Z
+31,Oliver,Jones,a6vr9g@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,First,71.1,2026-07-09T00:00:00Z
+32,Arjun,Taylor,nibkng@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,International equivalent,62.2,2026-07-09T00:00:00Z
+33,Carlos,Petrov,vhs6ks@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:2,55.7,2026-07-09T00:00:00Z
+34,Sneha,Ibrahim,g9pnqb@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,68.8,2026-07-09T00:00:00Z
+35,Jack,Rodriguez,urso99@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,2:1,65.4,2026-07-09T00:00:00Z
+36,Oliver,Iyer,v07q5x@student.sunderland.ac.uk,MSc Applied Cybersecurity,PT,2025,2:2,61.6,2026-07-09T00:00:00Z
+37,Carlos,Burns,k9z5za@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,2:2,57.0,2026-07-09T00:00:00Z
+38,Lukas,Smith,ji6vtv@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,68.9,2026-07-09T00:00:00Z
+39,Wei,Adeyemi,au5szo@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,2:2,60.1,2026-07-09T00:00:00Z
+40,Li,Silva,frx8d5@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,63.8,2026-07-09T00:00:00Z
+41,Priya,Eze,jemyr0@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,2:2,55.3,2026-07-09T00:00:00Z
+42,Duc,Schmidt,lkzqkd@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,60.8,2026-07-09T00:00:00Z
+43,Camila,Patel,spfkkt@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,60.4,2026-07-09T00:00:00Z
+44,Sophie,Kowalski,lxb9gf@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,67.1,2026-07-09T00:00:00Z
+45,Hannah,Le,hqhtay@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,64.6,2026-07-09T00:00:00Z
+46,Thomas,Iyer,i6r1z1@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,66.0,2026-07-09T00:00:00Z
+47,Isabela,Brown,a1elag@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,65.9,2026-07-09T00:00:00Z
+48,Fatima,Ivanov,wvwxu6@student.sunderland.ac.uk,MSc Data Science,PT,2025,International equivalent,63.9,2026-07-09T00:00:00Z
+49,Oliver,Silva,ifp4xy@student.sunderland.ac.uk,MSc Applied Cybersecurity,PT,2025,2:1,67.9,2026-07-09T00:00:00Z
+50,Omar,Khan,um71vb@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,International equivalent,68.5,2026-07-09T00:00:00Z
+51,Wei,Nguyen,z47nuz@student.sunderland.ac.uk,MSc Computer Science,FT,2025,International equivalent,47.6,2026-07-09T00:00:00Z
+52,Zara,Silva,g1jwf2@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,2:1,67.1,2026-07-09T00:00:00Z
+53,George,Schmidt,uf2qd7@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,International equivalent,66.2,2026-07-09T00:00:00Z
+54,Andrei,Kowalski,y96nab@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,2:1,64.0,2026-07-09T00:00:00Z
+55,Mohammed,Mensah,c3ewai@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,2:1,67.8,2026-07-09T00:00:00Z
+56,Lukas,Okafor,l9g0qt@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,64.3,2026-07-09T00:00:00Z
+57,Kwame,Hughes,nyxyb7@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,62.6,2026-07-09T00:00:00Z
+58,Li,Kowalski,k0csfw@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,2:1,66.7,2026-07-09T00:00:00Z
+59,Maya,Park,t1c0ot@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,68.5,2026-07-09T00:00:00Z
+60,Chinedu,Abubakar,vcbmbf@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:2,53.8,2026-07-09T00:00:00Z
+61,Lucia,Abubakar,huo11i@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,2:1,67.5,2026-07-09T00:00:00Z
+62,Ngozi,Garcia,rw52sy@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,First,79.5,2026-07-09T00:00:00Z
+63,Aisha,Stewart,tglxfo@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,57.2,2026-07-09T00:00:00Z
+64,Li,Tanaka,x6eby1@student.sunderland.ac.uk,MSc Computer Science,FT,2025,First,85.4,2026-07-09T00:00:00Z
+65,Aisha,Zhang,vryfww@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,PT,2025,2:1,60.9,2026-07-09T00:00:00Z
+66,Charlotte,Walker,abbgs2@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,57.7,2026-07-09T00:00:00Z
+67,Ethan,Doyle,qx2j5y@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,67.1,2026-07-09T00:00:00Z
+68,Ananya,Diallo,pituse@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,65.1,2026-07-09T00:00:00Z
+69,Olivia,Diallo,nfasmz@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,First,69.5,2026-07-09T00:00:00Z
+70,Andrei,Li,y2m1n4@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,International equivalent,62.2,2026-07-09T00:00:00Z
+71,Minh,Sato,iqo9xf@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,63.3,2026-07-09T00:00:00Z
+72,Sneha,Petrov,vvd5q5@student.sunderland.ac.uk,MSc Computer Science,FT,2025,International equivalent,61.3,2026-07-09T00:00:00Z
+73,Lukas,Liu,iz70eo@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,International equivalent,58.0,2026-07-09T00:00:00Z
+74,Fatima,O'Brien,ir6n7k@student.sunderland.ac.uk,MSc Data Science,FT,2025,International equivalent,67.4,2026-07-09T00:00:00Z
+75,Vikram,Okafor,re4gdj@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,63.3,2026-07-09T00:00:00Z
+76,Jack,Lopez,rhjpqv@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,61.3,2026-07-09T00:00:00Z
+77,Diego,Chowdhury,mtysy5@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,First,71.5,2026-07-09T00:00:00Z
+78,Diego,Diallo,fq909h@student.sunderland.ac.uk,MSc Computer Science,FT,2025,First,74.7,2026-07-09T00:00:00Z
+79,Adam,Begum,syp4zb@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,61.4,2026-07-09T00:00:00Z
+80,Andrei,Eze,p5s8kr@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,64.8,2026-07-09T00:00:00Z
+81,Sofia,Burns,p4w0rw@student.sunderland.ac.uk,MSc Computer Science,FT,2025,First,68.7,2026-07-09T00:00:00Z
+82,Zara,Khan,v44x77@student.sunderland.ac.uk,MSc Applied Cybersecurity,PT,2025,2:1,64.9,2026-07-09T00:00:00Z
+83,Kwame,Ali,rwo4xe@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,71.6,2026-07-09T00:00:00Z
+84,Andrei,Hussain,xpeb14@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,International equivalent,60.0,2026-07-09T00:00:00Z
+85,Sofia,Adeyemi,n2b64u@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,2:1,67.1,2026-07-09T00:00:00Z
+86,Yasmin,White,gmfhb0@student.sunderland.ac.uk,MSc Data Science,FT,2025,First,74.8,2026-07-09T00:00:00Z
+87,Rohan,Liu,bgsh60@student.sunderland.ac.uk,MSc Computer Science,PT,2025,First,70.8,2026-07-09T00:00:00Z
+88,Omar,Evans,y63ugq@student.sunderland.ac.uk,MSc Data Science,PT,2025,First,71.2,2026-07-09T00:00:00Z
+89,Emeka,Ahmed,wxpgiw@student.sunderland.ac.uk,MSc Applied Cybersecurity,PT,2025,First,78.6,2026-07-09T00:00:00Z
+90,Zara,Lopez,wahccl@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,2:1,68.3,2026-07-09T00:00:00Z
+91,Rafael,Sharma,ixei8y@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:2,50.1,2026-07-09T00:00:00Z
+92,Oliver,Evans,di5mqx@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,International equivalent,57.0,2026-07-09T00:00:00Z
+93,George,Silva,sm1vwi@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,International equivalent,58.8,2026-07-09T00:00:00Z
+94,Vikram,Popescu,d1wv6g@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,65.9,2026-07-09T00:00:00Z
+95,Fatima,Wang,v3l0i7@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,64.2,2026-07-09T00:00:00Z
+96,Sofia,Zhang,magpuc@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,2:1,63.5,2026-07-09T00:00:00Z
+97,Sofia,Fernandez,w5iagl@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,2:2,56.4,2026-07-09T00:00:00Z
+98,Miguel,Zhang,jdwpfg@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,71.8,2026-07-09T00:00:00Z
+99,Adam,Sharma,a7xrjo@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,International equivalent,65.6,2026-07-09T00:00:00Z
+100,Adam,Muller,jyj5xw@student.sunderland.ac.uk,MSc Computer Science,FT,2025,International equivalent,67.6,2026-07-09T00:00:00Z
+101,Hana,Begum,nddce6@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,First,76.1,2026-07-09T00:00:00Z
+102,Adaeze,White,zsuj9x@student.sunderland.ac.uk,MSc Data Science,FT,2025,International equivalent,57.8,2026-07-09T00:00:00Z
+103,Aisha,White,hpl8cm@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,2:2,57.6,2026-07-09T00:00:00Z
+104,Lukas,Fraser,p7sd5k@student.sunderland.ac.uk,MSc Computer Science,PT,2025,2:2,49.5,2026-07-09T00:00:00Z
+105,Hana,Wright,qykrqb@student.sunderland.ac.uk,MSc Applied Cybersecurity,PT,2025,International equivalent,60.5,2026-07-09T00:00:00Z
+106,Sofia,Davies,cqk0mq@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,68.4,2026-07-09T00:00:00Z
+107,Olivia,Martinez,rv4si8@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,57.8,2026-07-09T00:00:00Z
+108,Minh,Martinez,ht9lcx@student.sunderland.ac.uk,MSc Cybersecurity,PT,2025,2:1,62.4,2026-07-09T00:00:00Z
+109,Jack,Eze,n79ayh@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,2:2,53.6,2026-07-09T00:00:00Z
+110,Yasmin,Popescu,n6lq25@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,65.5,2026-07-09T00:00:00Z
+111,Lucy,Yang,qljkzj@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,First,79.6,2026-07-09T00:00:00Z
+112,Charlotte,Murphy,zah7nt@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,2:1,62.0,2026-07-09T00:00:00Z
+113,Kwame,Smith,p5c2l4@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,2:1,63.2,2026-07-09T00:00:00Z
+114,Harry,Ali,qd0jkv@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,63.7,2026-07-09T00:00:00Z
+115,Li,Zhang,bm42s0@student.sunderland.ac.uk,MSc Computer Science,FT,2025,International equivalent,54.9,2026-07-09T00:00:00Z
+116,Zara,Patel,vztiuz@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,67.3,2026-07-09T00:00:00Z
+117,Ella,Muller,esesx7@student.sunderland.ac.uk,MSc Computer Science,FT,2025,International equivalent,72.0,2026-07-09T00:00:00Z
+118,Jack,Le,qh7xqp@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,International equivalent,58.1,2026-07-09T00:00:00Z
+119,Omar,White,bhli7b@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,66.7,2026-07-09T00:00:00Z
+120,Arjun,Lopez,lgxq4s@student.sunderland.ac.uk,MSc Data Science,PT,2025,2:1,60.2,2026-07-09T00:00:00Z
+121,Olivia,Li,fiju80@student.sunderland.ac.uk,MSc Computer Science,FT,2025,First,65.6,2026-07-09T00:00:00Z
+122,Hao,Sharma,eutmvm@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,2:1,64.6,2026-07-09T00:00:00Z
+123,Sophie,Okafor,q3vdmv@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,62.1,2026-07-09T00:00:00Z
+124,Sneha,Yang,qkulsa@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,International equivalent,71.1,2026-07-09T00:00:00Z
+125,Andrei,Rodriguez,s180n2@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,First,72.8,2026-07-09T00:00:00Z
+126,Diego,Lopez,sj6vrv@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,PT,2025,2:1,67.0,2026-07-09T00:00:00Z
+127,Divya,Park,rr3kb8@student.sunderland.ac.uk,MSc Computer Science,PT,2025,International equivalent,57.2,2026-07-09T00:00:00Z
+128,Kwame,Ali,jabcsq@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,62.5,2026-07-09T00:00:00Z
+129,Isabela,Eze,po4dnh@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,First,67.5,2026-07-09T00:00:00Z
+130,Kwame,Costa,ybftqe@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,First,78.6,2026-07-09T00:00:00Z
+131,Mohammed,Zhao,hkqqkj@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,2:1,66.6,2026-07-09T00:00:00Z
+132,Sneha,Zhao,epkjp2@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:2,56.7,2026-07-09T00:00:00Z
+133,Katarzyna,Zhao,a8wzx0@student.sunderland.ac.uk,MSc Data Science,PT,2025,International equivalent,67.7,2026-07-09T00:00:00Z
+134,Noah,Kelly,wai9zy@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,2:1,71.2,2026-07-09T00:00:00Z
+135,Charlotte,Ivanov,nqzz1z@student.sunderland.ac.uk,MSc Computer Science,FT,2025,International equivalent,52.6,2026-07-09T00:00:00Z
+136,Hana,Pham,awusha@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,2:1,64.3,2026-07-09T00:00:00Z
+137,Harry,Stewart,jokr8w@student.sunderland.ac.uk,MSc Computer Science,FT,2025,First,78.6,2026-07-09T00:00:00Z
+138,Yan,White,a492ty@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,International equivalent,62.0,2026-07-09T00:00:00Z
+139,Piotr,Hussain,yvo1xu@student.sunderland.ac.uk,MSc Data Science,FT,2025,International equivalent,64.5,2026-07-09T00:00:00Z
+140,Ananya,Wang,civkon@student.sunderland.ac.uk,MSc Computer Science with Data Science,PT,2025,2:1,67.8,2026-07-09T00:00:00Z
+141,Duc,Reddy,ry96v4@student.sunderland.ac.uk,MSc Cybersecurity,PT,2025,International equivalent,64.7,2026-07-09T00:00:00Z
+142,Yan,Nguyen,gousym@student.sunderland.ac.uk,MSc Computer Science,PT,2025,2:2,55.7,2026-07-09T00:00:00Z
+143,Jack,Patel,ansnf4@student.sunderland.ac.uk,MSc Computer Science,FT,2025,First,72.3,2026-07-09T00:00:00Z
+144,Emily,Kelly,r4ecbd@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,2:1,64.2,2026-07-09T00:00:00Z
+145,Grace,Jones,cac6gt@student.sunderland.ac.uk,MSc Data Science,PT,2025,2:2,59.4,2026-07-09T00:00:00Z
+146,Adam,Walker,oajyiq@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,International equivalent,57.6,2026-07-09T00:00:00Z
+147,Charlotte,Silva,od2crv@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,2:1,63.1,2026-07-09T00:00:00Z
+148,Sophie,Nair,o4wi8a@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:2,62.2,2026-07-09T00:00:00Z
+149,Thomas,Fernandez,f5n63t@student.sunderland.ac.uk,MSc Data Science,FT,2025,First,77.1,2026-07-09T00:00:00Z
+150,Nadia,Muller,hef3vg@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,International equivalent,68.4,2026-07-09T00:00:00Z
+151,Katarzyna,Hughes,pp87ia@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:2,56.1,2026-07-09T00:00:00Z
+152,Noah,Roberts,qm9ypv@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,First,75.7,2026-07-09T00:00:00Z
+153,Samuel,Burns,sb0wqj@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,International equivalent,59.1,2026-07-09T00:00:00Z
+154,Sneha,Eze,varz6d@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,2:1,61.4,2026-07-09T00:00:00Z
+155,Somchai,Chen,xp7d6l@student.sunderland.ac.uk,MSc Computer Science,FT,2025,First,79.8,2026-07-09T00:00:00Z
+156,Jun,Huang,tqqy3k@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,First,72.7,2026-07-09T00:00:00Z
+157,Ngozi,Okafor,ijm5fw@student.sunderland.ac.uk,MSc Data Science,FT,2025,International equivalent,60.6,2026-07-09T00:00:00Z
+158,Adam,Kowalski,du6qil@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:2,53.5,2026-07-09T00:00:00Z
+159,Layla,Taylor,yjrl8i@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,First,86.5,2026-07-09T00:00:00Z
+160,Diego,Fraser,rac0g4@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,2:2,52.6,2026-07-09T00:00:00Z
+161,Adam,Davies,h7y9pi@student.sunderland.ac.uk,MSc Computer Science,FT,2025,International equivalent,67.0,2026-07-09T00:00:00Z
+162,Rafael,Huang,bg262r@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,57.4,2026-07-09T00:00:00Z
+163,Mohammed,Okafor,dvkyh5@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,2:1,65.7,2026-07-09T00:00:00Z
+164,Nok,White,r2ucmk@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,64.7,2026-07-09T00:00:00Z
+165,Ngozi,MacDonald,lwfxyk@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:2,63.0,2026-07-09T00:00:00Z
+166,Samuel,Liu,qu47lr@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,First,75.1,2026-07-09T00:00:00Z
+167,Thomas,Brown,izmm8f@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,67.9,2026-07-09T00:00:00Z
+168,Nadia,MacDonald,eeg33i@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,64.7,2026-07-09T00:00:00Z
+169,Isabela,Johnson,bvze4d@student.sunderland.ac.uk,MSc Data Science,FT,2025,International equivalent,64.0,2026-07-09T00:00:00Z
+170,Vikram,Taylor,asowgz@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,63.4,2026-07-09T00:00:00Z
+171,Harry,Murphy,z2yux4@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,First,67.8,2026-07-09T00:00:00Z
+172,Sophie,Johnson,q95f6r@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,2:1,68.3,2026-07-09T00:00:00Z
+173,Hannah,Ivanov,xpltwx@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,66.9,2026-07-09T00:00:00Z
+174,Chiamaka,Popescu,nw2mjm@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,2:1,62.9,2026-07-09T00:00:00Z
+175,Zara,Iyer,eun4qv@student.sunderland.ac.uk,MSc Computer Science,FT,2025,International equivalent,57.8,2026-07-09T00:00:00Z
+176,Lucy,Chowdhury,sw3ar1@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,63.7,2026-07-09T00:00:00Z
+177,Hana,Kowalski,j2kduz@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,59.2,2026-07-09T00:00:00Z
+178,Fatima,Jones,kywwx8@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,First,68.7,2026-07-09T00:00:00Z
+179,Zainab,Fernandez,f1qi6n@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,2:1,65.8,2026-07-09T00:00:00Z
+180,Jin,Huang,ur47z7@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,2:2,51.3,2026-07-09T00:00:00Z
+181,Sneha,Silva,klt794@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,69.5,2026-07-09T00:00:00Z
+182,Tunde,Sharma,uubmah@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,First,77.4,2026-07-09T00:00:00Z
+183,Valentina,Thomas,ityaqc@student.sunderland.ac.uk,MSc Data Science,FT,2025,International equivalent,68.7,2026-07-09T00:00:00Z
+184,Li,Hussain,j55ozo@student.sunderland.ac.uk,MSc Computer Science,FT,2025,International equivalent,58.4,2026-07-09T00:00:00Z
+185,Sneha,Nowak,cv9zni@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,67.6,2026-07-09T00:00:00Z
+186,Rafael,White,ezpy3e@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,65.1,2026-07-09T00:00:00Z
+187,Divya,Adeyemi,xyfm2p@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,2:1,63.2,2026-07-09T00:00:00Z
+188,Yan,Tran,r4vi0h@student.sunderland.ac.uk,MSc Cybersecurity,PT,2025,2:1,65.5,2026-07-09T00:00:00Z
+189,Aisha,Thompson,wpjwqy@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,2:1,68.1,2026-07-09T00:00:00Z
+190,Lukas,Rodriguez,j9prpq@student.sunderland.ac.uk,MSc Data Science,FT,2025,First,79.1,2026-07-09T00:00:00Z
+191,Fatima,Khan,r2t334@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,First,76.3,2026-07-09T00:00:00Z
+192,Leo,Roberts,vspbh7@student.sunderland.ac.uk,MSc Computer Science,FT,2025,International equivalent,58.7,2026-07-09T00:00:00Z
+193,Ananya,Le,ijot0m@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,63.1,2026-07-09T00:00:00Z
+194,Ahmed,Martinez,duphqn@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,First,64.1,2026-07-09T00:00:00Z
+195,Anh,Novak,cagctv@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:2,59.3,2026-07-09T00:00:00Z
+196,Valentina,Yang,awjfe6@student.sunderland.ac.uk,MSc Applied Cybersecurity,PT,2025,2:1,66.6,2026-07-09T00:00:00Z
+197,Oliver,Fraser,vm14n4@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,62.4,2026-07-09T00:00:00Z
+198,Olivia,Tanaka,tznll4@student.sunderland.ac.uk,MSc Computer Science,PT,2025,2:1,71.7,2026-07-09T00:00:00Z
+199,Vikram,Kim,k7u1o6@student.sunderland.ac.uk,MSc Computer Science with Data Science,PT,2025,International equivalent,64.9,2026-07-09T00:00:00Z
+200,Layla,Hughes,vuhs59@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,62.1,2026-07-09T00:00:00Z
+201,Samuel,Petrov,yvcwcn@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:2,53.4,2026-07-09T00:00:00Z
+202,Aisha,Rahman,nbtp87@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,International equivalent,64.4,2026-07-09T00:00:00Z
+203,Priya,Eze,fysiqy@student.sunderland.ac.uk,MSc Data Science,PT,2025,First,81.1,2026-07-09T00:00:00Z
+204,Zainab,Taylor,olvj1f@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,2:1,69.4,2026-07-09T00:00:00Z
+205,Amara,Burns,d0kp2a@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,2:1,62.6,2026-07-09T00:00:00Z
+206,Yasmin,Wilson,at6cbz@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,65.4,2026-07-09T00:00:00Z
+207,Isabela,Osei,k48b0y@student.sunderland.ac.uk,MSc Data Science,FT,2025,First,73.4,2026-07-09T00:00:00Z
+208,Vikram,Le,q49mjw@student.sunderland.ac.uk,MSc Computer Science,FT,2025,First,76.5,2026-07-09T00:00:00Z
+209,Fatima,Petrov,kiuaah@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,70.0,2026-07-09T00:00:00Z
+210,Rafael,Hussain,viuagz@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,2:2,53.7,2026-07-09T00:00:00Z
+211,Ling,Malik,zp140w@student.sunderland.ac.uk,MSc Computer Science,PT,2025,First,77.6,2026-07-09T00:00:00Z
+212,Isabela,Wright,iqz3j3@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,63.4,2026-07-09T00:00:00Z
+213,Jack,Hughes,mte6ib@student.sunderland.ac.uk,MSc Data Science,FT,2025,First,70.5,2026-07-09T00:00:00Z
+214,Li,Santos,g3fnqt@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,First,78.4,2026-07-09T00:00:00Z
+215,Lucy,Wright,ezy1da@student.sunderland.ac.uk,MSc Computer Science,FT,2025,First,69.7,2026-07-09T00:00:00Z
+216,Divya,Hughes,bb12mb@student.sunderland.ac.uk,MSc Computer Science with Data Science,PT,2025,2:1,57.6,2026-07-09T00:00:00Z
+217,Amara,Kumar,csse9o@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,65.5,2026-07-09T00:00:00Z
+218,James,Jones,uxrwoc@student.sunderland.ac.uk,MSc Data Science,PT,2025,2:1,60.4,2026-07-09T00:00:00Z
+219,Hao,Popescu,duqfe4@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,2:1,63.4,2026-07-09T00:00:00Z
+220,Charlotte,Singh,cvtxif@student.sunderland.ac.uk,MSc Computer Science with Data Science,PT,2025,2:1,54.4,2026-07-09T00:00:00Z
+221,Katarzyna,Nair,xjfe6p@student.sunderland.ac.uk,MSc Data Science,FT,2025,First,83.2,2026-07-09T00:00:00Z
+222,Camila,MacDonald,p9ty0u@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,2:2,56.9,2026-07-09T00:00:00Z
+223,Ananya,Yang,cyk9b2@student.sunderland.ac.uk,MSc Computer Science,FT,2025,International equivalent,64.5,2026-07-09T00:00:00Z
+224,Tunde,Liu,ylx4m1@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,2:1,71.2,2026-07-09T00:00:00Z
+225,Ahmed,Brown,q9qdni@student.sunderland.ac.uk,MSc Data Science,FT,2025,International equivalent,58.9,2026-07-09T00:00:00Z
+226,Noah,Zhao,gl9sbq@student.sunderland.ac.uk,MSc Data Science,FT,2025,International equivalent,56.1,2026-07-09T00:00:00Z
+227,Arjun,Ibrahim,zqfvnr@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,2:2,52.2,2026-07-09T00:00:00Z
+228,Hao,Huang,rxgdm5@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,International equivalent,58.4,2026-07-09T00:00:00Z
+229,Yan,Muller,ysphij@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,First,69.2,2026-07-09T00:00:00Z
+230,Chinedu,Garcia,nr315h@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,67.6,2026-07-09T00:00:00Z
+231,George,Chen,qubeho@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,2:1,65.0,2026-07-09T00:00:00Z
+232,Thomas,Adeyemi,tzby66@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,International equivalent,52.5,2026-07-09T00:00:00Z
+233,Daniel,Kim,o7bgmg@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,International equivalent,57.7,2026-07-09T00:00:00Z
+234,Priya,Thompson,xjnqf6@student.sunderland.ac.uk,MSc Computer Science,FT,2025,International equivalent,54.3,2026-07-09T00:00:00Z
+235,Katarzyna,Mensah,aqw7lf@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:2,53.1,2026-07-09T00:00:00Z
+236,Arjun,Zhang,daq33k@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,International equivalent,70.1,2026-07-09T00:00:00Z
+237,Chiamaka,Sharma,t7rm2y@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:2,52.4,2026-07-09T00:00:00Z
+238,Katarzyna,Smith,jye6wa@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,2:1,70.8,2026-07-09T00:00:00Z
+239,Vikram,Popescu,k1vd0v@student.sunderland.ac.uk,MSc Data Science,FT,2025,First,75.5,2026-07-09T00:00:00Z
+240,Amara,Chen,yxd5ba@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,65.9,2026-07-09T00:00:00Z
+241,Daniel,Khan,zl1pix@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,International equivalent,66.7,2026-07-09T00:00:00Z
+242,Adaeze,Nowak,cli5t5@student.sunderland.ac.uk,MSc Applied Cybersecurity,PT,2025,2:2,57.7,2026-07-09T00:00:00Z
+243,Camila,Chen,g7a1w0@student.sunderland.ac.uk,MSc Computer Science with Data Science,PT,2025,2:1,66.2,2026-07-09T00:00:00Z
+244,Olivia,Diallo,ifireg@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:2,61.6,2026-07-09T00:00:00Z
+245,Hannah,Huang,an4wum@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:2,57.0,2026-07-09T00:00:00Z
+246,Chinedu,Rahman,dqfg0r@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,69.4,2026-07-09T00:00:00Z
+247,Samuel,Ibrahim,j1td40@student.sunderland.ac.uk,MSc Computer Science,FT,2025,International equivalent,55.8,2026-07-09T00:00:00Z
+248,Sofia,Diallo,yqswcb@student.sunderland.ac.uk,MSc Computer Science,PT,2025,2:2,55.3,2026-07-09T00:00:00Z
+249,Nadia,Kowalski,hsf7zj@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:2,61.5,2026-07-09T00:00:00Z
+250,Olivia,Gupta,og926m@student.sunderland.ac.uk,MSc Computer Science with Data Science,PT,2025,2:1,64.2,2026-07-09T00:00:00Z
+251,Piotr,Johnson,jzxzgj@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,First,73.4,2026-07-09T00:00:00Z
+252,Amara,Wright,qnje4v@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:2,60.3,2026-07-09T00:00:00Z
+253,George,Evans,hejga3@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,70.9,2026-07-09T00:00:00Z
+254,Jack,Liu,myts0p@student.sunderland.ac.uk,MSc Computer Science with Data Science,PT,2025,International equivalent,52.2,2026-07-09T00:00:00Z
+255,Chinedu,Evans,jxxtrn@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,67.1,2026-07-09T00:00:00Z
+256,Lukas,Nguyen,qt16cy@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,International equivalent,69.6,2026-07-09T00:00:00Z
+257,Wei,Silva,goinf3@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,First,73.2,2026-07-09T00:00:00Z
+258,Sneha,Roberts,clofet@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,2:2,55.7,2026-07-09T00:00:00Z
+259,Lucia,Wang,u3qxds@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,69.3,2026-07-09T00:00:00Z
+260,Li,Ahmed,uuv4tc@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,2:1,69.5,2026-07-09T00:00:00Z
+261,Emeka,Hussain,es7wko@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,2:1,60.9,2026-07-09T00:00:00Z
+262,Charlotte,Novak,f0c6gq@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,61.8,2026-07-09T00:00:00Z
+263,Jack,Mensah,tniqnr@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,First,71.8,2026-07-09T00:00:00Z
+264,Nok,Eze,k2pxyq@student.sunderland.ac.uk,MSc Data Science,FT,2025,International equivalent,60.7,2026-07-09T00:00:00Z
+265,Carlos,Ali,q4czpu@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,64.3,2026-07-09T00:00:00Z
+266,Isabela,Walker,vuleng@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,First,76.4,2026-07-09T00:00:00Z
+267,Emeka,Nguyen,jwoyza@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,67.6,2026-07-09T00:00:00Z
+268,Xin,Popescu,v6109s@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,International equivalent,67.7,2026-07-09T00:00:00Z
+269,Rohan,Johnson,b0ptcx@student.sunderland.ac.uk,MSc Data Science,FT,2025,International equivalent,68.8,2026-07-09T00:00:00Z
+270,Matteo,Yang,kpw94d@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,International equivalent,57.4,2026-07-09T00:00:00Z
+271,Vikram,Wright,t4717r@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:2,56.6,2026-07-09T00:00:00Z
+272,Ethan,Wilson,x652pm@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:2,55.0,2026-07-09T00:00:00Z
+273,Katarzyna,Yang,glb6px@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,International equivalent,58.4,2026-07-09T00:00:00Z
+274,Sophie,Ahmed,n8nlzg@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,International equivalent,71.5,2026-07-09T00:00:00Z
+275,Somchai,Kowalski,h1lwso@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,International equivalent,69.2,2026-07-09T00:00:00Z
+276,Chiamaka,Rahman,lcy1ps@student.sunderland.ac.uk,MSc Computer Science,PT,2025,2:1,64.6,2026-07-09T00:00:00Z
+277,Valentina,Zhang,faleea@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:2,58.1,2026-07-09T00:00:00Z
+278,Jin,Park,ohxghf@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,72.4,2026-07-09T00:00:00Z
+279,Layla,Wilson,x7xmy8@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,First,77.1,2026-07-09T00:00:00Z
+280,Grace,Thomas,amnihu@student.sunderland.ac.uk,MSc Data Science,PT,2025,2:1,67.3,2026-07-09T00:00:00Z
+281,Jin,Park,ojagrb@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,69.3,2026-07-09T00:00:00Z
+282,Emeka,White,m8d0x6@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,First,76.3,2026-07-09T00:00:00Z
+283,Sofia,Ibrahim,unl1qc@student.sunderland.ac.uk,MSc Computer Science with Data Science,PT,2025,2:1,62.8,2026-07-09T00:00:00Z
+284,Hannah,Nowak,jlqec8@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,2:1,63.5,2026-07-09T00:00:00Z
+285,Chiamaka,Hussain,bldzdg@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,2:1,55.9,2026-07-09T00:00:00Z
+286,Anh,Diallo,eocxky@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,International equivalent,63.2,2026-07-09T00:00:00Z
+287,Oliver,Santos,jvwmlc@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,International equivalent,63.5,2026-07-09T00:00:00Z
+288,Aisha,Nair,xqumso@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,63.3,2026-07-09T00:00:00Z
+289,Sneha,Chen,j9mv5h@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,2:2,51.5,2026-07-09T00:00:00Z
+290,Sophie,Lopez,en9g4r@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,68.3,2026-07-09T00:00:00Z
+291,Nok,Nowak,a2e25r@student.sunderland.ac.uk,MSc Data Science,PT,2025,2:1,65.6,2026-07-09T00:00:00Z
+292,Layla,Kowalski,jbss99@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,International equivalent,60.1,2026-07-09T00:00:00Z
+293,Samuel,Walker,sg7mmx@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,International equivalent,54.5,2026-07-09T00:00:00Z
+294,Ahmed,Johnson,hc780u@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,62.5,2026-07-09T00:00:00Z
+295,Yusuf,Chowdhury,f5wayp@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,2:1,65.0,2026-07-09T00:00:00Z
+296,Oliver,Hughes,iv2y0u@student.sunderland.ac.uk,MSc Data Science,FT,2025,First,65.8,2026-07-09T00:00:00Z
+297,Fatima,Wilson,vf1v00@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,66.4,2026-07-09T00:00:00Z
+298,Adaeze,Pham,vi3heb@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,64.3,2026-07-09T00:00:00Z
+299,Mohammed,Park,hvfxcw@student.sunderland.ac.uk,MSc Computer Science,FT,2025,First,67.8,2026-07-09T00:00:00Z
+300,Miguel,Patel,gn0hmr@student.sunderland.ac.uk,MSc Computer Science,PT,2025,2:2,53.9,2026-07-09T00:00:00Z
+301,Noah,Zhao,rtvx55@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,2:2,54.3,2026-07-09T00:00:00Z
+302,Olivia,Rodriguez,gwdq1t@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,64.3,2026-07-09T00:00:00Z
+303,Matteo,Doyle,fjz5d7@student.sunderland.ac.uk,MSc Data Science,FT,2025,First,71.3,2026-07-09T00:00:00Z
+304,Maya,Begum,shai8y@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:2,50.0,2026-07-09T00:00:00Z
+305,Lucia,O'Brien,kdhl9s@student.sunderland.ac.uk,MSc Data Science,FT,2025,First,68.5,2026-07-09T00:00:00Z
+306,Sneha,Smith,ge96id@student.sunderland.ac.uk,MSc Computer Science with Data Science,PT,2025,First,74.8,2026-07-09T00:00:00Z
+307,Rafael,Lopez,o8b9zv@student.sunderland.ac.uk,MSc Cybersecurity,PT,2025,First,73.7,2026-07-09T00:00:00Z
+308,Chinedu,Yang,f3um9c@student.sunderland.ac.uk,MSc Data Science,FT,2025,International equivalent,66.2,2026-07-09T00:00:00Z
+309,Olivia,Kumar,fgdoc5@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,2:1,61.7,2026-07-09T00:00:00Z
+310,Noah,Nowak,uvd90v@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:2,54.0,2026-07-09T00:00:00Z
+311,Emeka,Davies,uic6kk@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,2:1,68.9,2026-07-09T00:00:00Z
+312,Xin,Sato,ucn51d@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,2:2,52.4,2026-07-09T00:00:00Z
+313,Katarzyna,Chen,k8p2or@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,66.0,2026-07-09T00:00:00Z
+314,Daniel,Ahmed,ip9xw4@student.sunderland.ac.uk,MSc Data Science,FT,2025,First,67.1,2026-07-09T00:00:00Z
+315,Tunde,Ibrahim,qy0sgw@student.sunderland.ac.uk,MSc Data Science,FT,2025,International equivalent,75.2,2026-07-09T00:00:00Z
+316,Nadia,Hussain,txch4h@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,64.3,2026-07-09T00:00:00Z
+317,Linh,Hughes,s9253q@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,61.1,2026-07-09T00:00:00Z
+318,Ngozi,Adeyemi,gbgoxu@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:2,52.1,2026-07-09T00:00:00Z
+319,Miguel,Singh,qc55cx@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,International equivalent,57.5,2026-07-09T00:00:00Z
+320,Yan,Jones,f9dibe@student.sunderland.ac.uk,MSc Computer Science,FT,2025,First,77.6,2026-07-09T00:00:00Z
+321,Yasmin,Rodriguez,ec6y06@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,58.9,2026-07-09T00:00:00Z
+322,Daniel,Gupta,kmginv@student.sunderland.ac.uk,MSc Computer Science,FT,2025,First,72.8,2026-07-09T00:00:00Z
+323,Oliver,Robinson,kgo0rn@student.sunderland.ac.uk,MSc Cybersecurity,PT,2025,2:2,54.9,2026-07-09T00:00:00Z
+324,Olivia,Adeyemi,u16q6a@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,PT,2025,First,79.9,2026-07-09T00:00:00Z
+325,Daniel,Hussain,qms06t@student.sunderland.ac.uk,MSc Data Science,PT,2025,First,75.5,2026-07-09T00:00:00Z
+326,Charlotte,Singh,twhw27@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,66.3,2026-07-09T00:00:00Z
+327,Samuel,Kumar,e9qa4h@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,International equivalent,69.6,2026-07-09T00:00:00Z
+328,Anna,Walker,fwd7ux@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,68.6,2026-07-09T00:00:00Z
+329,Anna,Chowdhury,kl1r8l@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,66.8,2026-07-09T00:00:00Z
+330,Ling,Smith,v79kda@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:2,55.5,2026-07-09T00:00:00Z
+331,Elena,Zhao,c5hzhx@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,International equivalent,64.4,2026-07-09T00:00:00Z
+332,Nadia,Ahmed,emrqzy@student.sunderland.ac.uk,MSc Data Science,PT,2025,2:1,58.1,2026-07-09T00:00:00Z
+333,Katarzyna,Petrov,wuu056@student.sunderland.ac.uk,MSc Computer Science with Data Science,PT,2025,First,73.2,2026-07-09T00:00:00Z
+334,Mohammed,Petrov,frogee@student.sunderland.ac.uk,MSc Computer Science with Data Science,PT,2025,International equivalent,61.1,2026-07-09T00:00:00Z
+335,Rafael,Nair,lmta0d@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,First,79.1,2026-07-09T00:00:00Z
+336,Anna,White,hhkljh@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,68.4,2026-07-09T00:00:00Z
+337,Olivia,Gupta,rbv7qm@student.sunderland.ac.uk,MSc Computer Science with Data Science,PT,2025,First,76.1,2026-07-09T00:00:00Z
+338,Leo,Robinson,vbc803@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,64.0,2026-07-09T00:00:00Z
+339,Oliver,Sharma,xmspm4@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,63.8,2026-07-09T00:00:00Z
+340,Mohammed,Sato,jnnshv@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:2,56.1,2026-07-09T00:00:00Z
+341,Grace,Doyle,ll4rn5@student.sunderland.ac.uk,MSc Computer Science with Data Science,PT,2025,First,79.9,2026-07-09T00:00:00Z
+342,Camila,Jones,dffupl@student.sunderland.ac.uk,MSc Computer Science,FT,2025,International equivalent,73.9,2026-07-09T00:00:00Z
+343,Samuel,Singh,upkh5w@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,61.1,2026-07-09T00:00:00Z
+344,Yasmin,White,ranirk@student.sunderland.ac.uk,MSc Data Science,PT,2025,International equivalent,76.3,2026-07-09T00:00:00Z
+345,Maya,Ibrahim,zcn68l@student.sunderland.ac.uk,MSc Applied Cybersecurity,PT,2025,2:1,64.7,2026-07-09T00:00:00Z
+346,Noah,Lopez,y90z4j@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,2:1,63.6,2026-07-09T00:00:00Z
+347,Ahmed,Wang,k48ofh@student.sunderland.ac.uk,MSc Computer Science,FT,2025,First,73.7,2026-07-09T00:00:00Z
+348,Duc,Gupta,cp20ek@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,First,77.6,2026-07-09T00:00:00Z
+349,Zara,Yang,g1l721@student.sunderland.ac.uk,MSc Data Science,FT,2025,First,69.7,2026-07-09T00:00:00Z
+350,Olivia,Burns,dzhjf6@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,International equivalent,56.6,2026-07-09T00:00:00Z
+351,Ananya,Johnson,urxga9@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,First,77.5,2026-07-09T00:00:00Z
+352,Maya,Malik,jekw4t@student.sunderland.ac.uk,MSc Data Science,PT,2025,2:1,71.6,2026-07-09T00:00:00Z
+353,Chinedu,Johnson,c2md1t@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,International equivalent,73.0,2026-07-09T00:00:00Z
+354,Hao,Jones,an98ds@student.sunderland.ac.uk,MSc Computer Science with Data Science,PT,2025,2:1,54.5,2026-07-09T00:00:00Z
+355,Thomas,Begum,d1cal7@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,International equivalent,63.3,2026-07-09T00:00:00Z
+356,Mei,Silva,wvgv0b@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,First,69.0,2026-07-09T00:00:00Z
+357,Omar,Thomas,ui26wn@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:2,55.4,2026-07-09T00:00:00Z
+358,Leo,Davies,cst7gr@student.sunderland.ac.uk,MSc Data Science,PT,2025,2:1,63.7,2026-07-09T00:00:00Z
+359,Maya,Petrov,k2oh32@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,2:1,69.3,2026-07-09T00:00:00Z
+360,Xin,Park,dvipzg@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,First,77.0,2026-07-09T00:00:00Z
+361,Maya,Eze,ne7y1f@student.sunderland.ac.uk,MSc Computer Science,PT,2025,First,74.2,2026-07-09T00:00:00Z
+362,Mei,Li,blbyuv@student.sunderland.ac.uk,MSc Data Science,PT,2025,International equivalent,66.4,2026-07-09T00:00:00Z
+363,Andrei,Smith,w8zd3s@student.sunderland.ac.uk,MSc Data Science,PT,2025,2:2,55.2,2026-07-09T00:00:00Z
+364,Miguel,Kowalski,pmy340@student.sunderland.ac.uk,MSc Data Science,PT,2025,2:1,67.9,2026-07-09T00:00:00Z
+365,Adaeze,Taylor,ur5sof@student.sunderland.ac.uk,MSc Computer Science with Data Science,PT,2025,2:1,60.5,2026-07-09T00:00:00Z
+366,Ella,Rodriguez,ytmld2@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,International equivalent,67.5,2026-07-09T00:00:00Z
+367,Hana,Smith,z6jehj@student.sunderland.ac.uk,MSc Data Science,FT,2025,International equivalent,67.0,2026-07-09T00:00:00Z
+368,Ngozi,Ivanov,gy89zz@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,68.0,2026-07-09T00:00:00Z
+369,Yusuf,Nowak,ei81rj@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,69.0,2026-07-09T00:00:00Z
+370,Diego,Rodriguez,djzdci@student.sunderland.ac.uk,MSc Computer Science,PT,2025,2:1,66.7,2026-07-09T00:00:00Z
+371,Rafael,Nowak,yn1zcg@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,70.1,2026-07-09T00:00:00Z
+372,Li,Chen,issiri@student.sunderland.ac.uk,MSc Computer Science,FT,2025,International equivalent,74.4,2026-07-09T00:00:00Z
+373,Matteo,Fernandez,xtwy52@student.sunderland.ac.uk,MSc Computer Science,FT,2025,International equivalent,58.6,2026-07-09T00:00:00Z
+374,Wei,Tran,regxla@student.sunderland.ac.uk,MSc Data Science,FT,2025,International equivalent,64.4,2026-07-09T00:00:00Z
+375,Anna,Gupta,fdu6zx@student.sunderland.ac.uk,MSc Computer Science,PT,2025,2:2,55.4,2026-07-09T00:00:00Z
+376,Carlos,Abubakar,sbnf4q@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,62.9,2026-07-09T00:00:00Z
+377,Noah,Santos,adhqez@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,2:1,66.5,2026-07-09T00:00:00Z
+378,George,Reddy,fccpg2@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,66.9,2026-07-09T00:00:00Z
+379,Ahmed,Hughes,rmplj7@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,2:1,64.5,2026-07-09T00:00:00Z
+380,Samuel,Kumar,k0tfsi@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,68.8,2026-07-09T00:00:00Z
+381,Anh,Rahman,bkj9av@student.sunderland.ac.uk,MSc Data Science,PT,2025,International equivalent,66.4,2026-07-09T00:00:00Z
+382,James,Taylor,h2ugek@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,74.0,2026-07-09T00:00:00Z
+383,Vikram,Evans,y8hirm@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:2,52.5,2026-07-09T00:00:00Z
+384,Olivia,Robinson,dotn48@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,2:1,69.0,2026-07-09T00:00:00Z
+385,Yan,Jones,jb3qxk@student.sunderland.ac.uk,MSc Computer Science,FT,2025,First,74.5,2026-07-09T00:00:00Z
+386,Daniel,Okafor,ns2wm8@student.sunderland.ac.uk,MSc Computer Science,FT,2025,International equivalent,69.6,2026-07-09T00:00:00Z
+387,Aisha,Begum,wdq8vr@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,International equivalent,66.5,2026-07-09T00:00:00Z
+388,Kwame,Tran,rz0p1i@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,International equivalent,58.2,2026-07-09T00:00:00Z
+389,Adaeze,Singh,ghqn6o@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,First,72.6,2026-07-09T00:00:00Z
+390,Zainab,Thomas,bpdnn9@student.sunderland.ac.uk,MSc Data Science,FT,2025,International equivalent,70.9,2026-07-09T00:00:00Z
+391,Chinedu,Ali,jligao@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,62.6,2026-07-09T00:00:00Z
+392,Jun,Nowak,r7v8xs@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,62.8,2026-07-09T00:00:00Z
+393,Linh,Li,firnv6@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,63.4,2026-07-09T00:00:00Z
+394,Daniel,Tanaka,rf02z6@student.sunderland.ac.uk,MSc Computer Science,FT,2025,International equivalent,68.6,2026-07-09T00:00:00Z
+395,Ella,Sato,xabo4t@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,2:2,60.4,2026-07-09T00:00:00Z
+396,Emily,Robinson,hbt9mt@student.sunderland.ac.uk,MSc Computer Science,FT,2025,First,71.1,2026-07-09T00:00:00Z
+397,Li,Fernandez,xy3mfj@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,2:1,65.1,2026-07-09T00:00:00Z
+398,Olivia,Ivanov,i90196@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,67.3,2026-07-09T00:00:00Z
+399,Leo,Abubakar,ajkyiv@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,First,76.4,2026-07-09T00:00:00Z
+400,Olivia,Martinez,qwbx6w@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:2,47.7,2026-07-09T00:00:00Z
+401,Jun,Yang,ilvorj@student.sunderland.ac.uk,MSc Data Science,FT,2025,International equivalent,60.1,2026-07-09T00:00:00Z
+402,Sophie,Ibrahim,tih2ah@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:2,59.3,2026-07-09T00:00:00Z
+403,Wei,Zhang,y01s29@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,First,71.8,2026-07-09T00:00:00Z
+404,Isabela,Ivanov,nrmr7x@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,69.0,2026-07-09T00:00:00Z
+405,Noah,Fernandez,v9ls10@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,62.2,2026-07-09T00:00:00Z
+406,Oliver,Ali,eap0cw@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,International equivalent,60.4,2026-07-09T00:00:00Z
+407,George,Hussain,femksb@student.sunderland.ac.uk,MSc Data Science,PT,2025,2:1,54.9,2026-07-09T00:00:00Z
+408,Fatima,Ibrahim,qhaxyt@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,69.3,2026-07-09T00:00:00Z
+409,Valentina,Begum,gg5c4o@student.sunderland.ac.uk,MSc Computer Science,FT,2025,International equivalent,57.6,2026-07-09T00:00:00Z
+410,Minh,Petrov,spk8td@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:2,55.6,2026-07-09T00:00:00Z
+411,Hao,Robinson,dhn59d@student.sunderland.ac.uk,MSc Applied Cybersecurity,PT,2025,2:2,57.1,2026-07-09T00:00:00Z
+412,Somchai,Ivanov,nadha3@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:2,59.5,2026-07-09T00:00:00Z
+413,Yasmin,White,zstnvr@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,71.8,2026-07-09T00:00:00Z
+414,Arjun,Wang,ns2uat@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,International equivalent,64.5,2026-07-09T00:00:00Z
+415,Duc,Chowdhury,a2p1su@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,62.7,2026-07-09T00:00:00Z
+416,Nok,Li,eg1wby@student.sunderland.ac.uk,MSc Computer Science with Data Science,PT,2025,First,84.3,2026-07-09T00:00:00Z
+417,Hao,Yang,deazfu@student.sunderland.ac.uk,MSc Computer Science,FT,2025,First,71.3,2026-07-09T00:00:00Z
+418,Diego,Reddy,czndrd@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,International equivalent,62.2,2026-07-09T00:00:00Z
+419,Duc,Huang,dlpkjz@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,International equivalent,66.2,2026-07-09T00:00:00Z
+420,Katarzyna,Rodriguez,dod1yf@student.sunderland.ac.uk,MSc Computer Science,PT,2025,2:1,63.3,2026-07-09T00:00:00Z
+421,Ngozi,Burns,mjhhyr@student.sunderland.ac.uk,MSc Data Science,FT,2025,International equivalent,60.6,2026-07-09T00:00:00Z
+422,Diego,Wilson,iq3jgi@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,2:1,63.5,2026-07-09T00:00:00Z
+423,Li,Costa,bm0ss7@student.sunderland.ac.uk,MSc Data Science,FT,2025,International equivalent,76.8,2026-07-09T00:00:00Z
+424,Adaeze,Fraser,gwgpde@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:2,55.4,2026-07-09T00:00:00Z
+425,Isabela,Sato,ilw1e5@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,2:1,66.7,2026-07-09T00:00:00Z
+426,Layla,O'Brien,oc8zcp@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,2:1,65.1,2026-07-09T00:00:00Z
+427,Somchai,MacDonald,s6jry9@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,2:1,61.8,2026-07-09T00:00:00Z
+428,Zainab,Evans,fcqsz3@student.sunderland.ac.uk,MSc Data Science,FT,2025,First,68.0,2026-07-09T00:00:00Z
+429,Adaeze,MacDonald,newxnw@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:2,58.2,2026-07-09T00:00:00Z
+430,Lucy,Chowdhury,xkn790@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,First,83.5,2026-07-09T00:00:00Z
+431,Chiamaka,Wang,eppiat@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,65.2,2026-07-09T00:00:00Z
+432,George,Jones,evpjgg@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,International equivalent,74.6,2026-07-09T00:00:00Z
+433,Elena,Ivanov,m3tdn2@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,International equivalent,53.6,2026-07-09T00:00:00Z
+434,Vikram,Eze,wj0fmk@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,International equivalent,61.7,2026-07-09T00:00:00Z
+435,Leo,Liu,uqz5xr@student.sunderland.ac.uk,MSc Computer Science,FT,2025,First,70.8,2026-07-09T00:00:00Z
+436,Anna,MacDonald,fau5j4@student.sunderland.ac.uk,MSc Cybersecurity,PT,2025,First,69.8,2026-07-09T00:00:00Z
+437,Camila,Popescu,t8qxbo@student.sunderland.ac.uk,MSc Data Science,FT,2025,International equivalent,68.6,2026-07-09T00:00:00Z
+438,Leo,Novak,g2ant3@student.sunderland.ac.uk,MSc Computer Science,FT,2025,First,70.7,2026-07-09T00:00:00Z
+439,Nok,Adeyemi,jhvr67@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,64.3,2026-07-09T00:00:00Z
+440,Yan,Johnson,z32hg1@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,International equivalent,66.8,2026-07-09T00:00:00Z
+441,Sofia,Lopez,r1proe@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,63.8,2026-07-09T00:00:00Z
+442,Grace,Sato,krozbj@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,First,81.2,2026-07-09T00:00:00Z
+443,Camila,Roberts,tvdssx@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,2:1,69.7,2026-07-09T00:00:00Z
+444,Sophie,Murphy,ufs75q@student.sunderland.ac.uk,MSc Data Science,PT,2025,First,73.2,2026-07-09T00:00:00Z
+445,Andrei,Murphy,krgem3@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,64.3,2026-07-09T00:00:00Z
+446,Emeka,Martinez,gwcj2m@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,69.4,2026-07-09T00:00:00Z
+447,Emeka,Kim,ep3wch@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,International equivalent,70.8,2026-07-09T00:00:00Z
+448,Samuel,Kelly,nhc0ou@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,2:2,51.7,2026-07-09T00:00:00Z
+449,Wei,Eze,tg4sjw@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,First,69.7,2026-07-09T00:00:00Z
+450,Samuel,Li,b05kvq@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,2:1,64.9,2026-07-09T00:00:00Z
+451,Samuel,Mensah,eretje@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,68.2,2026-07-09T00:00:00Z
+452,Arjun,Le,r141oo@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:2,56.1,2026-07-09T00:00:00Z
+453,Adam,Wright,e1zigx@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,PT,2025,International equivalent,56.2,2026-07-09T00:00:00Z
+454,Matteo,Kowalski,s74ryi@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:2,53.7,2026-07-09T00:00:00Z
+455,Emily,Diallo,dnm0nb@student.sunderland.ac.uk,MSc Data Science,FT,2025,First,76.2,2026-07-09T00:00:00Z
+456,Adam,Nair,lyw04r@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,64.0,2026-07-09T00:00:00Z
+457,Katarzyna,Sato,umgiq9@student.sunderland.ac.uk,MSc Computer Science,FT,2025,International equivalent,58.7,2026-07-09T00:00:00Z
+458,Thomas,Burns,cjyciq@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,2:1,67.0,2026-07-09T00:00:00Z
+459,Omar,Walker,n1gulf@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:2,47.9,2026-07-09T00:00:00Z
+460,Arjun,Liu,ijw2dy@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,2:2,50.1,2026-07-09T00:00:00Z
+461,Chinedu,Novak,p13lq4@student.sunderland.ac.uk,MSc Data Science,FT,2025,First,78.6,2026-07-09T00:00:00Z
+462,Emily,Kowalski,pwettv@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:2,60.5,2026-07-09T00:00:00Z
+463,Ling,Huang,zffots@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,62.2,2026-07-09T00:00:00Z
+464,Linh,Huang,sg6qj1@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,2:2,59.1,2026-07-09T00:00:00Z
+465,Hao,Davies,e3795l@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,2:1,56.6,2026-07-09T00:00:00Z
+466,Charlotte,Wright,hlg9ha@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:2,56.3,2026-07-09T00:00:00Z
+467,Yasmin,Yang,ylbza5@student.sunderland.ac.uk,MSc Computer Science,FT,2025,International equivalent,67.6,2026-07-09T00:00:00Z
+468,Diego,Garcia,d79jft@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,2:1,66.8,2026-07-09T00:00:00Z
+469,Mei,Park,wcad36@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,First,75.8,2026-07-09T00:00:00Z
+470,Olivia,Stewart,q4q90u@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,65.4,2026-07-09T00:00:00Z
+471,Nadia,Kumar,jv9rpo@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,2:1,65.4,2026-07-09T00:00:00Z
+472,Somchai,Lopez,lcdecb@student.sunderland.ac.uk,MSc Computer Science,PT,2025,First,69.9,2026-07-09T00:00:00Z
+473,Camila,Yang,rq7mcq@student.sunderland.ac.uk,MSc Applied Cybersecurity,FT,2025,2:1,65.6,2026-07-09T00:00:00Z
+474,Wei,Kumar,gwk7kt@student.sunderland.ac.uk,MSc Data Science,FT,2025,International equivalent,66.2,2026-07-09T00:00:00Z
+475,Isabela,Kelly,vp4zei@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,First,66.8,2026-07-09T00:00:00Z
+476,Hana,Silva,hizjh2@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,64.5,2026-07-09T00:00:00Z
+477,Zara,Hussain,fw9geo@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:2,52.8,2026-07-09T00:00:00Z
+478,Yasmin,Pham,upbi45@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,First,74.2,2026-07-09T00:00:00Z
+479,Wei,Fraser,gw4t11@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,68.1,2026-07-09T00:00:00Z
+480,Vikram,Taylor,xdojfe@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,First,68.4,2026-07-09T00:00:00Z
+481,Thomas,Adeyemi,n6zsfe@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,2:1,64.0,2026-07-09T00:00:00Z
+482,Thomas,Burns,u8nxsv@student.sunderland.ac.uk,MSc Computer Science,FT,2025,International equivalent,66.9,2026-07-09T00:00:00Z
+483,Priya,Pham,gx22lr@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,64.2,2026-07-09T00:00:00Z
+484,Grace,Novak,g6xjy6@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,2:1,68.3,2026-07-09T00:00:00Z
+485,Zara,Begum,jhzf2s@student.sunderland.ac.uk,MSc Computer Science,FT,2025,International equivalent,58.8,2026-07-09T00:00:00Z
+486,Maya,Zhao,k723mf@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,77.4,2026-07-09T00:00:00Z
+487,Ngozi,Park,peruqs@student.sunderland.ac.uk,MSc Computer Science,PT,2025,First,69.9,2026-07-09T00:00:00Z
+488,Mei,Popescu,se64os@student.sunderland.ac.uk,MSc Cybersecurity,FT,2025,First,75.7,2026-07-09T00:00:00Z
+489,Miguel,O'Brien,d8nij0@student.sunderland.ac.uk,MSc Data Science,FT,2025,International equivalent,56.6,2026-07-09T00:00:00Z
+490,Grace,Malik,e4or3o@student.sunderland.ac.uk,MSc Computer Science,FT,2025,2:1,62.9,2026-07-09T00:00:00Z
+491,Jack,Garcia,xt6bpq@student.sunderland.ac.uk,MSc Computer Science with Cyber Security,FT,2025,International equivalent,67.4,2026-07-09T00:00:00Z
+492,Carlos,Smith,q5cwl3@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:1,64.9,2026-07-09T00:00:00Z
+493,Li,Kim,llm782@student.sunderland.ac.uk,MSc Data Science,FT,2025,International equivalent,65.3,2026-07-09T00:00:00Z
+494,Ngozi,Eze,z5jbin@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,First,74.0,2026-07-09T00:00:00Z
+495,Matteo,Zhao,ek0pij@student.sunderland.ac.uk,MSc Computer Science,FT,2025,First,74.9,2026-07-09T00:00:00Z
+496,Lucia,Eze,lbu8b1@student.sunderland.ac.uk,MSc Computer Science with Data Science,FT,2025,International equivalent,63.8,2026-07-09T00:00:00Z
+497,Divya,Chowdhury,awxtnp@student.sunderland.ac.uk,MSc Computer Science,PT,2025,International equivalent,58.4,2026-07-09T00:00:00Z
+498,Priya,Eze,iqatkn@student.sunderland.ac.uk,MSc Computer Science,FT,2025,First,72.9,2026-07-09T00:00:00Z
+499,Rohan,Nair,dh8a42@student.sunderland.ac.uk,MSc Data Science,FT,2025,2:2,61.8,2026-07-09T00:00:00Z
+500,George,Osei,la67pd@student.sunderland.ac.uk,MSc Data Science,PT,2025,International equivalent,59.0,2026-07-09T00:00:00Z

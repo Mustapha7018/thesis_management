@@ -1,0 +1,74 @@
+[
+  {
+    "area_id": 1,
+    "code": "AI_ML",
+    "name": "Artificial Intelligence & Machine Learning",
+    "description": "Learning algorithms, neural networks, optimisation, applied AI."
+  },
+  {
+    "area_id": 2,
+    "code": "DATA_SCI",
+    "name": "Data Science & Analytics",
+    "description": "Statistical modelling, data engineering, visual analytics."
+  },
+  {
+    "area_id": 3,
+    "code": "CYBER",
+    "name": "Cybersecurity",
+    "description": "Network security, cryptography, threat modelling, digital forensics."
+  },
+  {
+    "area_id": 4,
+    "code": "SOFT_ENG",
+    "name": "Software Engineering",
+    "description": "Architecture, DevOps, testing, empirical software engineering."
+  },
+  {
+    "area_id": 5,
+    "code": "HCI",
+    "name": "Human-Computer Interaction",
+    "description": "Usability, accessibility, user experience, interaction design."
+  },
+  {
+    "area_id": 6,
+    "code": "NET_IOT",
+    "name": "Networks & Internet of Things",
+    "description": "Distributed systems, edge computing, sensor networks."
+  },
+  {
+    "area_id": 7,
+    "code": "HEALTH",
+    "name": "Health Informatics & Digital Health",
+    "description": "Clinical data systems, health analytics, assistive technology."
+  },
+  {
+    "area_id": 8,
+    "code": "CV",
+    "name": "Computer Vision & Image Processing",
+    "description": "Image analysis, object recognition, medical imaging."
+  },
+  {
+    "area_id": 9,
+    "code": "NLP",
+    "name": "Natural Language Processing",
+    "description": "Text mining, language models, information retrieval."
+  },
+  {
+    "area_id": 10,
+    "code": "GAMES",
+    "name": "Games & Immersive Technologies",
+    "description": "Game engineering, AR/VR, serious games."
+  },
+  {
+    "area_id": 11,
+    "code": "CLOUD",
+    "name": "Cloud & Distributed Computing",
+    "description": "Cloud architecture, virtualisation, scalable services."
+  },
+  {
+    "area_id": 12,
+    "code": "EDTECH",
+    "name": "Educational Technology",
+    "description": "Learning analytics, e-learning systems, technology-enhanced learning."
+  }
+]

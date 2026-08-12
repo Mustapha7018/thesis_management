@@ -1,0 +1,33 @@
+supervisor_id,title,first_name,last_name,email,seniority,fte,quota_min,quota_max,created_at
+1,Dr,Valentina,Osei,valentina.osei@sunderland.ac.uk,Associate Professor,0.8,2,15,2026-07-09T00:00:00Z
+2,Prof,Thomas,Popescu,thomas.popescu@sunderland.ac.uk,Professor,1.0,1,16,2026-07-09T00:00:00Z
+3,Dr,Fatima,Diallo,fatima.diallo@sunderland.ac.uk,Lecturer,1.0,2,13,2026-07-09T00:00:00Z
+4,Dr,Zara,Ahmed,zara.ahmed@sunderland.ac.uk,Associate Professor,1.0,2,16,2026-07-09T00:00:00Z
+5,Dr,Maya,Singh,maya.singh@sunderland.ac.uk,Associate Professor,1.0,2,14,2026-07-09T00:00:00Z
+6,Dr,Duc,Smith,duc.smith@sunderland.ac.uk,Lecturer,1.0,2,18,2026-07-09T00:00:00Z
+7,Dr,Emeka,Begum,emeka.begum@sunderland.ac.uk,Senior Lecturer,1.0,2,21,2026-07-09T00:00:00Z
+8,Dr,Ahmed,Roberts,ahmed.roberts@sunderland.ac.uk,Senior Lecturer,1.0,1,17,2026-07-09T00:00:00Z
+9,Dr,Olivia,Hussain,olivia.hussain@sunderland.ac.uk,Senior Lecturer,1.0,1,17,2026-07-09T00:00:00Z
+10,Dr,Carlos,Diallo,carlos.diallo@sunderland.ac.uk,Associate Professor,1.0,2,16,2026-07-09T00:00:00Z
+11,Dr,Mohammed,Osei,mohammed.osei@sunderland.ac.uk,Senior Lecturer,1.0,1,20,2026-07-09T00:00:00Z
+12,Dr,George,Walker,george.walker@sunderland.ac.uk,Lecturer,1.0,1,14,2026-07-09T00:00:00Z
+13,Dr,Aisha,Park,aisha.park@sunderland.ac.uk,Lecturer,1.0,2,17,2026-07-09T00:00:00Z
+14,Dr,Amara,Hughes,amara.hughes@sunderland.ac.uk,Associate Professor,0.8,1,13,2026-07-09T00:00:00Z
+15,Dr,Samuel,Gupta,samuel.gupta@sunderland.ac.uk,Senior Lecturer,1.0,1,18,2026-07-09T00:00:00Z
+16,Dr,Sneha,Chowdhury,sneha.chowdhury@sunderland.ac.uk,Lecturer,1.0,1,20,2026-07-09T00:00:00Z
+17,Dr,Mohammed,Mensah,mohammed.mensah@sunderland.ac.uk,Lecturer,1.0,1,19,2026-07-09T00:00:00Z
+18,Dr,Minh,Eze,minh.eze@sunderland.ac.uk,Lecturer,1.0,1,25,2026-07-09T00:00:00Z
+19,Dr,Valentina,Murphy,valentina.murphy@sunderland.ac.uk,Lecturer,1.0,1,21,2026-07-09T00:00:00Z
+20,Dr,Kwame,Singh,kwame.singh@sunderland.ac.uk,Associate Professor,0.8,2,16,2026-07-09T00:00:00Z
+21,Dr,Priya,Petrov,priya.petrov@sunderland.ac.uk,Lecturer,1.0,1,15,2026-07-09T00:00:00Z
+22,Dr,Hao,Roberts,hao.roberts@sunderland.ac.uk,Lecturer,1.0,1,13,2026-07-09T00:00:00Z
+23,Dr,Ethan,Popescu,ethan.popescu@sunderland.ac.uk,Senior Lecturer,1.0,1,16,2026-07-09T00:00:00Z
+24,Dr,Andrei,Garcia,andrei.garcia@sunderland.ac.uk,Lecturer,1.0,1,20,2026-07-09T00:00:00Z
+25,Dr,Priya,Fraser,priya.fraser@sunderland.ac.uk,Senior Lecturer,1.0,2,14,2026-07-09T00:00:00Z
+26,Dr,Grace,Park,grace.park@sunderland.ac.uk,Lecturer,0.8,1,19,2026-07-09T00:00:00Z
+27,Dr,Grace,Stewart,grace.stewart@sunderland.ac.uk,Lecturer,1.0,1,15,2026-07-09T00:00:00Z
+28,Dr,Lucia,Popescu,lucia.popescu@sunderland.ac.uk,Senior Lecturer,1.0,2,19,2026-07-09T00:00:00Z
+29,Dr,Noah,Zhao,noah.zhao@sunderland.ac.uk,Senior Lecturer,1.0,2,15,2026-07-09T00:00:00Z
+30,Prof,Aisha,Zhang,aisha.zhang@sunderland.ac.uk,Professor,1.0,1,20,2026-07-09T00:00:00Z
+31,Dr,Jun,Li,jun.li@sunderland.ac.uk,Associate Professor,1.0,2,15,2026-07-09T00:00:00Z
+32,Dr,Maya,Robinson,maya.robinson@sunderland.ac.uk,Associate Professor,1.0,2,23,2026-07-09T00:00:00Z

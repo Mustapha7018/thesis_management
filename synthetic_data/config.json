@@ -1,0 +1,69 @@
+{
+  "seed": 20260709,
+  "counts": {
+    "students": 240,
+    "supervisors": 32
+  },
+  "academic_year": {
+    "entry_year": 2025,
+    "created_at": "2026-07-09T00:00:00Z"
+  },
+  "email": {
+    "student_domain": "student.sunderland.ac.uk",
+    "staff_domain": "sunderland.ac.uk",
+    "student_local_length": 6
+  },
+  "preferences": {
+    "list_length": 5,
+    "softmax_temperature": 0.35,
+    "popularity_noise_sd": 0.08
+  },
+  "interests": {
+    "areas_per_student": {"1": 0.25, "2": 0.5, "3": 0.25}
+  },
+  "expertise": {
+    "areas_per_supervisor": {"2": 0.35, "3": 0.45, "4": 0.2}
+  },
+  "workload": {
+    "base_capacity": {
+      "Lecturer": 7,
+      "Senior Lecturer": 8,
+      "Associate Professor": 8,
+      "Professor": 6
+    },
+    "quota_min_choices": [1, 2],
+    "capacity_slack_target": 1.1
+  },
+  "students_attrs": {
+    "mode_ft_share": 0.85,
+    "programme_weights": {
+      "MSc Data Science": 0.26,
+      "MSc Computer Science": 0.24,
+      "MSc Cybersecurity": 0.16,
+      "MSc Applied Cybersecurity": 0.10,
+      "MSc Computer Science with Data Science": 0.14,
+      "MSc Computer Science with Cyber Security": 0.10
+    },
+    "entry_qualification_weights": {
+      "First": 0.18,
+      "2:1": 0.38,
+      "2:2": 0.16,
+      "International equivalent": 0.28
+    },
+    "prior_mark_by_qualification": {
+      "First":                    {"mean": 74, "sd": 4.5},
+      "2:1":                      {"mean": 65, "sd": 3.5},
+      "2:2":                      {"mean": 56, "sd": 3.5},
+      "International equivalent": {"mean": 64, "sd": 6.0}
+    }
+  },
+  "supervisors_attrs": {
+    "seniority_weights": {
+      "Lecturer": 0.38,
+      "Senior Lecturer": 0.34,
+      "Associate Professor": 0.16,
+      "Professor": 0.12
+    },
+    "fte_weights": {"1.0": 0.78, "0.8": 0.14, "0.6": 0.08}
+  }
+}

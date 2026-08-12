@@ -1,0 +1,130 @@
+[
+  {
+    "sprint_id": 1,
+    "student_id": 51,
+    "name": "Sprint 1 — Literature Review",
+    "goal": "Complete literature review and finalise research question.",
+    "start_date": "2026-06-29",
+    "end_date": "2026-07-13"
+  },
+  {
+    "sprint_id": 2,
+    "student_id": 51,
+    "name": "Sprint 2 — Requirements & Design",
+    "goal": "Elicit requirements and produce the system design.",
+    "start_date": "2026-07-14",
+    "end_date": "2026-08-10"
+  },
+  {
+    "sprint_id": 3,
+    "student_id": 4,
+    "name": "Sprint 1 — Literature Review",
+    "goal": "Complete literature review and finalise research question.",
+    "start_date": "2026-06-29",
+    "end_date": "2026-07-13"
+  },
+  {
+    "sprint_id": 4,
+    "student_id": 4,
+    "name": "Sprint 2 — Requirements & Design",
+    "goal": "Elicit requirements and produce the system design.",
+    "start_date": "2026-07-14",
+    "end_date": "2026-08-10"
+  },
+  {
+    "sprint_id": 5,
+    "student_id": 249,
+    "name": "Sprint 1 — Literature Review",
+    "goal": "Complete literature review and finalise research question.",
+    "start_date": "2026-06-29",
+    "end_date": "2026-07-13"
+  },
+  {
+    "sprint_id": 6,
+    "student_id": 249,
+    "name": "Sprint 2 — Requirements & Design",
+    "goal": "Elicit requirements and produce the system design.",
+    "start_date": "2026-07-14",
+    "end_date": "2026-08-10"
+  },
+  {
+    "sprint_id": 7,
+    "student_id": 325,
+    "name": "Sprint 1 — Literature Review",
+    "goal": "Complete literature review and finalise research question.",
+    "start_date": "2026-06-29",
+    "end_date": "2026-07-13"
+  },
+  {
+    "sprint_id": 8,
+    "student_id": 325,
+    "name": "Sprint 2 — Requirements & Design",
+    "goal": "Elicit requirements and produce the system design.",
+    "start_date": "2026-07-14",
+    "end_date": "2026-08-10"
+  },
+  {
+    "sprint_id": 9,
+    "student_id": 258,
+    "name": "Sprint 1 — Literature Review",
+    "goal": "Complete literature review and finalise research question.",
+    "start_date": "2026-06-29",
+    "end_date": "2026-07-13"
+  },
+  {
+    "sprint_id": 10,
+    "student_id": 258,
+    "name": "Sprint 2 — Requirements & Design",
+    "goal": "Elicit requirements and produce the system design.",
+    "start_date": "2026-07-14",
+    "end_date": "2026-08-10"
+  },
+  {
+    "sprint_id": 11,
+    "student_id": 263,
+    "name": "Sprint 1 — Literature Review",
+    "goal": "Complete literature review and finalise research question.",
+    "start_date": "2026-06-29",
+    "end_date": "2026-07-13"
+  },
+  {
+    "sprint_id": 12,
+    "student_id": 263,
+    "name": "Sprint 2 — Requirements & Design",
+    "goal": "Elicit requirements and produce the system design.",
+    "start_date": "2026-07-14",
+    "end_date": "2026-08-10"
+  },
+  {
+    "sprint_id": 13,
+    "student_id": 205,
+    "name": "Sprint 1 — Literature Review",
+    "goal": "Complete literature review and finalise research question.",
+    "start_date": "2026-06-29",
+    "end_date": "2026-07-13"
+  },
+  {
+    "sprint_id": 14,
+    "student_id": 205,
+    "name": "Sprint 2 — Requirements & Design",
+    "goal": "Elicit requirements and produce the system design.",
+    "start_date": "2026-07-14",
+    "end_date": "2026-08-10"
+  },
+  {
+    "sprint_id": 15,
+    "student_id": 300,
+    "name": "Sprint 1 — Literature Review",
+    "goal": "Complete literature review and finalise research question.",
+    "start_date": "2026-06-29",
+    "end_date": "2026-07-13"
+  },
+  {
+    "sprint_id": 16,
+    "student_id": 300,
+    "name": "Sprint 2 — Requirements & Design",
+    "goal": "Elicit requirements and produce the system design.",
+    "start_date": "2026-07-14",
+    "end_date": "2026-08-10"
+  }
+]

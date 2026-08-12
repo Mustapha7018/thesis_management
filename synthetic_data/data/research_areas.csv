@@ -1,0 +1,13 @@
+area_id,code,name,description
+1,AI_ML,Artificial Intelligence & Machine Learning,"Learning algorithms, neural networks, optimisation, applied AI."
+2,DATA_SCI,Data Science & Analytics,"Statistical modelling, data engineering, visual analytics."
+3,CYBER,Cybersecurity,"Network security, cryptography, threat modelling, digital forensics."
+4,SOFT_ENG,Software Engineering,"Architecture, DevOps, testing, empirical software engineering."
+5,HCI,Human-Computer Interaction,"Usability, accessibility, user experience, interaction design."
+6,NET_IOT,Networks & Internet of Things,"Distributed systems, edge computing, sensor networks."
+7,HEALTH,Health Informatics & Digital Health,"Clinical data systems, health analytics, assistive technology."
+8,CV,Computer Vision & Image Processing,"Image analysis, object recognition, medical imaging."
+9,NLP,Natural Language Processing,"Text mining, language models, information retrieval."
+10,GAMES,Games & Immersive Technologies,"Game engineering, AR/VR, serious games."
+11,CLOUD,Cloud & Distributed Computing,"Cloud architecture, virtualisation, scalable services."
+12,EDTECH,Educational Technology,"Learning analytics, e-learning systems, technology-enhanced learning."

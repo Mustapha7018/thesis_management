@@ -1,0 +1,30 @@
+[
+  {
+    "entry_id": 1,
+    "occurred_at": "2026-08-01T08:55:00Z",
+    "event_type": "login",
+    "actor_email": "jordan.blake@sunderland.ac.uk",
+    "detail": "Admin login succeeded."
+  },
+  {
+    "entry_id": 2,
+    "occurred_at": "2026-08-01T09:02:00Z",
+    "event_type": "login",
+    "actor_email": "z47nuz@student.sunderland.ac.uk",
+    "detail": "Student login succeeded."
+  },
+  {
+    "entry_id": 3,
+    "occurred_at": "2026-08-02T14:12:00Z",
+    "event_type": "login_failed",
+    "actor_email": "gn0hmr@student.sunderland.ac.uk",
+    "detail": "Failed login attempt (2 of 5 before lockout)."
+  },
+  {
+    "entry_id": 4,
+    "occurred_at": "2026-07-30T09:00:00Z",
+    "event_type": "role_change",
+    "actor_email": "jordan.blake@sunderland.ac.uk",
+    "detail": "Published allocation run run-2026-07-30-greedy-mock."
+  }
+]

@@ -14,6 +14,9 @@ server/dist
 server/.env
 server/coverage
 
+# Evaluation pipeline
+evaluation/.venv
+
 # Logs
 npm-debug.log*
 yarn-debug.log*

@@ -14,6 +14,7 @@
     "db:migrate": "drizzle-kit push",
     "db:seed": "tsx src/seed.ts",
     "experiment:sensitivity": "tsx scripts/sensitivity-experiment.ts",
+    "experiment:full": "tsx scripts/experiment-runner.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

@@ -12,10 +12,10 @@ export interface BaselineResult {
   allocatedCount: number
 }
 
-function shuffle<T>(items: T[]): T[] {
+function shuffle<T>(items: T[], rng: () => number): T[] {
   const arr = [...items]
   for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
+    const j = Math.floor(rng() * (i + 1))
     ;[arr[i], arr[j]] = [arr[j], arr[i]]
   }
   return arr
@@ -23,18 +23,23 @@ function shuffle<T>(items: T[]): T[] {
 
 const objectiveScore = (rank: number, score: number) => Math.round((((6 - rank) / 5 + score) / 2) * 100) / 100
 
-export function runBaseline(instance: GaInstance, algorithm: "greedy-mock" | "random"): BaselineResult {
+/** `rng` makes the random baseline reproducible in experiments; API runs use Math.random. */
+export function runBaseline(
+  instance: GaInstance,
+  algorithm: "greedy-mock" | "random",
+  rng: () => number = Math.random,
+): BaselineResult {
   const n = instance.studentIds.length
   const loads = new Array<number>(instance.supervisors.length).fill(0)
   const assignment = new Array<number>(n).fill(-1)
   const pairScores = new Array<number>(n).fill(0)
 
-  const studentOrder = algorithm === "random" ? shuffle([...Array(n).keys()]) : [...Array(n).keys()]
+  const studentOrder = algorithm === "random" ? shuffle([...Array(n).keys()], rng) : [...Array(n).keys()]
 
   let allocatedCount = 0
   for (const i of studentOrder) {
     const prefs = instance.prefs[i]
-    const order = algorithm === "random" ? shuffle([...prefs.keys()]) : [...prefs.keys()]
+    const order = algorithm === "random" ? shuffle([...prefs.keys()], rng) : [...prefs.keys()]
     for (const k of order) {
       const pref = prefs[k]
       const max = instance.supervisors[pref.supIdx].quotaMax

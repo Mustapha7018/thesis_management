@@ -1,0 +1,62 @@
+family,config,metric,ga_median,reference,statistic,p_raw,a12_better,p_holm,significant_0.05,effect
+GA vs random (Mann-Whitney U),default,meanRank,1.419,3.006042,0.0,0.0,1.0,0.0,True,large
+GA vs random (Mann-Whitney U),default,workloadVariance,7.140625,9.181152,116.0,1e-06,0.871111,7e-06,True,large
+GA vs random (Mann-Whitney U),default,pctUnallocated,0.0,0.6,45.0,0.0,0.95,0.0,True,large
+GA vs random (Mann-Whitney U),pure-preference,meanRank,1.165,3.006042,0.0,0.0,1.0,0.0,True,large
+GA vs random (Mann-Whitney U),pure-preference,workloadVariance,7.578125,9.181152,206.0,0.000318,0.771111,0.000635,True,large
+GA vs random (Mann-Whitney U),pure-preference,pctUnallocated,0.0,0.6,45.0,0.0,0.95,0.0,True,large
+GA vs random (Mann-Whitney U),pure-expertise,meanRank,2.652,3.006042,0.0,0.0,1.0,0.0,True,large
+GA vs random (Mann-Whitney U),pure-expertise,workloadVariance,8.828125,9.181152,453.5,0.964619,0.496111,0.964619,False,negligible
+GA vs random (Mann-Whitney U),pure-expertise,pctUnallocated,0.0,0.6,45.0,0.0,0.95,0.0,True,large
+GA vs random (Mann-Whitney U),pure-balance,meanRank,2.154285,3.006042,0.0,0.0,1.0,0.0,True,large
+GA vs random (Mann-Whitney U),pure-balance,workloadVariance,7.453125,9.181152,175.5,5.1e-05,0.805,0.000179,True,large
+GA vs random (Mann-Whitney U),pure-balance,pctUnallocated,0.0,0.6,66.5,0.0,0.926111,0.0,True,large
+GA vs random (Mann-Whitney U),equal-weights,meanRank,1.651,3.006042,0.0,0.0,1.0,0.0,True,large
+GA vs random (Mann-Whitney U),equal-weights,workloadVariance,7.296875,9.181152,149.5,9e-06,0.833889,4.6e-05,True,large
+GA vs random (Mann-Whitney U),equal-weights,pctUnallocated,0.0,0.6,45.0,0.0,0.95,0.0,True,large
+GA vs random (Mann-Whitney U),population-50,meanRank,1.406,3.006042,0.0,0.0,1.0,0.0,True,large
+GA vs random (Mann-Whitney U),population-50,workloadVariance,7.453125,9.181152,135.5,3e-06,0.849444,2.4e-05,True,large
+GA vs random (Mann-Whitney U),population-50,pctUnallocated,0.0,0.6,45.0,0.0,0.95,0.0,True,large
+GA vs random (Mann-Whitney U),population-200,meanRank,1.4,3.006042,0.0,0.0,1.0,0.0,True,large
+GA vs random (Mann-Whitney U),population-200,workloadVariance,7.203125,9.181152,142.0,5e-06,0.842222,3.3e-05,True,large
+GA vs random (Mann-Whitney U),population-200,pctUnallocated,0.0,0.6,45.0,0.0,0.95,0.0,True,large
+GA vs random (Mann-Whitney U),mutation-0.005,meanRank,1.32,3.006042,0.0,0.0,1.0,0.0,True,large
+GA vs random (Mann-Whitney U),mutation-0.005,workloadVariance,6.546875,9.181152,65.0,0.0,0.927778,0.0,True,large
+GA vs random (Mann-Whitney U),mutation-0.005,pctUnallocated,0.0,0.6,45.0,0.0,0.95,0.0,True,large
+GA vs random (Mann-Whitney U),mutation-0.05,meanRank,1.569,3.006042,0.0,0.0,1.0,0.0,True,large
+GA vs random (Mann-Whitney U),mutation-0.05,workloadVariance,7.390625,9.181152,173.5,4.5e-05,0.807222,0.000179,True,large
+GA vs random (Mann-Whitney U),mutation-0.05,pctUnallocated,0.0,0.6,45.0,0.0,0.95,0.0,True,large
+GA vs greedy (Wilcoxon signed-rank),default,meanRank,1.419,1.204819,0.0,2e-06,0.0,3e-05,True,
+GA vs greedy (Wilcoxon signed-rank),default,workloadVariance,7.140625,7.308594,175.0,0.236787,0.566667,1.0,False,
+GA vs greedy (Wilcoxon signed-rank),default,pctUnallocated,0.0,0.4,0.0,0.0,1.0,1e-06,True,
+GA vs greedy (Wilcoxon signed-rank),pure-preference,meanRank,1.165,1.204819,0.0,2e-06,1.0,3e-05,True,
+GA vs greedy (Wilcoxon signed-rank),pure-preference,workloadVariance,7.578125,7.308594,141.0,0.059775,0.433333,0.418424,False,
+GA vs greedy (Wilcoxon signed-rank),pure-preference,pctUnallocated,0.0,0.4,0.0,0.0,1.0,1e-06,True,
+GA vs greedy (Wilcoxon signed-rank),pure-expertise,meanRank,2.652,1.204819,0.0,2e-06,0.0,3e-05,True,
+GA vs greedy (Wilcoxon signed-rank),pure-expertise,workloadVariance,8.828125,7.308594,24.0,1.8e-05,0.1,0.000143,True,
+GA vs greedy (Wilcoxon signed-rank),pure-expertise,pctUnallocated,0.0,0.4,0.0,0.0,1.0,1e-06,True,
+GA vs greedy (Wilcoxon signed-rank),pure-balance,meanRank,2.154285,1.204819,0.0,2e-06,0.0,3e-05,True,
+GA vs greedy (Wilcoxon signed-rank),pure-balance,workloadVariance,7.453125,7.308594,165.0,0.164904,0.4,0.989422,False,
+GA vs greedy (Wilcoxon signed-rank),pure-balance,pctUnallocated,0.0,0.4,0.0,0.0,0.966667,5e-06,True,
+GA vs greedy (Wilcoxon signed-rank),equal-weights,meanRank,1.651,1.204819,0.0,2e-06,0.0,3e-05,True,
+GA vs greedy (Wilcoxon signed-rank),equal-weights,workloadVariance,7.296875,7.308594,232.0,0.991793,0.566667,1.0,False,
+GA vs greedy (Wilcoxon signed-rank),equal-weights,pctUnallocated,0.0,0.4,0.0,0.0,1.0,1e-06,True,
+GA vs greedy (Wilcoxon signed-rank),population-50,meanRank,1.406,1.204819,0.0,2e-06,0.0,3e-05,True,
+GA vs greedy (Wilcoxon signed-rank),population-50,workloadVariance,7.453125,7.308594,217.0,0.749794,0.466667,1.0,False,
+GA vs greedy (Wilcoxon signed-rank),population-50,pctUnallocated,0.0,0.4,0.0,0.0,1.0,1e-06,True,
+GA vs greedy (Wilcoxon signed-rank),population-200,meanRank,1.4,1.204819,0.0,2e-06,0.0,3e-05,True,
+GA vs greedy (Wilcoxon signed-rank),population-200,workloadVariance,7.203125,7.308594,213.0,0.688305,0.6,1.0,False,
+GA vs greedy (Wilcoxon signed-rank),population-200,pctUnallocated,0.0,0.4,0.0,0.0,1.0,1e-06,True,
+GA vs greedy (Wilcoxon signed-rank),mutation-0.005,meanRank,1.32,1.204819,0.0,2e-06,0.0,3e-05,True,
+GA vs greedy (Wilcoxon signed-rank),mutation-0.005,workloadVariance,6.546875,7.308594,1.0,2e-06,0.966667,3e-05,True,
+GA vs greedy (Wilcoxon signed-rank),mutation-0.005,pctUnallocated,0.0,0.4,0.0,0.0,1.0,1e-06,True,
+GA vs greedy (Wilcoxon signed-rank),mutation-0.05,meanRank,1.569,1.204819,0.0,2e-06,0.0,3e-05,True,
+GA vs greedy (Wilcoxon signed-rank),mutation-0.05,workloadVariance,7.390625,7.308594,205.0,0.571493,0.466667,1.0,False,
+GA vs greedy (Wilcoxon signed-rank),mutation-0.05,pctUnallocated,0.0,0.4,0.0,0.0,1.0,1e-06,True,
+weights sensitivity (Kruskal-Wallis),default | pure-preference | pure-expertise | pure-balance | equal-weights,meanRank,1.419,,143.030116,0.0,,0.0,True,
+weights sensitivity (Kruskal-Wallis),default | pure-preference | pure-expertise | pure-balance | equal-weights,workloadVariance,7.140625,,36.698096,0.0,,0.0,True,
+weights sensitivity (Kruskal-Wallis),default | pure-preference | pure-expertise | pure-balance | equal-weights,bestFitness,0.786375,,143.048392,0.0,,0.0,True,
+population sensitivity (Kruskal-Wallis),population-50 | default | population-200,bestFitness,0.780552,,68.862222,0.0,,0.0,True,
+population sensitivity (Kruskal-Wallis),population-50 | default | population-200,runtimeMs,153.5,,78.248065,0.0,,0.0,True,
+mutation sensitivity (Kruskal-Wallis),mutation-0.005 | default | mutation-0.05,bestFitness,0.805267,,79.120879,0.0,,0.0,True,
+mutation sensitivity (Kruskal-Wallis),mutation-0.005 | default | mutation-0.05,generationsRun,245.5,,60.900835,0.0,,0.0,True,

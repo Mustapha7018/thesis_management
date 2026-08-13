@@ -361,6 +361,46 @@ Design lesson for the write-up: navigation should mirror the user's stated struc
 rather than an inferred richer one, and dashboard copy earns its place only when it
 changes what the user does next.
 
+## 2026-08-13 — Statistical evaluation pipeline: 30-seed experiments + significance testing (O6)
+
+**Why:** the research question ("to what extent can a genetic algorithm … outperform a
+manual baseline…") is a statistical claim, and the GA is stochastic — single runs are
+anecdotes. Standard evolutionary-computation methodology applied: 30 independent seeded
+runs per configuration, non-parametric tests (no normality assumption), effect sizes
+alongside p-values, Holm-Bonferroni correction within each test family.
+
+**Pipeline (two stages, fully reproducible):**
+1. `npm run experiment:full` (server) — 9 GA configurations × 30 seeds + 30 seeded
+   random-baseline runs (the baseline was made seedable for reproducibility) + the
+   deterministic greedy baseline = 301 runs over the live 500×32 instance, with
+   per-generation convergence histories → `docs/evaluation/experiments-runs.csv` +
+   `experiments-convergence.csv`.
+2. `evaluation/analyze.py` (Python: pandas/scipy/matplotlib) → per-configuration
+   descriptive statistics (median, mean, std, 95% CI), three Holm-corrected test
+   families (Mann-Whitney U vs the random distribution with Vargha-Delaney A12;
+   one-sample Wilcoxon signed-rank vs the greedy value with fraction-of-runs-better;
+   Kruskal-Wallis across weight/population/mutation levels), and six figures
+   (box plots per metric with the greedy reference line, convergence curves with IQR
+   bands, runtime distributions).
+
+**Headline results (evidence for the evaluation chapter):**
+- Every GA configuration beats the random baseline on mean satisfied rank with
+  **A12 = 1.0** (every GA run better than every random run) and Holm-adjusted
+  p < 0.001 — the maximal large effect.
+- **Pure-preference GA beats the greedy baseline on greedy's own objective**: median
+  mean-rank 1.165 vs 1.205, all 30/30 runs strictly better, Wilcoxon Holm-adjusted
+  p = 3×10⁻⁵ — while also allocating 100% of students (greedy leaves 0.4% unallocated)
+  and guaranteeing quota_min, which greedy does not.
+- Other weight profiles trade rank for their own objectives exactly as configured —
+  reported honestly as the multi-objective trade-off, not hidden.
+- All three parameter-sensitivity families are significant (Kruskal-Wallis, Holm
+  p < 0.001): weights, population size and mutation rate all measurably steer outcomes,
+  satisfying the evaluation plan's "test parameter sensitivity".
+- Every run < 1 s at the 500-student stress scale (NFR-PERF-01 margin ~60×).
+
+Methodological strength worth stating in the write-up: the seeded engine makes every
+number in the chapter exactly reproducible from the committed code and data.
+
 ---
 
 ## Planned / next

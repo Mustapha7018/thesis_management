@@ -218,6 +218,44 @@ exports. Deferred to a later iteration: cloud deployment (env-driven config, COR
 bundled build and backup strategy documented in `server/README.md`), notifications
 (FR-ALLOC-06/FR-MEET-04), load testing (NFR-PERF-03).
 
+## 2026-08-13 — DB hardening, manual baseline (FR-ALLOC-04), sensitivity experiment (O6)
+
+**Database hardening:** indexes added on every frequently-queried foreign-key column
+(PostgreSQL does not auto-index FKs) — allocations by student/supervisor, preferences by
+supervisor (applicants view), and the per-student agile/meeting/flag tables; pool size
+made configurable (`PG_POOL_MAX`, default 10) with idle/connection timeouts; graceful
+shutdown drains HTTP before releasing DB connections. Connection pooling itself was
+already in place via `pg.Pool`.
+
+**Manual baseline (FR-ALLOC-04, Must — last open Must requirement):**
+`POST /api/v1/allocation-runs/manual` records a hand-made allocation (e.g. a
+departmental spreadsheet) identically to algorithmic runs: same run/allocation tables,
+same benchmarks, audit-logged; `objective_score` computed where the pairing is on the
+student's list, null off-list; `runtime_ms` null (human-entered). Server validates
+duplicate students and unknown ids. UI: a third baseline card with a
+"student_id,supervisor_id per line" paste box. Verified in browser — a partial manual
+run correctly reports its quota_min violations. Integration test added (37 total).
+
+**Parameter-sensitivity experiment (O2/O6 evaluation plan):**
+`npm run experiment:sensitivity` runs the shared engine over the live 500×32 instance —
+5 weight profiles × 3 seeds, population {50, 100, 200}, mutation {0.005, 0.02, 0.05} —
+plus the greedy reference; results in `docs/evaluation/ga-sensitivity-<date>.csv`.
+Headline findings for the evaluation chapter (means over 3 seeds):
+
+| Configuration | Fitness | Mean rank | Load variance | % unallocated |
+|---|---|---|---|---|
+| **GA, pure preference (wP=1)** | 0.967 | **1.16** | 8.13 | **0** |
+| GA, default (0.5/0.3/0.2) | 0.787 | 1.43 | **6.73** | 0 |
+| GA, pure balance (wB=1) | 0.903 | 2.12 | 7.44 | 0 |
+| Greedy baseline | — | 1.21 | 7.31 | 0.4 |
+
+(1) With pure preference weight the GA **beats greedy on greedy's own objective**
+(mean rank 1.16 vs 1.21) while allocating 100% of students and guaranteeing quota_min —
+greedy does neither. (2) Weights steer outcomes monotonically (FR-ALLOC-01 acceptance).
+(3) Population 200 improves fitness marginally at ~4× the runtime of population 50;
+low mutation (0.005) converges slower but slightly better — defaults are a reasonable
+operating point. All runs < 1 s (NFR-PERF-01 margin ≈ 60×).
+
 ---
 
 ## Planned / next
@@ -225,7 +263,7 @@ bundled build and backup strategy documented in `server/README.md`), notificatio
 - Cloud deployment of API + PostgreSQL + web app (O4 "secure cloud database"); set real
   `JWT_SECRET`, `ALLOW_DEMO_RESET=false`, TLS.
 - GA parameter-sensitivity experiments for O6 (params are persisted per run to support this).
-- Manual baseline entry UI (FR-ALLOC-04) and sandbox/what-if runs (FR-ALLOC-08, Could).
+- Sandbox/what-if runs (FR-ALLOC-08, Could).
 - Email notifications: password reset (FR-AUTH-05), publish notification (FR-ALLOC-06),
   meeting reminders (FR-MEET-04).
 - Latency measurement for NFR-PERF-02/03 evidence (p95 targets, 300 concurrent users).

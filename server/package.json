@@ -13,6 +13,7 @@
     "test:coverage": "vitest run --coverage",
     "db:migrate": "drizzle-kit push",
     "db:seed": "tsx src/seed.ts",
+    "experiment:sensitivity": "tsx scripts/sensitivity-experiment.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

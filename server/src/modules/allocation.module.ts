@@ -273,6 +273,94 @@ export const allocationModule: FastifyPluginAsync = async (raw) => {
     return { infeasible_supervisor_ids: findInfeasibleQuotaMins(instance) }
   })
 
+  /**
+   * Manual baseline (FR-ALLOC-04): an admin records a hand-made allocation
+   * (e.g. from a departmental spreadsheet), persisted identically to
+   * algorithmic runs so it appears in the same benchmarks.
+   */
+  app.post(
+    "/allocation-runs/manual",
+    {
+      ...adminOnly,
+      schema: {
+        tags: ["allocation"],
+        body: z.object({
+          label: z.string().min(1).max(80).default("Manual baseline"),
+          pairs: z
+            .array(z.object({ student_id: z.number().int(), supervisor_id: z.number().int() }))
+            .min(1)
+            .max(1000),
+        }),
+      },
+    },
+    async (req, reply) => {
+      const { label, pairs } = req.body
+
+      const seenStudents = new Set<number>()
+      for (const pair of pairs) {
+        if (seenStudents.has(pair.student_id)) {
+          throw badRequest(`Student ${pair.student_id} appears more than once.`)
+        }
+        seenStudents.add(pair.student_id)
+      }
+
+      const [studentRows, supervisorRows, prefs, scores] = await Promise.all([
+        db.select({ id: students.student_id }).from(students),
+        db.select({ id: supervisors.supervisor_id }).from(supervisors),
+        db.select().from(studentPreferences),
+        db.select().from(supervisorPreferences),
+      ])
+      const studentIds = new Set(studentRows.map((s) => s.id))
+      const supervisorIds = new Set(supervisorRows.map((s) => s.id))
+      for (const pair of pairs) {
+        if (!studentIds.has(pair.student_id)) throw badRequest(`Unknown student_id ${pair.student_id}.`)
+        if (!supervisorIds.has(pair.supervisor_id)) throw badRequest(`Unknown supervisor_id ${pair.supervisor_id}.`)
+      }
+
+      const rankByPair = new Map(prefs.map((p) => [`${p.student_id}:${p.supervisor_id}`, p.rank]))
+      const scoreByPair = new Map(scores.map((s) => [`${s.student_id}:${s.supervisor_id}`, s.score]))
+      const runId = `run-${new Date().toISOString().slice(0, 10)}-manual-${Date.now()}`
+      const createdAt = new Date().toISOString()
+
+      await db.transaction(async (tx) => {
+        await tx.insert(allocationRuns).values({
+          run_id: runId,
+          algorithm: "manual",
+          label,
+          created_at: createdAt,
+          published: false,
+          instance_size: studentIds.size,
+          runtime_ms: null, // human-entered — no algorithm runtime
+          params: null,
+        })
+        for (let i = 0; i < pairs.length; i += 500) {
+          await tx.insert(allocations).values(
+            pairs.slice(i, i + 500).map((pair) => {
+              const rank = rankByPair.get(`${pair.student_id}:${pair.supervisor_id}`)
+              const score = scoreByPair.get(`${pair.student_id}:${pair.supervisor_id}`)
+              return {
+                run_id: runId,
+                algorithm: "manual",
+                student_id: pair.student_id,
+                supervisor_id: pair.supervisor_id,
+                // Off-list pairings have no preference data to score against.
+                objective_score:
+                  rank !== undefined ? Math.round((((6 - rank) / 5 + (score ?? 0)) / 2) * 100) / 100 : null,
+                created_at: createdAt,
+              }
+            }),
+          )
+        }
+        await writeAudit(tx, "allocation_run", req.user.email, `Recorded manual allocation ${runId} (${pairs.length} pairings).`)
+      })
+
+      return reply.status(200).send({
+        kind: "completed" as const,
+        summary: { run_id: runId, runtime_ms: 0, instance_size: studentIds.size, allocated_count: pairs.length },
+      })
+    },
+  )
+
   app.post(
     "/allocation-runs",
     {

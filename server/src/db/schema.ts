@@ -9,6 +9,7 @@
 import { sql } from "drizzle-orm"
 import {
   boolean,
+  index,
   integer,
   jsonb,
   pgTable,
@@ -93,6 +94,8 @@ export const studentPreferences = pgTable(
   (t) => [
     primaryKey({ columns: [t.student_id, t.rank] }),
     uniqueIndex("student_pref_pair").on(t.student_id, t.supervisor_id),
+    // Applicants view queries by supervisor (FK columns are not auto-indexed).
+    index("student_pref_supervisor").on(t.supervisor_id),
   ],
 )
 
@@ -143,78 +146,102 @@ export const allocations = pgTable(
     objective_score: real(),
     created_at: text().notNull(),
   },
-  (t) => [uniqueIndex("allocation_run_student").on(t.run_id, t.student_id)],
+  (t) => [
+    uniqueIndex("allocation_run_student").on(t.run_id, t.student_id),
+    index("allocation_student").on(t.student_id),
+    index("allocation_supervisor").on(t.supervisor_id),
+  ],
 )
 
-export const sprints = pgTable("sprints", {
-  sprint_id: integer().primaryKey().generatedByDefaultAsIdentity(),
-  student_id: integer()
-    .notNull()
-    .references(() => students.student_id, { onDelete: "cascade" }),
-  name: text().notNull(),
-  goal: text(),
-  start_date: text().notNull(),
-  end_date: text().notNull(),
-})
+export const sprints = pgTable(
+  "sprints",
+  {
+    sprint_id: integer().primaryKey().generatedByDefaultAsIdentity(),
+    student_id: integer()
+      .notNull()
+      .references(() => students.student_id, { onDelete: "cascade" }),
+    name: text().notNull(),
+    goal: text(),
+    start_date: text().notNull(),
+    end_date: text().notNull(),
+  },
+  (t) => [index("sprint_student").on(t.student_id)],
+)
 
-export const milestones = pgTable("milestones", {
-  milestone_id: integer().primaryKey().generatedByDefaultAsIdentity(),
-  student_id: integer()
-    .notNull()
-    .references(() => students.student_id, { onDelete: "cascade" }),
-  title: text().notNull(),
-  description: text(),
-  due_date: text().notNull(),
-  status: text().notNull(),
-  created_at: text().notNull(),
-  attachment_name: text(),
-  attachment_type: text(),
-  attachment_data: text(),
-})
+export const milestones = pgTable(
+  "milestones",
+  {
+    milestone_id: integer().primaryKey().generatedByDefaultAsIdentity(),
+    student_id: integer()
+      .notNull()
+      .references(() => students.student_id, { onDelete: "cascade" }),
+    title: text().notNull(),
+    description: text(),
+    due_date: text().notNull(),
+    status: text().notNull(),
+    created_at: text().notNull(),
+    attachment_name: text(),
+    attachment_type: text(),
+    attachment_data: text(),
+  },
+  (t) => [index("milestone_student").on(t.student_id)],
+)
 
-export const tasks = pgTable("tasks", {
-  task_id: integer().primaryKey().generatedByDefaultAsIdentity(),
-  sprint_id: integer().references(() => sprints.sprint_id, { onDelete: "set null" }),
-  milestone_id: integer().references(() => milestones.milestone_id, { onDelete: "set null" }),
-  student_id: integer()
-    .notNull()
-    .references(() => students.student_id, { onDelete: "cascade" }),
-  title: text().notNull(),
-  priority: text().notNull(),
-  status: text().notNull(),
-  created_at: text().notNull(),
-  updated_at: text(),
-})
+export const tasks = pgTable(
+  "tasks",
+  {
+    task_id: integer().primaryKey().generatedByDefaultAsIdentity(),
+    sprint_id: integer().references(() => sprints.sprint_id, { onDelete: "set null" }),
+    milestone_id: integer().references(() => milestones.milestone_id, { onDelete: "set null" }),
+    student_id: integer()
+      .notNull()
+      .references(() => students.student_id, { onDelete: "cascade" }),
+    title: text().notNull(),
+    priority: text().notNull(),
+    status: text().notNull(),
+    created_at: text().notNull(),
+    updated_at: text(),
+  },
+  (t) => [index("task_student").on(t.student_id)],
+)
 
-export const meetings = pgTable("meetings", {
-  meeting_id: integer().primaryKey().generatedByDefaultAsIdentity(),
-  student_id: integer()
-    .notNull()
-    .references(() => students.student_id, { onDelete: "cascade" }),
-  supervisor_id: integer()
-    .notNull()
-    .references(() => supervisors.supervisor_id),
-  scheduled_at: text().notNull(),
-  held: integer().notNull().default(0),
-  notes: text(),
-  log_file_name: text(),
-  log_file_type: text(),
-  log_file_data: text(),
-})
+export const meetings = pgTable(
+  "meetings",
+  {
+    meeting_id: integer().primaryKey().generatedByDefaultAsIdentity(),
+    student_id: integer()
+      .notNull()
+      .references(() => students.student_id, { onDelete: "cascade" }),
+    supervisor_id: integer()
+      .notNull()
+      .references(() => supervisors.supervisor_id),
+    scheduled_at: text().notNull(),
+    held: integer().notNull().default(0),
+    notes: text(),
+    log_file_name: text(),
+    log_file_type: text(),
+    log_file_data: text(),
+  },
+  (t) => [index("meeting_student").on(t.student_id), index("meeting_supervisor").on(t.supervisor_id)],
+)
 
-export const atRiskFlags = pgTable("at_risk_flags", {
-  flag_id: integer().primaryKey().generatedByDefaultAsIdentity(),
-  student_id: integer()
-    .notNull()
-    .references(() => students.student_id, { onDelete: "cascade" }),
-  rule_code: text().notNull(),
-  reason: text().notNull(),
-  raised_at: text().notNull(),
-  cleared_at: text(),
-  reviewed_at: text(),
-  reviewed_by: text(),
-  cleared_note: text(),
-})
+export const atRiskFlags = pgTable(
+  "at_risk_flags",
+  {
+    flag_id: integer().primaryKey().generatedByDefaultAsIdentity(),
+    student_id: integer()
+      .notNull()
+      .references(() => students.student_id, { onDelete: "cascade" }),
+    rule_code: text().notNull(),
+    reason: text().notNull(),
+    raised_at: text().notNull(),
+    cleared_at: text(),
+    reviewed_at: text(),
+    reviewed_by: text(),
+    cleared_note: text(),
+  },
+  (t) => [index("flag_student").on(t.student_id)],
+)
 
 /** Merges the old users directory + demoAccounts: one row per account (FR-AUTH-01). */
 export const accounts = pgTable("accounts", {

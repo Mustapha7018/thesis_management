@@ -39,6 +39,18 @@ export async function runAllocation(
   return response.summary
 }
 
+/** Records a hand-made allocation as a manual baseline run (FR-ALLOC-04). */
+export async function submitManualBaseline(
+  label: string,
+  pairs: { student_id: number; supervisor_id: number }[],
+): Promise<BaselineRunResult> {
+  const response = await api.post<{ kind: "completed"; summary: BaselineRunResult }>("/allocation-runs/manual", {
+    label,
+    pairs,
+  })
+  return response.summary
+}
+
 export async function compareRuns(): Promise<RunBenchmark[]> {
   return api.get("/allocation-runs/benchmarks")
 }

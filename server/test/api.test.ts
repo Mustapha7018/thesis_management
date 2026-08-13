@@ -317,6 +317,41 @@ describe("allocation runs (FR-ALLOC-03/04/06) and GA job (FR-ALLOC-01/02)", () =
     expect(second.best_fitness).toBe(first.best_fitness)
   })
 
+  it("records a manual baseline identically to algorithmic runs (FR-ALLOC-04)", async () => {
+    const dupe = await app.inject({
+      method: "POST",
+      url: "/api/v1/allocation-runs/manual",
+      headers: auth(adminToken),
+      payload: { pairs: [{ student_id: 1, supervisor_id: 1 }, { student_id: 1, supervisor_id: 2 }] },
+    })
+    expect(dupe.statusCode).toBe(400)
+
+    const unknown = await app.inject({
+      method: "POST",
+      url: "/api/v1/allocation-runs/manual",
+      headers: auth(adminToken),
+      payload: { pairs: [{ student_id: 1, supervisor_id: 99999 }] },
+    })
+    expect(unknown.statusCode).toBe(400)
+
+    const ok = await app.inject({
+      method: "POST",
+      url: "/api/v1/allocation-runs/manual",
+      headers: auth(adminToken),
+      payload: { label: "Dept spreadsheet 2026", pairs: [{ student_id: 1, supervisor_id: 1 }, { student_id: 2, supervisor_id: 2 }] },
+    })
+    expect(ok.statusCode).toBe(200)
+    const { summary } = ok.json() as { summary: { run_id: string; allocated_count: number } }
+    expect(summary.allocated_count).toBe(2)
+
+    const benchmarks = (
+      await app.inject({ method: "GET", url: "/api/v1/allocation-runs/benchmarks", headers: auth(adminToken) })
+    ).json() as { run_id: string; algorithm: string; label: string }[]
+    const manual = benchmarks.find((r) => r.run_id === summary.run_id)
+    expect(manual?.algorithm).toBe("manual")
+    expect(manual?.label).toBe("Dept spreadsheet 2026")
+  })
+
   it("rejects GA runs from non-admin tokens", async () => {
     const res = await app.inject({
       method: "POST",

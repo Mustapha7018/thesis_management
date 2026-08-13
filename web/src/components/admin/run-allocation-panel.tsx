@@ -7,7 +7,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Progress } from "@/components/ui/progress"
-import { getQuotaViolations, runAllocation } from "@/lib/services/allocation.service"
+import { Textarea } from "@/components/ui/textarea"
+import { getQuotaViolations, runAllocation, submitManualBaseline } from "@/lib/services/allocation.service"
 import { checkQuotaMinFeasibility, runGaAllocation } from "@/lib/services/ga/ga.service"
 import type { GaRunHandle } from "@/lib/services/ga/ga.service"
 import type { GaParams, GaProgress } from "@/lib/services/ga/types"
@@ -41,6 +42,7 @@ export function RunAllocationPanel({ onRunComplete }: { onRunComplete: () => voi
   const [stagnation, setStagnation] = useState(String(D.stagnationWindow))
 
   const [gaProgress, setGaProgress] = useState<GaProgress | null>(null)
+  const [manualPairs, setManualPairs] = useState("")
   const gaHandle = useRef<GaRunHandle | null>(null)
 
   function parseGaParams(): GaParams | string {
@@ -112,6 +114,42 @@ export function RunAllocationPanel({ onRunComplete }: { onRunComplete: () => voi
     } finally {
       gaHandle.current = null
       setGaProgress(null)
+      setRunning(null)
+    }
+  }
+
+  async function handleManualBaseline() {
+    const lines = manualPairs
+      .split("\n")
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0 && !line.toLowerCase().startsWith("student_id"))
+    const pairs: { student_id: number; supervisor_id: number }[] = []
+    for (const [index, line] of lines.entries()) {
+      const [studentPart, supervisorPart, ...rest] = line.split(",").map((p) => p.trim())
+      const student_id = Number(studentPart)
+      const supervisor_id = Number(supervisorPart)
+      if (rest.length > 0 || !Number.isInteger(student_id) || !Number.isInteger(supervisor_id)) {
+        toast.error(`Line ${index + 1} is not "student_id,supervisor_id".`)
+        return
+      }
+      pairs.push({ student_id, supervisor_id })
+    }
+    if (pairs.length === 0) {
+      toast.error("Paste at least one student_id,supervisor_id pair.")
+      return
+    }
+
+    setRunning("manual")
+    try {
+      const result = await submitManualBaseline("Manual baseline", pairs)
+      const violations = await getQuotaViolations(result.run_id)
+      setLastResult({ ...result, violations: violations.length })
+      setManualPairs("")
+      onRunComplete()
+      toast.success(`Manual baseline recorded: ${result.allocated_count} pairings.`)
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Failed to record manual baseline.")
+    } finally {
       setRunning(null)
     }
   }
@@ -218,7 +256,7 @@ export function RunAllocationPanel({ onRunComplete }: { onRunComplete: () => voi
 
       <div>
         <p className="mb-2 text-sm font-medium text-muted-foreground">Baselines (O6 benchmark)</p>
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-4 md:grid-cols-3">
           <Card>
             <CardHeader>
               <CardTitle className="text-base">Greedy baseline</CardTitle>
@@ -240,6 +278,25 @@ export function RunAllocationPanel({ onRunComplete }: { onRunComplete: () => voi
               <Button variant="outline" onClick={() => handleRunBaseline("random")} disabled={running !== null}>
                 <Play className="size-4" />
                 {running === "random" ? "Running…" : "Run"}
+              </Button>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base">Manual baseline</CardTitle>
+              <CardDescription>Record a hand-made allocation — one "student_id,supervisor_id" pair per line.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <Textarea
+                rows={3}
+                placeholder={"1,17\n2,4\n3,22"}
+                value={manualPairs}
+                disabled={running !== null}
+                onChange={(e) => setManualPairs(e.target.value)}
+              />
+              <Button variant="outline" onClick={handleManualBaseline} disabled={running !== null || !manualPairs.trim()}>
+                <Play className="size-4" />
+                {running === "manual" ? "Recording…" : "Record"}
               </Button>
             </CardContent>
           </Card>

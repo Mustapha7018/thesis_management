@@ -16,6 +16,10 @@ const envSchema = z.object({
   ALLOW_DEMO_RESET: z.coerce.boolean().default(true),
   /** Pino log level; benchmarks run at "warn" so per-request logging doesn't skew latency. */
   LOG_LEVEL: z.enum(["debug", "info", "warn", "error"]).default("info"),
+  /** Apply SQL migrations at boot (production; dev uses drizzle-kit push). */
+  RUN_MIGRATIONS: z.coerce.boolean().default(false),
+  /** Seed the synthetic dataset at boot when the database is empty. */
+  AUTO_SEED: z.coerce.boolean().default(false),
 })
 
 export const config = envSchema.parse(process.env)

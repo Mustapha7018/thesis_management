@@ -42,6 +42,9 @@ async function authPlugin(app: FastifyInstance) {
   })
 
   app.addHook("onRequest", async (req) => {
+    // Auth guards the versioned API only; static SPA assets, /health and
+    // /api/docs are outside it. Deny by default within /api/v1.
+    if (!req.url.startsWith("/api/v1")) return
     if (req.routeOptions.config?.public) return
     try {
       await req.jwtVerify()

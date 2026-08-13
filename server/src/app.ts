@@ -1,4 +1,7 @@
+import { existsSync } from "node:fs"
+import { fileURLToPath } from "node:url"
 import fastifyCors from "@fastify/cors"
+import fastifyStatic from "@fastify/static"
 import fastifySwagger from "@fastify/swagger"
 import fastifySwaggerUi from "@fastify/swagger-ui"
 import Fastify from "fastify"
@@ -63,6 +66,19 @@ export async function buildApp() {
   await app.register(auth)
 
   app.get("/health", { config: { public: true }, schema: { hide: true } }, async () => ({ status: "ok" }))
+
+  // Serve the built SPA when present (single-service deployment): API under
+  // /api, everything else falls through to the client-side router.
+  const webDist = fileURLToPath(new URL("../../web/dist", import.meta.url))
+  if (existsSync(webDist)) {
+    await app.register(fastifyStatic, { root: webDist })
+    app.setNotFoundHandler((req, reply) => {
+      if (req.raw.url?.startsWith("/api")) {
+        return reply.status(404).send({ error: { message: "Not found." } })
+      }
+      return reply.sendFile("index.html")
+    })
+  }
 
   await app.register(
     async (v1) => {

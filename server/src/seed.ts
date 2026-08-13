@@ -149,10 +149,3 @@ export async function seedDatabase(db: Db): Promise<{ students: number; accounts
   return { students: fixtures.students.length, accounts: accountRows.length }
 }
 
-const isDirectRun = process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)
-if (isDirectRun) {
-  const { db, pool } = await import("./db/client.js")
-  const result = await seedDatabase(db)
-  console.log(`Seeded ${result.students} students, ${result.accounts} accounts (all login-capable).`)
-  await pool.end()
-}

@@ -1,0 +1,30 @@
+# Render Blueprint: single web service serving the REST API and the built SPA.
+# Database: external managed PostgreSQL (set DATABASE_URL when prompted).
+services:
+  - type: web
+    name: thesis-portal
+    runtime: node
+    plan: free
+    region: frankfurt
+    healthCheckPath: /health
+    buildCommand: npm ci --prefix web && npm run build --prefix web && npm ci --prefix server && npm run build --prefix server
+    startCommand: node server/dist/index.js
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      - key: DATABASE_URL
+        sync: false # paste the managed Postgres connection string
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DEMO_PASSWORD
+        sync: false # choose the shared demo password
+      - key: RUN_MIGRATIONS
+        value: "true"
+      - key: AUTO_SEED
+        value: "true"
+      - key: ALLOW_DEMO_RESET
+        value: "true"
+      - key: LOG_LEVEL
+        value: info
+      - key: PG_POOL_MAX
+        value: "10"

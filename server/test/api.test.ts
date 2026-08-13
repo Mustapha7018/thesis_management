@@ -365,46 +365,103 @@ describe("allocation runs (FR-ALLOC-03/04/06) and GA job (FR-ALLOC-01/02)", () =
   })
 })
 
-describe("cohort import (FR-PROF-06) — destructive, runs last", () => {
+describe("cohort batches (FR-PROF-06) — destructive, runs last", () => {
   const header = "student_id,first_name,last_name,email,programme,mode,entry_year,entry_qualification,prior_avg_mark,created_at"
 
+  const activeCohort = async () => {
+    const res = await app.inject({ method: "GET", url: "/api/v1/admin/cohorts", headers: auth(adminToken) })
+    const rows = res.json() as { cohort_id: number; label: string; active: boolean; student_count: number }[]
+    return { rows, active: rows.find((c) => c.active)! }
+  }
+
   it("rejects an invalid CSV atomically with row-level details", async () => {
-    const before = await app.inject({ method: "GET", url: "/api/v1/admin/cohort/summary", headers: auth(adminToken) })
-    const csv = `${header}\n1,Ada,Lovelace,abc123@student.sunderland.ac.uk,MSc Data Science,FT,2026,First,95,2026-08-01T00:00:00Z`
+    const before = await activeCohort()
+    const csv = `${header}\n9001,Ada,Lovelace,zzz111@student.sunderland.ac.uk,MSc Data Science,FT,2026,First,95,2026-08-01T00:00:00Z`
     const res = await app.inject({
       method: "POST",
       url: "/api/v1/admin/cohort/import",
       headers: auth(adminToken),
-      payload: { file_name: "students.csv", content: csv },
+      payload: { file_name: "students.csv", label: "2026/2027", content: csv },
     })
     expect(res.statusCode).toBe(400)
     const details = (res.json() as { error: { details: { errors: { message: string }[] } } }).error.details
     expect(details.errors[0].message).toContain("prior_avg_mark")
-    const after = await app.inject({ method: "GET", url: "/api/v1/admin/cohort/summary", headers: auth(adminToken) })
-    expect((after.json() as { studentCount: number }).studentCount).toBe(
-      (before.json() as { studentCount: number }).studentCount,
-    )
+    const after = await activeCohort()
+    expect(after.rows).toHaveLength(before.rows.length)
+    expect(after.active.student_count).toBe(before.active.student_count)
   })
 
-  it("imports a valid CSV, replacing the cohort and clearing dependants", async () => {
+  it("rejects a batch that collides with existing students", async () => {
+    const csv = `${header}\n1,Ada,Lovelace,zzz111@student.sunderland.ac.uk,MSc Data Science,FT,2026,First,80,2026-08-01T00:00:00Z`
+    const res = await app.inject({
+      method: "POST",
+      url: "/api/v1/admin/cohort/import",
+      headers: auth(adminToken),
+      payload: { file_name: "students.csv", label: "2026/2027", content: csv },
+    })
+    expect(res.statusCode).toBe(409)
+    expect((res.json() as { error: { message: string } }).error.message).toContain("student_id 1")
+  })
+
+  it("imports a valid batch: archives the old one, new students can log in, old ones cannot", async () => {
     const csv = [
       header,
-      "1,Ada,Lovelace,abc123@student.sunderland.ac.uk,MSc Data Science,FT,2026,First,80,2026-08-01T00:00:00Z",
-      "2,Alan,Turing,xyz789@student.sunderland.ac.uk,MSc Computer Science,FT,2026,2:1,75,2026-08-01T00:00:00Z",
+      "9001,Ada,Lovelace,zzz111@student.sunderland.ac.uk,MSc Data Science,FT,2026,First,80,2026-08-01T00:00:00Z",
+      "9002,Alan,Turing,zzz222@student.sunderland.ac.uk,MSc Computer Science,FT,2026,2:1,75,2026-08-01T00:00:00Z",
     ].join("\n")
     const res = await app.inject({
       method: "POST",
       url: "/api/v1/admin/cohort/import",
       headers: auth(adminToken),
-      payload: { file_name: "students.csv", content: csv },
+      payload: { file_name: "students.csv", label: "2026/2027", content: csv },
     })
     expect(res.statusCode).toBe(200)
-    const body = res.json() as { imported: number; cleared: { runs: number } }
-    expect(body.imported).toBe(2)
-    expect(body.cleared.runs).toBeGreaterThan(0)
+    expect((res.json() as { imported: number; label: string }).imported).toBe(2)
 
-    const summary = await app.inject({ method: "GET", url: "/api/v1/admin/cohort/summary", headers: auth(adminToken) })
-    expect((summary.json() as { studentCount: number }).studentCount).toBe(2)
+    const { rows, active } = await activeCohort()
+    expect(rows).toHaveLength(2)
+    expect(active.label).toBe("2026/2027")
+    expect(active.student_count).toBe(2)
+
+    // New batch student can log in; archived batch student cannot.
+    expect((await login("zzz111@student.sunderland.ac.uk")).statusCode).toBe(200)
+    expect((await login("gvn1d6@student.sunderland.ac.uk")).statusCode).toBe(401)
+
+    // Duplicate label rejected.
+    const dupeLabel = await app.inject({
+      method: "POST",
+      url: "/api/v1/admin/cohort/import",
+      headers: auth(adminToken),
+      payload: { file_name: "students.csv", label: "2026/2027", content: csv },
+    })
+    expect(dupeLabel.statusCode).toBe(409)
+  })
+
+  it("lists batch students with search, deletes archived batches only", async () => {
+    const { rows, active } = await activeCohort()
+    const archived = rows.find((c) => !c.active)!
+
+    const studentsRes = await app.inject({
+      method: "GET",
+      url: `/api/v1/admin/cohorts/${active.cohort_id}/students?search=lovelace`,
+      headers: auth(adminToken),
+    })
+    expect((studentsRes.json() as { total: number }).total).toBe(1)
+
+    const deleteActive = await app.inject({
+      method: "DELETE",
+      url: `/api/v1/admin/cohorts/${active.cohort_id}`,
+      headers: auth(adminToken),
+    })
+    expect(deleteActive.statusCode).toBe(400)
+
+    const deleteArchived = await app.inject({
+      method: "DELETE",
+      url: `/api/v1/admin/cohorts/${archived.cohort_id}`,
+      headers: auth(adminToken),
+    })
+    expect(deleteArchived.statusCode).toBe(204)
+    expect((await activeCohort()).rows).toHaveLength(1)
 
     // Restore the full demo dataset for anything running after.
     const reset = await app.inject({ method: "POST", url: "/api/v1/admin/reset-demo", headers: auth(adminToken) })

@@ -11,6 +11,7 @@ import { db } from "../db/client.js"
 import {
   allocationRuns,
   allocations,
+  cohorts,
   researchAreas,
   studentInterests,
   studentPreferences,
@@ -167,12 +168,14 @@ export const allocationModule: FastifyPluginAsync = async (raw) => {
   )
 
   app.get("/allocation-runs/benchmarks", { ...adminOnly, schema: { tags: ["allocation"] } }, async () => {
-    const [runs, allocationRows, prefs, supervisorRows] = await Promise.all([
+    const [runs, allocationRows, prefs, supervisorRows, cohortRows] = await Promise.all([
       db.select().from(allocationRuns).orderBy(desc(allocationRuns.created_at)),
       db.select().from(allocations),
       db.select().from(studentPreferences),
       db.select().from(supervisors).orderBy(asc(supervisors.supervisor_id)),
+      db.select().from(cohorts),
     ])
+    const cohortLabel = new Map(cohortRows.map((c) => [c.cohort_id, c.label]))
     const rankByPair = new Map(prefs.map((p) => [`${p.student_id}:${p.supervisor_id}`, p.rank]))
 
     return runs.map((run) => {
@@ -192,6 +195,7 @@ export const allocationModule: FastifyPluginAsync = async (raw) => {
         run_id: run.run_id,
         algorithm: run.algorithm,
         label: run.label,
+        cohort_label: run.cohort_id !== null ? (cohortLabel.get(run.cohort_id) ?? null) : null,
         mean_satisfied_rank: meanRank !== null ? Math.round(meanRank * 100) / 100 : null,
         workload_variance: Math.round(variance * 100) / 100,
         percent_unallocated:
@@ -304,8 +308,11 @@ export const allocationModule: FastifyPluginAsync = async (raw) => {
         seenStudents.add(pair.student_id)
       }
 
+      const activeCohort = await db.query.cohorts.findFirst({ where: eq(cohorts.active, true) })
       const [studentRows, supervisorRows, prefs, scores] = await Promise.all([
-        db.select({ id: students.student_id }).from(students),
+        activeCohort
+          ? db.select({ id: students.student_id }).from(students).where(eq(students.cohort_id, activeCohort.cohort_id))
+          : Promise.resolve([]),
         db.select({ id: supervisors.supervisor_id }).from(supervisors),
         db.select().from(studentPreferences),
         db.select().from(supervisorPreferences),
@@ -313,7 +320,9 @@ export const allocationModule: FastifyPluginAsync = async (raw) => {
       const studentIds = new Set(studentRows.map((s) => s.id))
       const supervisorIds = new Set(supervisorRows.map((s) => s.id))
       for (const pair of pairs) {
-        if (!studentIds.has(pair.student_id)) throw badRequest(`Unknown student_id ${pair.student_id}.`)
+        if (!studentIds.has(pair.student_id)) {
+          throw badRequest(`Unknown student_id ${pair.student_id} (not in the active batch).`)
+        }
         if (!supervisorIds.has(pair.supervisor_id)) throw badRequest(`Unknown supervisor_id ${pair.supervisor_id}.`)
       }
 
@@ -332,6 +341,7 @@ export const allocationModule: FastifyPluginAsync = async (raw) => {
           instance_size: studentIds.size,
           runtime_ms: null, // human-entered — no algorithm runtime
           params: null,
+          cohort_id: activeCohort?.cohort_id ?? null,
         })
         for (let i = 0; i < pairs.length; i += 500) {
           await tx.insert(allocations).values(

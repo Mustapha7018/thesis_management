@@ -9,7 +9,13 @@ export async function listSupervisorCohort(
 }
 
 export async function listAdminCohortOverview(params?: ListParams): Promise<Paginated<CohortStudentSummary>> {
-  return api.get(`/admin/cohort-overview${query({ page: params?.page, limit: params?.limit })}`)
+  return api.get(
+    `/admin/cohort-overview${query({
+      page: params?.page,
+      limit: params?.limit,
+      search: params?.filter?.search as string | undefined,
+    })}`,
+  )
 }
 
 export async function getStudentDetail(studentId: number): Promise<StudentDetail> {

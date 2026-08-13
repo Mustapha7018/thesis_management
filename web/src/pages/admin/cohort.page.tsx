@@ -1,57 +1,164 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { Info } from "lucide-react"
+import { Search, Trash2 } from "lucide-react"
+import { useState } from "react"
+import { useSearchParams } from "react-router-dom"
+import { toast } from "sonner"
 import { CohortImportPanel } from "@/components/admin/cohort-import-panel"
+import { ConfirmDialog } from "@/components/common/confirm-dialog"
+import { DataTable } from "@/components/common/data-table"
 import { PageHeader } from "@/components/common/page-header"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Skeleton } from "@/components/ui/skeleton"
-import { getCohortSummary } from "@/lib/services/cohort.service"
+import { deleteCohort, listCohorts, listCohortStudents } from "@/lib/services/cohort.service"
 import { formatDateTime } from "@/lib/utils/date"
 
 export function CohortPage() {
   const queryClient = useQueryClient()
-  const summaryQuery = useQuery({ queryKey: ["cohort-summary"], queryFn: getCohortSummary })
-  const summary = summaryQuery.data
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [search, setSearch] = useState("")
+  const [page, setPage] = useState(1)
+
+  const cohortsQuery = useQuery({ queryKey: ["cohorts"], queryFn: listCohorts })
+  const cohorts = cohortsQuery.data ?? []
+  const activeCohort = cohorts.find((c) => c.active)
+
+  const batchParam = searchParams.get("batch")
+  const selectedId = batchParam !== null ? Number(batchParam) : (activeCohort?.cohort_id ?? null)
+  const selected = cohorts.find((c) => c.cohort_id === selectedId) ?? activeCohort ?? null
+
+  const studentsQuery = useQuery({
+    queryKey: ["cohort-students", selected?.cohort_id, page, search],
+    queryFn: () => listCohortStudents(selected!.cohort_id, { page, limit: 20, search: search || undefined }),
+    enabled: selected !== null,
+  })
+
+  function selectBatch(cohortId: string) {
+    setSearchParams(cohortId === String(activeCohort?.cohort_id) ? {} : { batch: cohortId })
+    setPage(1)
+    setSearch("")
+  }
+
+  async function handleDelete(cohortId: number, label: string) {
+    try {
+      await deleteCohort(cohortId)
+      toast.success(`Batch ${label} deleted.`)
+      if (selectedId === cohortId) setSearchParams({})
+      await queryClient.invalidateQueries({ queryKey: ["cohorts"] })
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Failed to delete batch.")
+    }
+  }
 
   return (
     <div className="space-y-4">
       <PageHeader
         title="Cohort"
-        description="Import each year's student cohort from a students.csv export. Importing replaces the current cohort and clears preferences, allocations and progress data. Reset demo data restores the original seed cohort."
+        description="Student batches by academic year. Importing a new batch archives the current one; allocation always runs on the active batch."
       />
 
-      {summaryQuery.isPending ? (
-        <Skeleton className="h-28 w-full" />
+      {cohortsQuery.isPending ? (
+        <Skeleton className="h-40 w-full" />
       ) : (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">Current cohort</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-1 text-sm">
-            <p>
-              <span className="font-medium">{summary!.studentCount}</span> students
-            </p>
-            <p className="text-muted-foreground">
-              {summary!.lastImport
-                ? `Last import: ${formatDateTime(summary!.lastImport.occurred_at)} — ${summary!.lastImport.detail}`
-                : "No CSV import yet — this is the seed dataset."}
-            </p>
-          </CardContent>
-        </Card>
+        <>
+          <div className="flex flex-wrap items-center gap-3">
+            <Select value={selected ? String(selected.cohort_id) : undefined} onValueChange={selectBatch}>
+              <SelectTrigger className="w-56">
+                <SelectValue placeholder="Select a batch" />
+              </SelectTrigger>
+              <SelectContent>
+                {cohorts.map((c) => (
+                  <SelectItem key={c.cohort_id} value={String(c.cohort_id)}>
+                    {c.label} {c.active ? "(active)" : "(archived)"} — {c.student_count} students
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {selected && (
+              <span className="text-sm text-muted-foreground">
+                Imported {formatDateTime(selected.imported_at)}
+                {selected.source_file ? ` from ${selected.source_file}` : ""}
+              </span>
+            )}
+            <div className="relative min-w-56 flex-1 max-w-sm">
+              <Search className="pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                placeholder="Search this batch by name, email or programme…"
+                className="pl-8"
+                value={search}
+                onChange={(e) => {
+                  setSearch(e.target.value)
+                  setPage(1)
+                }}
+              />
+            </div>
+          </div>
+
+          {studentsQuery.isPending || !studentsQuery.data ? (
+            <Skeleton className="h-64 w-full" />
+          ) : (
+            <DataTable
+              data={studentsQuery.data}
+              getRowKey={(row) => row.student_id}
+              onPageChange={setPage}
+              emptyTitle="No students match"
+              columns={[
+                { header: "ID", cell: (row) => <span className="font-mono text-xs">{row.student_id}</span> },
+                { header: "Name", cell: (row) => `${row.first_name} ${row.last_name}` },
+                { header: "Email", cell: (row) => <span className="text-muted-foreground">{row.email}</span> },
+                { header: "Programme", cell: (row) => row.programme },
+                { header: "Mode", cell: (row) => row.mode },
+                { header: "Entry mark", cell: (row) => row.prior_avg_mark.toFixed(1) },
+              ]}
+            />
+          )}
+
+          <div>
+            <p className="mb-2 text-sm font-medium text-muted-foreground">Batch history</p>
+            <div className="overflow-hidden rounded-lg border border-border">
+              {cohorts.map((c) => (
+                <div key={c.cohort_id} className="flex items-center justify-between border-b border-border px-4 py-2 text-sm last:border-b-0">
+                  <div className="flex items-center gap-3">
+                    <span className="font-medium">{c.label}</span>
+                    {c.active ? (
+                      <Badge className="border-transparent bg-success text-success-foreground">Active</Badge>
+                    ) : (
+                      <Badge variant="secondary">Archived</Badge>
+                    )}
+                    <span className="text-muted-foreground">
+                      {c.student_count} students · imported {formatDateTime(c.imported_at)}
+                    </span>
+                  </div>
+                  {!c.active && (
+                    <ConfirmDialog
+                      trigger={
+                        <Button variant="ghost" size="sm" className="text-destructive">
+                          <Trash2 className="size-3.5" />
+                          Delete
+                        </Button>
+                      }
+                      title={`Delete batch ${c.label}?`}
+                      description={`This permanently removes the batch's ${c.student_count} students, their activity and its allocation runs. This cannot be undone.`}
+                      confirmLabel="Delete batch"
+                      destructive
+                      onConfirm={() => handleDelete(c.cohort_id, c.label)}
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
       )}
 
-      {summary && !summary.hasPreferences && (
-        <Alert>
-          <Info className="size-4" />
-          <AlertTitle>No student preferences yet</AlertTitle>
-          <AlertDescription>
-            This cohort has no supervisor preferences, so an allocation run will allocate 0 students until students
-            submit their preference lists.
-          </AlertDescription>
-        </Alert>
-      )}
-
-      <CohortImportPanel onImported={() => queryClient.invalidateQueries()} />
+      <CohortImportPanel
+        onImported={() => {
+          setSearchParams({})
+          void queryClient.invalidateQueries()
+        }}
+      />
     </div>
   )
 }

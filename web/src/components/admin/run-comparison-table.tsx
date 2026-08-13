@@ -30,7 +30,10 @@ export function RunComparisonTable({
             <TableRow key={run.run_id}>
               <TableCell>
                 <p className="font-medium">{run.label}</p>
-                <p className="text-xs text-muted-foreground">{formatDateTime(run.created_at)}</p>
+                <p className="text-xs text-muted-foreground">
+                  {run.cohort_label ? `${run.cohort_label} · ` : ""}
+                  {formatDateTime(run.created_at)}
+                </p>
               </TableCell>
               <TableCell>{run.mean_satisfied_rank?.toFixed(2) ?? "—"}</TableCell>
               <TableCell>{run.workload_variance.toFixed(2)}</TableCell>

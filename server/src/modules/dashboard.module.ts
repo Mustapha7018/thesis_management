@@ -70,10 +70,34 @@ export const dashboardModule: FastifyPluginAsync = async (raw) => {
 
   app.get(
     "/admin/cohort-overview",
-    { preHandler: requireRole("admin"), schema: { tags: ["dashboard"], querystring: listQuerySchema } },
+    {
+      preHandler: requireRole("admin"),
+      schema: { tags: ["dashboard"], querystring: listQuerySchema.extend({ search: z.string().optional() }) },
+    },
     async (req) => {
       await evaluateAtRiskFlags()
-      const rows = await publishedAllocations()
+      let rows = await publishedAllocations()
+
+      const needle = req.query.search?.trim().toLowerCase()
+      if (needle) {
+        // Search by student or supervisor name/email before paginating.
+        const [studentRows, supervisorRows] = await Promise.all([
+          db.select().from(students),
+          db.select().from(supervisors),
+        ])
+        const studentText = new Map(
+          studentRows.map((s) => [s.student_id, `${s.first_name} ${s.last_name} ${s.email}`.toLowerCase()]),
+        )
+        const supervisorText = new Map(
+          supervisorRows.map((s) => [s.supervisor_id, `${s.title} ${s.first_name} ${s.last_name} ${s.email}`.toLowerCase()]),
+        )
+        rows = rows.filter(
+          (a) =>
+            (studentText.get(a.student_id) ?? "").includes(needle) ||
+            (supervisorText.get(a.supervisor_id) ?? "").includes(needle),
+        )
+      }
+
       // Paginate BEFORE aggregating so a 500-student overview stays fast.
       const page = paginate(rows, req.query.page, req.query.limit)
       const summaries = await Promise.all(page.data.map((a) => buildCohortSummary(a.student_id, a.supervisor_id)))

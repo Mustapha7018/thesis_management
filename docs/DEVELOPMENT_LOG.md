@@ -307,6 +307,42 @@ End-to-end curl trace on a fresh database: empty runs/flags/audit → roster stu
 in → creates overdue milestone → admin runs and publishes an allocation → exactly one
 active flag, naming that milestone.
 
+## 2026-08-13 — Cohort batches with history; admin dashboard search + pagination
+
+**Design change:** the original cohort import used replace-and-wipe semantics (the
+simpler option chosen when the feature was built). The user now needs batches kept
+side-by-side — "2024/2025 batch, 2025/2026 batch" — with browsable history, so the data
+model gained a batch dimension:
+
+- New `cohorts` table (label, imported_at, source_file, active); `students.cohort_id`
+  and `allocation_runs.cohort_id` FKs. Exactly one batch is **active**; the GA/baseline
+  instance builder, manual-baseline validation and the supervisor applicants view all
+  scope to the active batch. Archived batches keep every row (auditability) but their
+  students' accounts are retired so only the current intake can log in.
+- **Import now creates a batch instead of wiping**: the admin names it (e.g. 2026/2027),
+  the outgoing batch is archived, its published allocation is unpublished (the new batch
+  starts unallocated), and the new intake can log in immediately. Because each batch is
+  a distinct intake, student ids/emails must be unique across batches — a colliding file
+  is rejected with a 409 naming the collisions (re-importing the same file requires
+  deleting the old batch first; documented trade-off vs surrogate keys, which would have
+  meant renumbering every student-keyed table for no real-world benefit).
+- Archived batches can be deleted (cascades to their students, activity and runs);
+  the active batch cannot.
+- UI: the Cohort page gained a batch selector, per-batch searchable/paginated student
+  table, and a batch-history list with delete; the sidebar "Cohort" item now expands to
+  the batch history (active + archived), deep-linking via `?batch=`. Benchmark rows in
+  Compare runs now show which batch a run belongs to.
+
+**Admin dashboard:** the cohort overview gained a server-side search (student or
+supervisor name/email, filtered before pagination) and pagination controls (20/page)
+replacing the previous fixed 100-row fetch.
+
+**Verification:** 41 server integration tests (new: collision rejection, batch
+archiving with login switchover — new batch logs in, old batch 401 — per-batch student
+search, active-batch delete protection, dashboard search filtering); browser-verified
+the full flow: imported a 40-student 2026/2027 batch, sidebar/history updated, archived
+2025/2026 browsable, dashboard search "diallo" → 37 matches across 2 pages.
+
 ---
 
 ## Planned / next

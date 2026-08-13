@@ -92,6 +92,7 @@ export async function seedDatabase(db: Db): Promise<{ students: number; accounts
       t.supervisorExpertise,
       t.accounts,
       t.students,
+      t.cohorts,
       t.supervisors,
       t.researchAreas,
       t.preferenceWindow,
@@ -102,8 +103,14 @@ export async function seedDatabase(db: Db): Promise<{ students: number; accounts
     await tx.insert(t.researchAreas).values(fixtures.researchAreas)
     await tx.insert(t.supervisors).values(fixtures.supervisors)
     await tx.insert(t.supervisorExpertise).values(fixtures.supervisorExpertise)
+    // The synthetic dataset is the first (active) batch; label follows entry_year.
+    const entryYear = fixtures.students[0]?.entry_year ?? new Date().getFullYear()
+    const [cohort] = await tx
+      .insert(t.cohorts)
+      .values({ label: `${entryYear}/${entryYear + 1}`, imported_at: now, source_file: "students.csv (seed)", active: true })
+      .returning()
     for (let i = 0; i < fixtures.students.length; i += 500) {
-      await tx.insert(t.students).values(fixtures.students.slice(i, i + 500))
+      await tx.insert(t.students).values(fixtures.students.slice(i, i + 500).map((s) => ({ ...s, cohort_id: cohort.cohort_id })))
     }
     for (let i = 0; i < fixtures.studentInterests.length; i += 500) {
       await tx.insert(t.studentInterests).values(fixtures.studentInterests.slice(i, i + 500))

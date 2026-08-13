@@ -352,6 +352,38 @@ describe("dashboards + flags (FR-DASH-01..03)", () => {
     expect(cohort.statusCode).toBe(200)
   })
 
+  it("filters the admin cohort overview by student or supervisor search", async () => {
+    const all = (
+      await app.inject({ method: "GET", url: "/api/v1/admin/cohort-overview?limit=5", headers: auth(adminToken) })
+    ).json() as { total: number; data: { student_name: string }[] }
+    expect(all.total).toBeGreaterThan(0)
+    const name = all.data[0].student_name.split(" ")[0].toLowerCase()
+
+    const filtered = (
+      await app.inject({
+        method: "GET",
+        url: `/api/v1/admin/cohort-overview?search=${encodeURIComponent(name)}`,
+        headers: auth(adminToken),
+      })
+    ).json() as { total: number; data: { student_name: string; supervisor_name: string }[] }
+    expect(filtered.total).toBeLessThanOrEqual(all.total)
+    expect(filtered.total).toBeGreaterThan(0)
+    expect(
+      filtered.data.every(
+        (r) => r.student_name.toLowerCase().includes(name) || r.supervisor_name.toLowerCase().includes(name),
+      ),
+    ).toBe(true)
+
+    const none = (
+      await app.inject({
+        method: "GET",
+        url: "/api/v1/admin/cohort-overview?search=zzzznomatchzzzz",
+        headers: auth(adminToken),
+      })
+    ).json() as { total: number }
+    expect(none.total).toBe(0)
+  })
+
   it("serves student detail with progress to admins", async () => {
     const detail = await app.inject({ method: "GET", url: `/api/v1/students/1/detail`, headers: auth(adminToken) })
     expect(detail.statusCode).toBe(200)
@@ -406,8 +438,9 @@ describe("admin reads + allocation views", () => {
     const audit = await app.inject({ method: "GET", url: "/api/v1/admin/audit-log", headers: auth(adminToken) })
     expect((audit.json() as { total: number }).total).toBeGreaterThan(0)
 
-    const summary = await app.inject({ method: "GET", url: "/api/v1/admin/cohort/summary", headers: auth(adminToken) })
-    expect((summary.json() as { studentCount: number }).studentCount).toBe(500)
+    const cohortsRes = await app.inject({ method: "GET", url: "/api/v1/admin/cohorts", headers: auth(adminToken) })
+    const active = (cohortsRes.json() as { active: boolean; student_count: number }[]).find((c) => c.active)
+    expect(active?.student_count).toBe(500)
 
     const feasibility = await app.inject({ method: "GET", url: "/api/v1/allocation/feasibility", headers: auth(adminToken) })
     expect(feasibility.statusCode).toBe(200)

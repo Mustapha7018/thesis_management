@@ -3,9 +3,10 @@
  * instance tables into the plain-data GaInstance the shared engine consumes,
  * with the D14 alignment score precomputed per listed pairing.
  */
-import { asc } from "drizzle-orm"
+import { asc, eq } from "drizzle-orm"
 import { db } from "../db/client.js"
 import {
+  cohorts,
   studentInterests,
   studentPreferences,
   students,
@@ -17,8 +18,12 @@ import { alignmentScore } from "@shared/services/ga/alignment"
 import type { GaInstance } from "@shared/services/ga/types"
 
 export async function buildGaInstance(): Promise<GaInstance> {
+  // The allocation instance is the ACTIVE batch only; archived batches are history.
+  const activeCohort = await db.query.cohorts.findFirst({ where: eq(cohorts.active, true) })
   const [studentRows, supervisorRows, interests, expertise, scores, prefs] = await Promise.all([
-    db.select().from(students).orderBy(asc(students.student_id)),
+    activeCohort
+      ? db.select().from(students).where(eq(students.cohort_id, activeCohort.cohort_id)).orderBy(asc(students.student_id))
+      : Promise.resolve([]),
     db.select().from(supervisors).orderBy(asc(supervisors.supervisor_id)),
     db.select().from(studentInterests),
     db.select().from(supervisorExpertise),

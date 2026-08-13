@@ -6,6 +6,8 @@ import { ConfirmDialog } from "@/components/common/confirm-dialog"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import {
   CsvValidationError,
   importStudentCohort,
@@ -14,22 +16,15 @@ import {
 } from "@/lib/services/cohort.service"
 import { routePaths } from "@/routes/route-paths"
 
-const CLEARED_LABELS: Record<keyof CohortImportResult["cleared"], string> = {
-  interests: "student interests",
-  studentPreferences: "student preferences",
-  supervisorPreferences: "supervisor preferences",
-  allocations: "allocations",
-  runs: "allocation runs",
-  sprints: "sprints",
-  milestones: "milestones",
-  tasks: "tasks",
-  meetings: "meetings",
-  flags: "at-risk flags",
+function defaultBatchLabel(): string {
+  const year = new Date().getFullYear()
+  return `${year}/${year + 1}`
 }
 
 export function CohortImportPanel({ onImported }: { onImported?: () => void }) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [file, setFile] = useState<File | null>(null)
+  const [label, setLabel] = useState(defaultBatchLabel)
   const [importing, setImporting] = useState(false)
   const [result, setResult] = useState<CohortImportResult | null>(null)
   const [failure, setFailure] = useState<{ errors: CsvRowError[]; total: number } | null>(null)
@@ -45,13 +40,17 @@ export function CohortImportPanel({ onImported }: { onImported?: () => void }) {
 
   async function handleImport() {
     if (!file) return
+    if (!label.trim()) {
+      toast.error("Give the batch a label, e.g. 2026/2027.")
+      return
+    }
     setImporting(true)
     try {
-      const res = await importStudentCohort(file)
+      const res = await importStudentCohort(file, label.trim())
       setResult(res)
       setFailure(null)
       setFile(null)
-      toast.success(`Imported ${res.imported} students.`)
+      toast.success(`Imported batch ${res.label}: ${res.imported} students.`)
       onImported?.()
     } catch (err) {
       if (err instanceof CsvValidationError) {
@@ -65,26 +64,29 @@ export function CohortImportPanel({ onImported }: { onImported?: () => void }) {
     }
   }
 
-  const clearedSummary = result
-    ? (Object.entries(result.cleared) as [keyof CohortImportResult["cleared"], number][])
-        .filter(([, count]) => count > 0)
-        .map(([key, count]) => `${count} ${CLEARED_LABELS[key]}`)
-        .join(", ")
-    : ""
-
   return (
     <div className="space-y-4">
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Import students.csv</CardTitle>
+          <CardTitle className="text-base">Import a new batch</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           <p className="text-sm text-muted-foreground">
-            Expected columns: student_id, first_name, last_name, email, programme, mode, entry_year,
-            entry_qualification, prior_avg_mark, created_at. The import is all-or-nothing — any invalid row rejects
-            the whole file.
+            Importing a students.csv creates a new batch and archives the current one (its students keep their data
+            but can no longer log in). Student ids and emails must be new — each batch is a new intake.
           </p>
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap items-end gap-3">
+            <div className="space-y-1.5">
+              <Label htmlFor="batch-label">Batch label</Label>
+              <Input
+                id="batch-label"
+                className="w-36"
+                placeholder="2026/2027"
+                value={label}
+                disabled={importing}
+                onChange={(e) => setLabel(e.target.value)}
+              />
+            </div>
             <input ref={inputRef} type="file" accept=".csv,text/csv" className="hidden" onChange={handleFileChange} />
             <Button variant="outline" size="sm" disabled={importing} onClick={() => inputRef.current?.click()}>
               <Upload className="size-3.5" />
@@ -100,12 +102,12 @@ export function CohortImportPanel({ onImported }: { onImported?: () => void }) {
               <ConfirmDialog
                 trigger={
                   <Button variant="destructive" size="sm" disabled={importing}>
-                    {importing ? "Importing…" : "Import and replace cohort"}
+                    {importing ? "Importing…" : `Import as batch ${label.trim() || "…"}`}
                   </Button>
                 }
-                title="Replace current cohort?"
-                description="This replaces all students and clears their interests, preferences, allocations, allocation runs, sprints, milestones, tasks, meetings and at-risk flags. Supervisors, research areas and admin accounts are kept. This cannot be undone (Reset demo data restores the original seed)."
-                confirmLabel="Import and replace"
+                title={`Import batch ${label.trim()}?`}
+                description="The current batch will be archived: its students keep their data but can no longer log in, and the published allocation is unpublished. The new batch becomes active with no allocations yet."
+                confirmLabel="Import batch"
                 destructive
                 onConfirm={handleImport}
               />
@@ -135,18 +137,15 @@ export function CohortImportPanel({ onImported }: { onImported?: () => void }) {
       {result && (
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">Import complete</CardTitle>
+            <CardTitle className="text-base">Batch {result.label} imported</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             <p className="text-sm">
-              Imported <span className="font-medium">{result.imported}</span> students.
-              {clearedSummary && (
-                <span className="text-muted-foreground"> Cleared from the previous cohort: {clearedSummary}.</span>
-              )}
+              <span className="font-medium">{result.imported}</span> students imported and able to log in. The previous
+              batch is archived in the history below.
             </p>
             <p className="text-sm text-muted-foreground">
-              Next step: run the allocation algorithm over the new cohort. Until students submit preferences, a run
-              will allocate 0 students.
+              Next step: run the allocation algorithm once this batch has submitted preferences.
             </p>
             <Button asChild size="sm">
               <Link to={routePaths.admin.runAllocation}>

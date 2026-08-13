@@ -98,6 +98,8 @@ export interface RunBenchmark {
   run_id: string
   algorithm: AllocationAlgorithm
   label: string
+  /** Batch the run was computed over; null for legacy rows. */
+  cohort_label?: string | null
   mean_satisfied_rank: number | null
   workload_variance: number
   percent_unallocated: number

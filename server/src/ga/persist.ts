@@ -3,8 +3,9 @@
  * rows + run row (+ audit for GA runs) commit atomically — a failed or
  * cancelled run leaves nothing behind.
  */
+import { eq } from "drizzle-orm"
 import { db } from "../db/client.js"
-import { allocationRuns, allocations } from "../db/schema.js"
+import { allocationRuns, allocations, cohorts } from "../db/schema.js"
 import { writeAudit } from "../lib/audit.js"
 import { nowIso } from "../lib/http.js"
 import type { GaInstance, GaParams } from "@shared/services/ga/types"
@@ -43,6 +44,8 @@ export async function persistRun(options: {
     })
   })
 
+  const activeCohort = await db.query.cohorts.findFirst({ where: eq(cohorts.active, true) })
+
   await db.transaction(async (tx) => {
     await tx.insert(allocationRuns).values({
       run_id: runId,
@@ -53,6 +56,7 @@ export async function persistRun(options: {
       instance_size: instance.studentIds.length,
       runtime_ms: runtimeMs,
       params,
+      cohort_id: activeCohort?.cohort_id ?? null,
     })
     for (let i = 0; i < rows.length; i += 500) {
       await tx.insert(allocations).values(rows.slice(i, i + 500))

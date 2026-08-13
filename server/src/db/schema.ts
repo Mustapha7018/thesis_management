@@ -53,18 +53,36 @@ export const supervisorExpertise = pgTable(
   (t) => [primaryKey({ columns: [t.supervisor_id, t.area_id] })],
 )
 
-export const students = pgTable("students", {
-  student_id: integer().primaryKey(),
-  first_name: text().notNull(),
-  last_name: text().notNull(),
-  email: text().notNull().unique(),
-  programme: text().notNull(),
-  mode: text().notNull(),
-  entry_year: integer().notNull(),
-  entry_qualification: text().notNull(),
-  prior_avg_mark: real().notNull(),
-  created_at: text().notNull(),
+/**
+ * One row per imported student batch (academic year). Exactly one cohort is
+ * active; allocation and the GA operate on the active cohort's students,
+ * previous batches remain browsable history.
+ */
+export const cohorts = pgTable("cohorts", {
+  cohort_id: integer().primaryKey().generatedByDefaultAsIdentity(),
+  label: text().notNull().unique(),
+  imported_at: text().notNull(),
+  source_file: text(),
+  active: boolean().notNull().default(false),
 })
+
+export const students = pgTable(
+  "students",
+  {
+    student_id: integer().primaryKey(),
+    first_name: text().notNull(),
+    last_name: text().notNull(),
+    email: text().notNull().unique(),
+    programme: text().notNull(),
+    mode: text().notNull(),
+    entry_year: integer().notNull(),
+    entry_qualification: text().notNull(),
+    prior_avg_mark: real().notNull(),
+    created_at: text().notNull(),
+    cohort_id: integer().references(() => cohorts.cohort_id, { onDelete: "cascade" }),
+  },
+  (t) => [index("student_cohort").on(t.cohort_id)],
+)
 
 export const studentInterests = pgTable(
   "student_interests",
@@ -124,6 +142,7 @@ export const allocationRuns = pgTable(
     instance_size: integer().notNull(),
     runtime_ms: integer(),
     params: jsonb(),
+    cohort_id: integer().references(() => cohorts.cohort_id, { onDelete: "cascade" }),
   },
   // At most one published run, enforced at the database level (FR-ALLOC-06).
   (t) => [uniqueIndex("one_published_run").on(t.published).where(sql`${t.published} = true`)],

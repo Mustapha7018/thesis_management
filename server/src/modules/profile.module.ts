@@ -4,12 +4,13 @@
  * only while the window is open, 2-4 expertise areas, scores 0-1 on actual
  * applicants only.
  */
-import { asc, eq, inArray } from "drizzle-orm"
+import { and, asc, eq, inArray } from "drizzle-orm"
 import type { FastifyPluginAsync } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import { z } from "zod"
 import { db } from "../db/client.js"
 import {
+  cohorts,
   researchAreas,
   studentInterests,
   studentPreferences,
@@ -177,8 +178,17 @@ export const profileModule: FastifyPluginAsync = async (raw) => {
         .where(eq(studentPreferences.supervisor_id, req.params.id))
       const studentIds = prefs.map((p) => p.student_id)
       if (studentIds.length === 0) return []
+      const activeCohort = await db.query.cohorts.findFirst({ where: eq(cohorts.active, true) })
       const [studentRows, interests, areas, scores] = await Promise.all([
-        db.select().from(students).where(inArray(students.student_id, studentIds)),
+        // Applicants are always drawn from the active batch — archived batches are history.
+        db
+          .select()
+          .from(students)
+          .where(
+            activeCohort
+              ? and(inArray(students.student_id, studentIds), eq(students.cohort_id, activeCohort.cohort_id))
+              : inArray(students.student_id, studentIds),
+          ),
         db.select().from(studentInterests).where(inArray(studentInterests.student_id, studentIds)),
         db.select().from(researchAreas),
         db.select().from(supervisorPreferences).where(eq(supervisorPreferences.supervisor_id, req.params.id)),

@@ -1,38 +1,50 @@
 /**
- * Cohort bulk import (FR-PROF-06). The CSV is pre-validated client-side for
- * instant feedback, then sent to the server which re-validates
- * authoritatively and replaces the cohort in one transaction.
+ * Cohort batches (FR-PROF-06): each CSV import creates a new batch (academic
+ * year); previous batches are archived and browsable. The CSV is
+ * pre-validated client-side for instant feedback, then re-validated
+ * authoritatively server-side.
  */
-import { api, ApiError } from "@/lib/api/client"
+import { api, ApiError, query } from "@/lib/api/client"
 import { CsvValidationError, parseStudentsCsv, type CsvRowError } from "./parse-students-csv"
-import type { AuditLogEntry } from "@/lib/types/entities"
+import type { ListParams, Paginated } from "@/lib/types/dto"
+import type { Student } from "@/lib/types/entities"
 
 export { CsvValidationError, parseStudentsCsv }
 export type { CsvRowError }
 
+export interface CohortRow {
+  cohort_id: number
+  label: string
+  imported_at: string
+  source_file: string | null
+  active: boolean
+  student_count: number
+}
+
 export interface CohortImportResult {
   imported: number
-  cleared: {
-    interests: number
-    studentPreferences: number
-    supervisorPreferences: number
-    allocations: number
-    runs: number
-    sprints: number
-    milestones: number
-    tasks: number
-    meetings: number
-    flags: number
-  }
+  cohort_id: number
+  label: string
 }
 
-export interface CohortSummary {
-  studentCount: number
-  hasPreferences: boolean
-  lastImport: AuditLogEntry | null
+export async function listCohorts(): Promise<CohortRow[]> {
+  return api.get("/admin/cohorts")
 }
 
-export async function importStudentCohort(file: File): Promise<CohortImportResult> {
+export async function listCohortStudents(
+  cohortId: number,
+  params?: ListParams & { search?: string },
+): Promise<Paginated<Student>> {
+  return api.get(
+    `/admin/cohorts/${cohortId}/students${query({ page: params?.page, limit: params?.limit, search: params?.search })}`,
+  )
+}
+
+export async function deleteCohort(cohortId: number): Promise<void> {
+  await api.delete(`/admin/cohorts/${cohortId}`)
+}
+
+export async function importStudentCohort(file: File, label: string): Promise<CohortImportResult> {
   if (!file.name.toLowerCase().endsWith(".csv") && file.type !== "text/csv") {
     throw new Error("Only .csv files are accepted.")
   }
@@ -47,7 +59,7 @@ export async function importStudentCohort(file: File): Promise<CohortImportResul
   }
 
   try {
-    return await api.post<CohortImportResult>("/admin/cohort/import", { file_name: file.name, content: text })
+    return await api.post<CohortImportResult>("/admin/cohort/import", { file_name: file.name, label, content: text })
   } catch (err) {
     // The server re-validates; surface its row errors in the same shape.
     if (err instanceof ApiError && err.details && typeof err.details === "object" && "errors" in err.details) {
@@ -56,8 +68,4 @@ export async function importStudentCohort(file: File): Promise<CohortImportResul
     }
     throw err
   }
-}
-
-export async function getCohortSummary(): Promise<CohortSummary> {
-  return api.get("/admin/cohort/summary")
 }

@@ -350,7 +350,8 @@ data-driven list of batch year labels — the user wanted **functional tabs** in
 "All cohorts" (batch selector + per-batch student table + history, including the current
 one) and "Import" (its own page). Routes split into `/admin/cohorts` and
 `/admin/cohorts/import`; the year-label sub-items and the sidebar's cohort query were
-removed.
+removed. The "Cohort" parent is a collapsible toggle (chevron) that expands/collapses
+the two tabs rather than navigating itself.
 
 **UI copy principle recorded:** the user rejected verbose on-screen explanations
 ("AI noise") — multi-sentence helper paragraphs, "next step" coaching text and long page

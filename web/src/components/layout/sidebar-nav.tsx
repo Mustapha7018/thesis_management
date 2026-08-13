@@ -1,5 +1,6 @@
 import {
   CalendarClock,
+  ChevronRight,
   ClipboardList,
   Contact,
   FileCheck2,
@@ -16,8 +17,9 @@ import {
   UserCog,
   Users,
 } from "lucide-react"
-import type { ComponentType } from "react"
+import { useState, type ComponentType } from "react"
 import { Link, useLocation } from "react-router-dom"
+import { cn } from "@/lib/utils"
 import {
   SidebarContent,
   SidebarGroup,
@@ -98,25 +100,29 @@ function NavItems({ items }: { items: NavItem[] }) {
 
 function CohortNavItem() {
   const location = useLocation()
+  const onCohortRoute = cohortSubNav.some((item) => location.pathname === item.to)
+  const [open, setOpen] = useState(onCohortRoute)
+
   return (
     <SidebarMenuItem>
-      <SidebarMenuButton asChild isActive={location.pathname === routePaths.admin.cohorts}>
-        <Link to={routePaths.admin.cohorts}>
-          <Upload className="size-4" />
-          <span>Cohort</span>
-        </Link>
+      <SidebarMenuButton onClick={() => setOpen((v) => !v)} isActive={onCohortRoute && !open}>
+        <Upload className="size-4" />
+        <span>Cohort</span>
+        <ChevronRight className={cn("ml-auto size-4 transition-transform", open && "rotate-90")} />
       </SidebarMenuButton>
-      <SidebarMenuSub>
-        {cohortSubNav.map((item) => (
-          <SidebarMenuSubItem key={item.to}>
-            <SidebarMenuSubButton asChild isActive={location.pathname === item.to}>
-              <Link to={item.to}>
-                <span>{item.label}</span>
-              </Link>
-            </SidebarMenuSubButton>
-          </SidebarMenuSubItem>
-        ))}
-      </SidebarMenuSub>
+      {open && (
+        <SidebarMenuSub>
+          {cohortSubNav.map((item) => (
+            <SidebarMenuSubItem key={item.to}>
+              <SidebarMenuSubButton asChild isActive={location.pathname === item.to}>
+                <Link to={item.to}>
+                  <span>{item.label}</span>
+                </Link>
+              </SidebarMenuSubButton>
+            </SidebarMenuSubItem>
+          ))}
+        </SidebarMenuSub>
+      )}
     </SidebarMenuItem>
   )
 }

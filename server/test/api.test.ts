@@ -66,9 +66,14 @@ describe("auth (FR-AUTH-02/03/05)", () => {
     expect(res.json().error.message).toBe("Invalid email or password.")
   })
 
-  it("rejects directory-only accounts (no password hash) even with the demo password", async () => {
-    // gvn1d6 is student-1 in the directory but has no login (not a demo account).
+  it("lets any roster account log in with the shared demo password", async () => {
+    // gvn1d6 is student-1 — every seeded account is login-capable.
     const res = await login("gvn1d6@student.sunderland.ac.uk")
+    expect(res.statusCode).toBe(200)
+  })
+
+  it("rejects accounts that do not exist", async () => {
+    const res = await login("no.body@sunderland.ac.uk")
     expect(res.statusCode).toBe(401)
   })
 
@@ -249,26 +254,23 @@ describe("allocation runs (FR-ALLOC-03/04/06) and GA job (FR-ALLOC-01/02)", () =
   })
 
   it("keeps exactly one run published", async () => {
-    const benchmarks = async () =>
+    const createRun = async (algorithm: string) =>
       (
-        await app.inject({ method: "GET", url: "/api/v1/allocation-runs/benchmarks", headers: auth(adminToken) })
-      ).json() as { run_id: string; published: boolean }[]
+        (
+          await app.inject({ method: "POST", url: "/api/v1/allocation-runs", headers: auth(adminToken), payload: { algorithm } })
+        ).json() as { summary: { run_id: string } }
+      ).summary.run_id
+    const first = await createRun("greedy-mock")
+    const second = await createRun("random")
 
-    const runs = await benchmarks()
-    expect(runs.length).toBeGreaterThanOrEqual(2)
-    await app.inject({
-      method: "POST",
-      url: `/api/v1/allocation-runs/${runs[0].run_id}/publish`,
-      headers: auth(adminToken),
-    })
-    await app.inject({
-      method: "POST",
-      url: `/api/v1/allocation-runs/${runs[1].run_id}/publish`,
-      headers: auth(adminToken),
-    })
-    const after = await benchmarks()
+    await app.inject({ method: "POST", url: `/api/v1/allocation-runs/${first}/publish`, headers: auth(adminToken) })
+    await app.inject({ method: "POST", url: `/api/v1/allocation-runs/${second}/publish`, headers: auth(adminToken) })
+
+    const after = (
+      await app.inject({ method: "GET", url: "/api/v1/allocation-runs/benchmarks", headers: auth(adminToken) })
+    ).json() as { run_id: string; published: boolean }[]
     expect(after.filter((r) => r.published)).toHaveLength(1)
-    expect(after.find((r) => r.published)?.run_id).toBe(runs[1].run_id)
+    expect(after.find((r) => r.published)?.run_id).toBe(second)
   })
 
   it("runs the GA as a job: 202, progress, done, persisted, zero violations, reproducible", async () => {

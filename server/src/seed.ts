@@ -1,9 +1,14 @@
 /**
- * Seeds the database from the checked-in synthetic dataset fixtures and demo
- * seeds (web/src/lib/data). Idempotent: wipes every table and re-inserts, so
- * it also backs POST /admin/reset-demo. Login-capable demo accounts get an
- * argon2 hash of DEMO_PASSWORD; directory-only students have no hash and
- * cannot authenticate (FR-AUTH-03: no plaintext credential ever stored).
+ * Seeds the database with the validated synthetic dataset (the allocation
+ * problem instance) plus accounts and configuration — and nothing else.
+ * No fabricated activity: sprints, milestones, tasks, meetings, allocation
+ * runs, at-risk flags and audit entries all start empty and only ever arise
+ * from real user actions (FR-DASH-02's rule engine raises flags; the GA and
+ * baselines create runs; the audit log records real events).
+ *
+ * Every account is login-capable with the shared DEMO_PASSWORD (argon2-
+ * hashed; FR-AUTH-03: no plaintext credential stored). Idempotent — also
+ * backs POST /admin/reset-demo.
  */
 import { readFileSync } from "node:fs"
 import { dirname, resolve } from "node:path"
@@ -21,17 +26,6 @@ function load<T>(relativePath: string): T {
   return JSON.parse(readFileSync(resolve(DATA_DIR, relativePath), "utf-8")) as T
 }
 
-interface SeedUserRow {
-  account_id: string
-  email: string
-  role: string
-  display_name: string
-  active: boolean
-}
-interface SeedDemoAccount extends SeedUserRow {
-  ref_id: number | null
-}
-
 export async function seedDatabase(db: Db): Promise<{ students: number; accounts: number }> {
   const fixtures = {
     researchAreas: load<(typeof t.researchAreas.$inferInsert)[]>("fixtures/research-areas.json"),
@@ -42,44 +36,44 @@ export async function seedDatabase(db: Db): Promise<{ students: number; accounts
     studentPreferences: load<(typeof t.studentPreferences.$inferInsert)[]>("fixtures/student-preferences.json"),
     supervisorPreferences: load<(typeof t.supervisorPreferences.$inferInsert)[]>("fixtures/supervisor-preferences.json"),
   }
-  const seeds = {
-    allocationRuns: load<Record<string, unknown>[]>("seed/allocation-runs.seed.json"),
-    allocations: load<(typeof t.allocations.$inferInsert)[]>("seed/allocations.seed.json"),
-    sprints: load<(typeof t.sprints.$inferInsert)[]>("seed/sprints.seed.json"),
-    milestones: load<(typeof t.milestones.$inferInsert)[]>("seed/milestones.seed.json"),
-    tasks: load<(typeof t.tasks.$inferInsert)[]>("seed/tasks.seed.json"),
-    meetings: load<(typeof t.meetings.$inferInsert)[]>("seed/meetings.seed.json"),
-    atRiskFlags: load<(typeof t.atRiskFlags.$inferInsert)[]>("seed/at-risk-flags.seed.json"),
-    auditLog: load<(typeof t.auditLog.$inferInsert)[]>("seed/audit-log.seed.json"),
-    preferenceWindow: load<{ is_open: boolean; opens_at: string; closes_at: string }>("seed/preference-window.seed.json"),
-    users: load<SeedUserRow[]>("seed/users.seed.json"),
-    demoAccounts: load<SeedDemoAccount[]>("seed/demo-accounts.seed.json"),
-  }
+  const preferenceWindow = load<{ is_open: boolean; opens_at: string; closes_at: string }>(
+    "seed/preference-window.seed.json",
+  )
 
   const demoHash = await argon2.hash(config.DEMO_PASSWORD)
-  const loginAccounts = new Map(seeds.demoAccounts.map((a) => [a.account_id, a]))
   const now = new Date().toISOString()
 
-  // Merge the users directory + demoAccounts into the single accounts table:
-  // every directory row becomes an account; only rows that existed as demo
-  // accounts get a password hash (and thus the ability to log in).
-  const accountRows: (typeof t.accounts.$inferInsert)[] = seeds.users.map((u) => {
-    const demo = loginAccounts.get(u.account_id)
-    return {
-      account_id: u.account_id,
-      email: u.email,
-      role: u.role,
-      display_name: u.display_name,
-      active: u.active,
-      password_hash: demo ? demoHash : null,
-      failed_login_count: 0,
-      locked_until: null,
-      student_id: u.role === "student" ? (demo?.ref_id ?? (Number(u.account_id.replace("student-", "")) || null)) : null,
-      supervisor_id:
-        u.role === "supervisor" ? (demo?.ref_id ?? (Number(u.account_id.replace("supervisor-", "")) || null)) : null,
+  const accountRows: (typeof t.accounts.$inferInsert)[] = [
+    ...fixtures.students.map((s) => ({
+      account_id: `student-${s.student_id}`,
+      email: s.email!,
+      role: "student",
+      display_name: `${s.first_name} ${s.last_name}`,
+      active: true,
+      password_hash: demoHash,
+      student_id: s.student_id as number,
       created_at: now,
-    }
-  })
+    })),
+    ...fixtures.supervisors.map((s) => ({
+      account_id: `supervisor-${s.supervisor_id}`,
+      email: s.email!,
+      role: "supervisor",
+      display_name: `${s.title} ${s.first_name} ${s.last_name}`,
+      active: true,
+      password_hash: demoHash,
+      supervisor_id: s.supervisor_id as number,
+      created_at: now,
+    })),
+    {
+      account_id: "admin-1",
+      email: "jordan.blake@sunderland.ac.uk",
+      role: "admin",
+      display_name: "Jordan Blake",
+      active: true,
+      password_hash: demoHash,
+      created_at: now,
+    },
+  ]
 
   await db.transaction(async (tx) => {
     // Delete in dependency order.
@@ -120,16 +114,7 @@ export async function seedDatabase(db: Db): Promise<{ students: number; accounts
     for (let i = 0; i < fixtures.supervisorPreferences.length; i += 500) {
       await tx.insert(t.supervisorPreferences).values(fixtures.supervisorPreferences.slice(i, i + 500))
     }
-
-    await tx.insert(t.allocationRuns).values(seeds.allocationRuns as (typeof t.allocationRuns.$inferInsert)[])
-    await tx.insert(t.allocations).values(seeds.allocations)
-    await tx.insert(t.sprints).values(seeds.sprints)
-    await tx.insert(t.milestones).values(seeds.milestones)
-    await tx.insert(t.tasks).values(seeds.tasks)
-    await tx.insert(t.meetings).values(seeds.meetings)
-    await tx.insert(t.atRiskFlags).values(seeds.atRiskFlags)
-    await tx.insert(t.auditLog).values(seeds.auditLog)
-    await tx.insert(t.preferenceWindow).values({ id: 1, ...seeds.preferenceWindow })
+    await tx.insert(t.preferenceWindow).values({ id: 1, ...preferenceWindow })
     for (let i = 0; i < accountRows.length; i += 500) {
       await tx.insert(t.accounts).values(accountRows.slice(i, i + 500))
     }
@@ -161,6 +146,6 @@ const isDirectRun = process.argv[1] && resolve(process.argv[1]) === fileURLToPat
 if (isDirectRun) {
   const { db, pool } = await import("./db/client.js")
   const result = await seedDatabase(db)
-  console.log(`Seeded ${result.students} students, ${result.accounts} accounts.`)
+  console.log(`Seeded ${result.students} students, ${result.accounts} accounts (all login-capable).`)
   await pool.end()
 }

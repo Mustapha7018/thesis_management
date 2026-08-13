@@ -12,6 +12,7 @@ import { forbidden, notFound } from "../lib/errors.js"
 import { listQuerySchema, nowIso, paginate } from "../lib/http.js"
 import { assertSelfOr, requireRole } from "../plugins/auth.js"
 import { computeProgress } from "./agile.module.js"
+import { evaluateAtRiskFlags } from "./flag-rules.js"
 
 async function publishedAllocations() {
   const run = await db.query.allocationRuns.findFirst({ where: eq(allocationRuns.published, true) })
@@ -59,6 +60,7 @@ export const dashboardModule: FastifyPluginAsync = async (raw) => {
     },
     async (req) => {
       assertSelfOr(req, "supervisor", req.params.id)
+      await evaluateAtRiskFlags()
       const rows = await publishedAllocations()
       const mine = rows.filter((a) => a.supervisor_id === req.params.id)
       const summaries = await Promise.all(mine.map((a) => buildCohortSummary(a.student_id, a.supervisor_id)))
@@ -70,6 +72,7 @@ export const dashboardModule: FastifyPluginAsync = async (raw) => {
     "/admin/cohort-overview",
     { preHandler: requireRole("admin"), schema: { tags: ["dashboard"], querystring: listQuerySchema } },
     async (req) => {
+      await evaluateAtRiskFlags()
       const rows = await publishedAllocations()
       // Paginate BEFORE aggregating so a 500-student overview stays fast.
       const page = paginate(rows, req.query.page, req.query.limit)
@@ -83,6 +86,7 @@ export const dashboardModule: FastifyPluginAsync = async (raw) => {
     { schema: { tags: ["dashboard"], params: z.object({ id: z.coerce.number().int() }) } },
     async (req) => {
       const studentId = req.params.id
+      await evaluateAtRiskFlags()
       const allocationRows = await publishedAllocations()
       const allocation = allocationRows.find((a) => a.student_id === studentId)
       // Supervisors may only open detail for their own allocated students.
@@ -134,6 +138,7 @@ export const dashboardModule: FastifyPluginAsync = async (raw) => {
       if (req.user.role === "student") throw forbidden()
       if (req.query.supervisorId !== undefined) assertSelfOr(req, "supervisor", req.query.supervisorId)
 
+      await evaluateAtRiskFlags()
       let rows = await db.select().from(atRiskFlags).orderBy(desc(atRiskFlags.raised_at))
       if (req.query.studentId !== undefined) rows = rows.filter((f) => f.student_id === req.query.studentId)
       if (req.query.supervisorId !== undefined) {

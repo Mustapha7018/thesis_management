@@ -4,10 +4,12 @@
  * cohort and every student-keyed table. The CSV arrives as a JSON body
  * (file name + text content) — it is ~60 KB of text, multipart adds nothing.
  */
+import argon2 from "argon2"
 import { desc, eq } from "drizzle-orm"
 import type { FastifyPluginAsync } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import { z } from "zod"
+import { config } from "../config.js"
 import { db } from "../db/client.js"
 import {
   accounts,
@@ -89,6 +91,8 @@ export const cohortModule: FastifyPluginAsync = async (raw) => {
         flags: await db.$count(atRiskFlags),
       }
 
+      const demoHash = await argon2.hash(config.DEMO_PASSWORD)
+
       await db.transaction(async (tx) => {
         // Student-keyed data first, then the cohort itself.
         await tx.delete(allocations)
@@ -107,14 +111,14 @@ export const cohortModule: FastifyPluginAsync = async (raw) => {
         for (let i = 0; i < parsed.length; i += 500) {
           await tx.insert(students).values(parsed.slice(i, i + 500))
         }
-        // Directory-only accounts (no password hash — imported students cannot log in).
+        // Imported students can log in immediately with the shared demo password.
         const accountRows = parsed.map((s) => ({
           account_id: `student-${s.student_id}`,
           email: s.email,
           role: "student",
           display_name: `${s.first_name} ${s.last_name}`,
           active: true,
-          password_hash: null,
+          password_hash: demoHash,
           student_id: s.student_id,
           created_at: nowIso(),
         }))

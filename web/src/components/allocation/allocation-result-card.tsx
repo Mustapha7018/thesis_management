@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import type { AllocationResult } from "@/lib/types/dto"
 
 const ALGORITHM_LABELS: Record<string, string> = {
-  "greedy-mock": "Greedy (mock — GA pending)",
+  "greedy-mock": "Greedy baseline",
   ga: "Genetic algorithm",
   random: "Random baseline",
   manual: "Manual baseline",

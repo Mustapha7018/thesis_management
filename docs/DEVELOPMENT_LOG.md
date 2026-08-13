@@ -256,6 +256,57 @@ greedy does neither. (2) Weights steer outcomes monotonically (FR-ALLOC-01 accep
 low mutation (0.005) converges slower but slightly better — defaults are a reasonable
 operating point. All runs < 1 s (NFR-PERF-01 margin ≈ 60×).
 
+## 2026-08-13 — Real data everywhere: flag rule engine, universal logins, placeholder removal (FR-DASH-02)
+
+**Problem:** an audit of the three role dashboards found the UIs fully API-driven, but
+fed by hand-authored placeholders three layers down: (1) at-risk flags were never raised
+by anything — FR-DASH-02 (Must: "Raise rule-based at-risk flags carrying a rule_code and
+a human-readable reason") was unimplemented and the only flags in existence were two
+hand-written seed rows; (2) the demo seeds fabricated activity (sprints/milestones/tasks/
+meetings for 8 students, three rigged allocation runs — the published one still labelled
+"GA engine pending" — and four fabricated audit-log entries); (3) only 17 of 533 accounts
+had password hashes, so real students and supervisors could not log in and generate real
+data.
+
+**At-risk flag rule engine** (`server/src/modules/flag-rules.ts`): flags are now derived
+entirely from real activity. Rules (formalising the two de facto rule codes the seed had
+invented): **MILESTONE_OVERDUE** — any student with an overdue, not-done milestone
+(reason names the earliest overdue milestone and counts the rest); **NO_RECENT_MEETING**
+— an allocated student with no meeting scheduled or held in the last 28 days.
+Design decisions: *evaluate-on-read* (the evaluator runs at the top of the four
+dashboard/flag endpoints, so a flag appears within one page load of its condition —
+inside FR-DASH-01's <1-minute staleness — without a scheduler); *raise-only* (the
+lifecycle raised → reviewed → cleared stays a human decision per FR-DASH-03; nothing
+auto-clears); *14-day cool-down* after clearing so a just-cleared flag doesn't
+immediately re-raise; *28-day grace period after publication* for NO_RECENT_MEETING —
+first verification flagged all 500 students seconds after publishing (technically true,
+practically noise), so the rule only fires once the published run is older than the
+meeting window. Thresholds are named constants; admin-configurable thresholds
+(FR-DASH-06, Could) deferred.
+
+**Universal logins:** every seeded account — all 500 students, 32 supervisors, admin —
+and every bulk-imported student now gets an argon2 hash of the shared `DEMO_PASSWORD`,
+so anyone on the roster can log in and *do the work* that populates the dashboards.
+Security caveat documented: a shared password is a demo/testing device; per-user
+credentials and reset-by-email remain the deferred production path.
+
+**Placeholder removal:** the server seed now loads only the validated synthetic dataset
+(the allocation problem instance: students, supervisors, areas, expertise, interests,
+preferences) plus accounts and the preference window. Sprints, milestones, tasks,
+meetings, allocation runs, at-risk flags and audit entries all start empty and arise
+only from user actions. The stale "Greedy (mock — GA pending)" badge was corrected.
+Consequence, by design: a fresh system shows honest empty dashboards — the demo script
+is now "log in and do the work": students submit interests/preferences and manage their
+projects, the admin runs the real GA and publishes, supervisors see genuinely computed
+progress and rule-raised flags.
+
+**Verification:** 38 server integration tests green, including a new causality test —
+a student creating an overdue milestone via the API must cause the engine (not a seed)
+to raise a MILESTONE_OVERDUE flag for that student, which is then reviewed and cleared.
+End-to-end curl trace on a fresh database: empty runs/flags/audit → roster student logs
+in → creates overdue milestone → admin runs and publishes an allocation → exactly one
+active flag, naming that milestone.
+
 ---
 
 ## Planned / next

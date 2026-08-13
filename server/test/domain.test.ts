@@ -38,6 +38,17 @@ beforeAll(async () => {
   const supervisor = await tokenFor("fatima.diallo@sunderland.ac.uk")
   supervisorToken = supervisor.token
   supervisorId = supervisor.session.ref_id!
+
+  // The seed contains no runs — dashboards need a published allocation, so
+  // create and publish one the way an admin would.
+  const run = await app.inject({
+    method: "POST",
+    url: "/api/v1/allocation-runs",
+    headers: auth(adminToken),
+    payload: { algorithm: "greedy-mock" },
+  })
+  const runId = (run.json() as { summary: { run_id: string } }).summary.run_id
+  await app.inject({ method: "POST", url: `/api/v1/allocation-runs/${runId}/publish`, headers: auth(adminToken) })
 })
 
 afterAll(async () => {
@@ -348,11 +359,24 @@ describe("dashboards + flags (FR-DASH-01..03)", () => {
     expect(body.student_name.length).toBeGreaterThan(0)
   })
 
-  it("runs the flag lifecycle: list, review, clear with note", async () => {
+  it("raises rule-based flags from real activity, then runs the lifecycle (FR-DASH-02/03)", async () => {
+    // Cause a MILESTONE_OVERDUE condition through a genuine user action.
+    await app.inject({
+      method: "POST",
+      url: `/api/v1/students/${studentId}/milestones`,
+      headers: auth(studentToken),
+      payload: { title: "Ethics form submission", due_date: "2020-06-01" },
+    })
+
     const flags = await app.inject({ method: "GET", url: "/api/v1/at-risk-flags?active=true", headers: auth(adminToken) })
-    const list = flags.json() as { flag_id: number; reviewed: boolean }[]
+    const list = flags.json() as { flag_id: number; student_id: number; rule_code: string; reason: string; reviewed: boolean }[]
     expect(list.length).toBeGreaterThan(0)
-    const flagId = list[0].flag_id
+
+    // The engine, not a seed, raised this flag — for this student, from this milestone.
+    const raised = list.find((f) => f.student_id === studentId && f.rule_code === "MILESTONE_OVERDUE")
+    expect(raised).toBeDefined()
+    expect(raised!.reason).toContain("overdue")
+    const flagId = raised!.flag_id
 
     const review = await app.inject({
       method: "POST",

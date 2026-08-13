@@ -15,6 +15,7 @@
     "db:seed": "tsx src/seed.ts",
     "experiment:sensitivity": "tsx scripts/sensitivity-experiment.ts",
     "experiment:full": "tsx scripts/experiment-runner.ts",
+    "experiment:load": "tsx scripts/load-test.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -34,10 +35,12 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@types/autocannon": "^7.12.7",
     "@types/node": "^26.2.0",
     "@types/papaparse": "^5.5.2",
     "@types/pg": "^8.21.0",
     "@vitest/coverage-v8": "^4.1.10",
+    "autocannon": "^8.0.0",
     "drizzle-kit": "^0.31.10",
     "esbuild": "^0.28.2",
     "oxlint": "^1.78.0",

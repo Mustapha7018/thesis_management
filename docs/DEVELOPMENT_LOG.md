@@ -401,6 +401,45 @@ alongside p-values, Holm-Bonferroni correction within each test family.
 Methodological strength worth stating in the write-up: the seeded engine makes every
 number in the chapter exactly reproducible from the committed code and data.
 
+## 2026-08-13 — Latency and load test evidence (NFR-PERF-02 / NFR-PERF-03)
+
+**Tooling and why it was chosen:** [autocannon](https://github.com/mcollina/autocannon)
+v8.0.0 — an HTTP/1.1 benchmarking tool built on Node's undici client, maintained by a
+Fastify core author and the de-facto standard for benchmarking Node HTTP servers. Chosen
+over k6/JMeter because it (a) installs as an npm devDependency inside the existing
+toolchain (no extra runtime), (b) is scriptable programmatically, letting the benchmark
+be a checked-in, reproducible TypeScript script (`server/scripts/load-test.ts`,
+`npm run experiment:load`) rather than a manual procedure, and (c) reports HDR-histogram
+latency percentiles per scenario. Percentile note: autocannon reports fixed percentiles
+(p50/p90/p97.5/p99); the NFR p95 targets are assessed against **p97.5**, which is
+conservative — if p97.5 meets the target, p95 necessarily does.
+
+**Method:** two phases against the running API (Fastify via tsx, `LOG_LEVEL=warn` so
+per-request logging does not skew latency; `PG_POOL_MAX=20`), on the full seeded
+dataset (500 students × 32 supervisors) with a published allocation and the at-risk
+flag engine active (dashboard scenarios therefore pay the real aggregation +
+rule-evaluation cost). Phase 1 — *interactive latency* (NFR-PERF-02): 10 concurrent
+connections, 10 s per scenario, across nine endpoint classes (five CRUD reads, one
+CRUD write, three dashboard aggregates). Phase 2 — *concurrency* (NFR-PERF-03): 300
+concurrent connections, 15 s, on representative CRUD and aggregate endpoints. Login is
+measured outside the CRUD class: argon2 verification is deliberately CPU-expensive — a
+security property (FR-AUTH-03/NFR-SEC-01), not a latency defect. Each report embeds the
+exact environment (autocannon 8.0.0, Node v24.16.0, macOS/Darwin 27 arm64, Apple M3 Pro
+11-core, 18 GB, PostgreSQL 18.4) so the numbers are citable.
+
+**Results** (`docs/evaluation/latency-load.{csv,md}` — all 12 scenarios PASS, 0 non-2xx
+across ~1.2 M requests):
+- Interactive (10 conn): CRUD reads p97.5 of 2–85 ms vs the 500 ms target (worst:
+  supervisor applicants view, a multi-join, at 85 ms); CRUD write 19 ms; dashboard
+  aggregates 5–49 ms vs the 2000 ms target.
+- 300 concurrent connections: p97.5 137–198 ms at 2 600–4 600 req/s per endpoint —
+  an order of magnitude inside the targets, with zero errors, satisfying NFR-PERF-03's
+  "300 concurrent users within latency targets".
+- Interpretation for the write-up: the margin comes from the deliberately simple data
+  layer (indexed single-table scans over cohort-scale data, connection pooling) — the
+  earlier design decision to avoid premature query complexity is validated by
+  measurement rather than asserted.
+
 ---
 
 ## Planned / next

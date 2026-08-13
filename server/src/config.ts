@@ -14,6 +14,8 @@ const envSchema = z.object({
   CORS_ORIGIN: z.string().default("http://localhost:5173"),
   /** Enables POST /admin/reset-demo (dev/demo convenience; disable in production). */
   ALLOW_DEMO_RESET: z.coerce.boolean().default(true),
+  /** Pino log level; benchmarks run at "warn" so per-request logging doesn't skew latency. */
+  LOG_LEVEL: z.enum(["debug", "info", "warn", "error"]).default("info"),
 })
 
 export const config = envSchema.parse(process.env)

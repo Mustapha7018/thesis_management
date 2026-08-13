@@ -21,7 +21,7 @@ import { researchAreasModule } from "./modules/research-areas.module.js"
 
 export async function buildApp() {
   const app = Fastify({
-    logger: { level: "info" },
+    logger: { level: config.LOG_LEVEL },
     // Base64 attachments (3 MB file ≈ 4.1 MB encoded) arrive as JSON bodies.
     bodyLimit: 16 * 1024 * 1024,
   }).withTypeProvider<ZodTypeProvider>()

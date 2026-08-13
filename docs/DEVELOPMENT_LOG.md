@@ -440,6 +440,50 @@ across ~1.2 M requests):
   earlier design decision to avoid premature query complexity is validated by
   measurement rather than asserted.
 
+## 2026-08-13 — Cloud deployment (O4 "secure cloud database")
+
+**Topology:** single Render web service (Frankfurt, free tier) serving both the REST API
+and the built SPA — Fastify serves `web/dist` with a client-route fallback, so there is
+one origin, no CORS surface, and the versioned API remains the only backend. Database:
+**Supabase managed PostgreSQL 17.6** (eu-west-1), used purely as Postgres — the
+application connects through Supabase's Supavisor session pooler (IPv4) as the table
+owner; none of Supabase's client-facing services are used.
+
+**Deployment mechanics (all reproducible from the repo):** `render.yaml` blueprint
+(build both packages, `node server/dist/index.js`, health check on `/health`,
+auto-generated `JWT_SECRET`); committed SQL migrations (drizzle-kit generate) applied at
+boot when `RUN_MIGRATIONS=true`; `AUTO_SEED=true` seeds the synthetic dataset only when
+the database is empty. The exact production boot sequence was rehearsed locally against
+a scratch database and then against the live Supabase instance before Render was
+involved — empty database → migrate → seed 500 students/533 accounts → serve.
+
+**Database hardening:** Supabase's security advisor flagged all 18 tables as exposed
+through its auto-generated Data API (RLS disabled — anyone with the project's anon key
+could read/write rows, bypassing our API). Fix applied: **RLS enabled on every table
+with zero policies** — a deny-all posture that seals the Data API completely while the
+application, connecting as table owner, is unaffected (owners are exempt from RLS).
+This enforces FR-API-01's "the API is the only writer" at the database layer as well as
+the application layer; advisor re-run confirms only informational "RLS enabled, no
+policy" notices remain, which is the intended state. Logins verified before and after.
+
+**Two defects found by verification, not by users:** (1) the production bundle
+triggered the seed module's direct-run detection (its `import.meta.url` collapses to
+the bundle entry), seeding before migrations — fixed by extracting the seed CLI from
+the library module; (2) esbuild's multi-entry build preserved source structure
+(`dist/ga/ga.worker.js`) while the job registry resolves a sibling path — the first GA
+run on production failed with a module-not-found, fixed by emitting the worker flat and
+re-verifying a GA run through the bundle. Both are worth citing as evidence that the
+"rehearse the exact production sequence" discipline catches integration bugs unit tests
+cannot.
+
+**Live verification** at https://thesis-portal.onrender.com: health, SPA, OpenAPI docs,
+TLS (HTTP/2 via Render/Cloudflare), logins for all three roles, unauthenticated API
+requests rejected 401, and a GA job (seed 12345) run through the production job API —
+best fitness 0.7827 in 108 generations, identical to every previous environment
+(browser worker, local Node, CI), completing the determinism chain across four runtimes.
+Free-tier caveat recorded: the service sleeps when idle (~50 s cold start); the
+DPIA-style note is that all data is synthetic, hosted in EU regions (Frankfurt/Ireland).
+
 ---
 
 ## Planned / next

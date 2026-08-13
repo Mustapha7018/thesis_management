@@ -3,7 +3,7 @@ import { useRef, useState } from "react"
 import { toast } from "sonner"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Progress } from "@/components/ui/progress"
@@ -176,10 +176,6 @@ export function RunAllocationPanel({ onRunComplete }: { onRunComplete: () => voi
       <Card>
         <CardHeader>
           <CardTitle className="text-base">Genetic algorithm</CardTitle>
-          <CardDescription>
-            Optimises two-sided preferences, expertise alignment and workload balance under hard supervisor quotas.
-            Weights are normalised to sum 1; the same seed and weights always reproduce the same allocation.
-          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid gap-3 sm:grid-cols-4">
@@ -260,7 +256,6 @@ export function RunAllocationPanel({ onRunComplete }: { onRunComplete: () => voi
           <Card>
             <CardHeader>
               <CardTitle className="text-base">Greedy baseline</CardTitle>
-              <CardDescription>Each student gets the first available supervisor from their ranked list, in student order.</CardDescription>
             </CardHeader>
             <CardContent>
               <Button variant="outline" onClick={() => handleRunBaseline("greedy-mock")} disabled={running !== null}>
@@ -272,7 +267,6 @@ export function RunAllocationPanel({ onRunComplete }: { onRunComplete: () => voi
           <Card>
             <CardHeader>
               <CardTitle className="text-base">Random baseline</CardTitle>
-              <CardDescription>Student order and preference order are both shuffled before the same first-fit rule.</CardDescription>
             </CardHeader>
             <CardContent>
               <Button variant="outline" onClick={() => handleRunBaseline("random")} disabled={running !== null}>
@@ -284,7 +278,6 @@ export function RunAllocationPanel({ onRunComplete }: { onRunComplete: () => voi
           <Card>
             <CardHeader>
               <CardTitle className="text-base">Manual baseline</CardTitle>
-              <CardDescription>Record a hand-made allocation — one "student_id,supervisor_id" pair per line.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
               <Textarea

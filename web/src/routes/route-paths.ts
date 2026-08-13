@@ -23,7 +23,8 @@ export const routePaths = {
   admin: {
     home: "/admin",
     users: "/admin/users",
-    cohort: "/admin/cohort",
+    cohorts: "/admin/cohorts",
+    cohortImport: "/admin/cohorts/import",
     supervisors: "/admin/supervisors",
     supervisorDetail: (supervisorId: number | string) => `/admin/supervisors/${supervisorId}`,
     researchAreas: "/admin/research-areas",

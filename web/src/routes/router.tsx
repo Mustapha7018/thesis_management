@@ -22,7 +22,8 @@ import { SupervisorMeetingsPage } from "@/pages/supervisor/meetings.page"
 
 import { AdminDashboardPage } from "@/pages/admin/admin-dashboard.page"
 import { UsersPage } from "@/pages/admin/users.page"
-import { CohortPage } from "@/pages/admin/cohort.page"
+import { CohortsPage } from "@/pages/admin/cohorts.page"
+import { CohortImportPage } from "@/pages/admin/cohort-import.page"
 import { SupervisorsPage } from "@/pages/admin/supervisors.page"
 import { SupervisorDetailPage } from "@/pages/admin/supervisor-detail.page"
 import { ResearchAreasPage } from "@/pages/admin/research-areas.page"
@@ -79,7 +80,8 @@ export const router = createBrowserRouter([
             children: [
               { path: routePaths.admin.home, element: <AdminDashboardPage /> },
               { path: routePaths.admin.users, element: <UsersPage /> },
-              { path: routePaths.admin.cohort, element: <CohortPage /> },
+              { path: routePaths.admin.cohorts, element: <CohortsPage /> },
+              { path: routePaths.admin.cohortImport, element: <CohortImportPage /> },
               { path: routePaths.admin.supervisors, element: <SupervisorsPage /> },
               { path: "/admin/supervisors/:supervisorId", element: <SupervisorDetailPage /> },
               { path: routePaths.admin.researchAreas, element: <ResearchAreasPage /> },

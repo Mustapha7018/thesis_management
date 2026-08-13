@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query"
 import {
   CalendarClock,
   ClipboardList,
@@ -18,7 +17,7 @@ import {
   Users,
 } from "lucide-react"
 import type { ComponentType } from "react"
-import { Link, useLocation, useSearchParams } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import {
   SidebarContent,
   SidebarGroup,
@@ -31,7 +30,6 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
-import { listCohorts } from "@/lib/services/cohort.service"
 import { routePaths } from "@/routes/route-paths"
 import type { Role } from "@/lib/types/entities"
 
@@ -75,6 +73,11 @@ const adminNavAfterCohort: NavItem[] = [
   { label: "Audit log", to: routePaths.admin.auditLog, icon: ScrollText },
 ]
 
+const cohortSubNav = [
+  { label: "All cohorts", to: routePaths.admin.cohorts },
+  { label: "Import", to: routePaths.admin.cohortImport },
+]
+
 function NavItems({ items }: { items: NavItem[] }) {
   const location = useLocation()
   return (
@@ -93,47 +96,27 @@ function NavItems({ items }: { items: NavItem[] }) {
   )
 }
 
-/** "Cohort" with the batch history (import + previous cohorts) as sub-items. */
 function CohortNavItem() {
   const location = useLocation()
-  const [searchParams] = useSearchParams()
-  const cohortsQuery = useQuery({ queryKey: ["cohorts"], queryFn: listCohorts })
-  const cohorts = cohortsQuery.data ?? []
-
-  const onCohortPage = location.pathname === routePaths.admin.cohort
-  const selectedBatch = searchParams.get("batch")
-  const activeCohortId = cohorts.find((c) => c.active)?.cohort_id
-
   return (
     <SidebarMenuItem>
-      <SidebarMenuButton asChild isActive={onCohortPage && selectedBatch === null}>
-        <Link to={routePaths.admin.cohort}>
+      <SidebarMenuButton asChild isActive={location.pathname === routePaths.admin.cohorts}>
+        <Link to={routePaths.admin.cohorts}>
           <Upload className="size-4" />
           <span>Cohort</span>
         </Link>
       </SidebarMenuButton>
-      {cohorts.length > 0 && (
-        <SidebarMenuSub>
-          {cohorts.map((c) => {
-            const isActiveBatch = c.cohort_id === activeCohortId
-            const to = isActiveBatch ? routePaths.admin.cohort : `${routePaths.admin.cohort}?batch=${c.cohort_id}`
-            const isCurrent =
-              onCohortPage && (selectedBatch === String(c.cohort_id) || (selectedBatch === null && isActiveBatch))
-            return (
-              <SidebarMenuSubItem key={c.cohort_id}>
-                <SidebarMenuSubButton asChild isActive={isCurrent}>
-                  <Link to={to}>
-                    <span>
-                      {c.label}
-                      {isActiveBatch ? "" : " (archived)"}
-                    </span>
-                  </Link>
-                </SidebarMenuSubButton>
-              </SidebarMenuSubItem>
-            )
-          })}
-        </SidebarMenuSub>
-      )}
+      <SidebarMenuSub>
+        {cohortSubNav.map((item) => (
+          <SidebarMenuSubItem key={item.to}>
+            <SidebarMenuSubButton asChild isActive={location.pathname === item.to}>
+              <Link to={item.to}>
+                <span>{item.label}</span>
+              </Link>
+            </SidebarMenuSubButton>
+          </SidebarMenuSubItem>
+        ))}
+      </SidebarMenuSub>
     </SidebarMenuItem>
   )
 }

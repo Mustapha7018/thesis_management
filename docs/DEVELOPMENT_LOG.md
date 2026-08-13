@@ -343,6 +343,23 @@ search, active-batch delete protection, dashboard search filtering); browser-ver
 the full flow: imported a 40-student 2026/2027 batch, sidebar/history updated, archived
 2025/2026 browsable, dashboard search "diallo" → 37 matches across 2 pages.
 
+## 2026-08-13 — Cohort navigation restructure; UI copy trimmed (user feedback)
+
+**Correction from user review:** the sidebar "Cohort" dropdown was implemented as a
+data-driven list of batch year labels — the user wanted **functional tabs** instead:
+"All cohorts" (batch selector + per-batch student table + history, including the current
+one) and "Import" (its own page). Routes split into `/admin/cohorts` and
+`/admin/cohorts/import`; the year-label sub-items and the sidebar's cohort query were
+removed.
+
+**UI copy principle recorded:** the user rejected verbose on-screen explanations
+("AI noise") — multi-sentence helper paragraphs, "next step" coaching text and long page
+descriptions were removed across the admin pages (import panel, GA/baseline cards,
+dashboard, run page). Explanatory rationale lives here in the log, not in the interface.
+Design lesson for the write-up: navigation should mirror the user's stated structure
+rather than an inferred richer one, and dashboard copy earns its place only when it
+changes what the user does next.
+
 ---
 
 ## Planned / next

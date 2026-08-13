@@ -33,7 +33,7 @@ export function AdminDashboardPage() {
 
   return (
     <div className="space-y-6">
-      <PageHeader title="Cohort overview" description="Programme-wide progress across every allocated student." />
+      <PageHeader title="Cohort overview" />
 
       <div className="grid gap-4 sm:grid-cols-3">
         <Card>

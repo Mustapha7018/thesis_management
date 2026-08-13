@@ -7,10 +7,7 @@ export function RunAllocationPage() {
 
   return (
     <div>
-      <PageHeader
-        title="Run allocation"
-        description="Run a baseline allocation algorithm over the full student/supervisor instance."
-      />
+      <PageHeader title="Run allocation" />
       <RunAllocationPanel onRunComplete={() => queryClient.invalidateQueries({ queryKey: ["run-benchmarks"] })} />
     </div>
   )

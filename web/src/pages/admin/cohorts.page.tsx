@@ -3,7 +3,6 @@ import { Search, Trash2 } from "lucide-react"
 import { useState } from "react"
 import { useSearchParams } from "react-router-dom"
 import { toast } from "sonner"
-import { CohortImportPanel } from "@/components/admin/cohort-import-panel"
 import { ConfirmDialog } from "@/components/common/confirm-dialog"
 import { DataTable } from "@/components/common/data-table"
 import { PageHeader } from "@/components/common/page-header"
@@ -15,7 +14,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { deleteCohort, listCohorts, listCohortStudents } from "@/lib/services/cohort.service"
 import { formatDateTime } from "@/lib/utils/date"
 
-export function CohortPage() {
+export function CohortsPage() {
   const queryClient = useQueryClient()
   const [searchParams, setSearchParams] = useSearchParams()
   const [search, setSearch] = useState("")
@@ -54,10 +53,7 @@ export function CohortPage() {
 
   return (
     <div className="space-y-4">
-      <PageHeader
-        title="Cohort"
-        description="Student batches by academic year. Importing a new batch archives the current one; allocation always runs on the active batch."
-      />
+      <PageHeader title="Cohorts" />
 
       {cohortsQuery.isPending ? (
         <Skeleton className="h-40 w-full" />
@@ -65,27 +61,21 @@ export function CohortPage() {
         <>
           <div className="flex flex-wrap items-center gap-3">
             <Select value={selected ? String(selected.cohort_id) : undefined} onValueChange={selectBatch}>
-              <SelectTrigger className="w-56">
+              <SelectTrigger className="w-52">
                 <SelectValue placeholder="Select a batch" />
               </SelectTrigger>
               <SelectContent>
                 {cohorts.map((c) => (
                   <SelectItem key={c.cohort_id} value={String(c.cohort_id)}>
-                    {c.label} {c.active ? "(active)" : "(archived)"} — {c.student_count} students
+                    {c.label} {c.active ? "(active)" : "(archived)"}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
-            {selected && (
-              <span className="text-sm text-muted-foreground">
-                Imported {formatDateTime(selected.imported_at)}
-                {selected.source_file ? ` from ${selected.source_file}` : ""}
-              </span>
-            )}
             <div className="relative min-w-56 flex-1 max-w-sm">
               <Search className="pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" />
               <Input
-                placeholder="Search this batch by name, email or programme…"
+                placeholder="Search…"
                 className="pl-8"
                 value={search}
                 onChange={(e) => {
@@ -115,50 +105,40 @@ export function CohortPage() {
             />
           )}
 
-          <div>
-            <p className="mb-2 text-sm font-medium text-muted-foreground">Batch history</p>
-            <div className="overflow-hidden rounded-lg border border-border">
-              {cohorts.map((c) => (
-                <div key={c.cohort_id} className="flex items-center justify-between border-b border-border px-4 py-2 text-sm last:border-b-0">
-                  <div className="flex items-center gap-3">
-                    <span className="font-medium">{c.label}</span>
-                    {c.active ? (
-                      <Badge className="border-transparent bg-success text-success-foreground">Active</Badge>
-                    ) : (
-                      <Badge variant="secondary">Archived</Badge>
-                    )}
-                    <span className="text-muted-foreground">
-                      {c.student_count} students · imported {formatDateTime(c.imported_at)}
-                    </span>
-                  </div>
-                  {!c.active && (
-                    <ConfirmDialog
-                      trigger={
-                        <Button variant="ghost" size="sm" className="text-destructive">
-                          <Trash2 className="size-3.5" />
-                          Delete
-                        </Button>
-                      }
-                      title={`Delete batch ${c.label}?`}
-                      description={`This permanently removes the batch's ${c.student_count} students, their activity and its allocation runs. This cannot be undone.`}
-                      confirmLabel="Delete batch"
-                      destructive
-                      onConfirm={() => handleDelete(c.cohort_id, c.label)}
-                    />
+          <div className="overflow-hidden rounded-lg border border-border">
+            {cohorts.map((c) => (
+              <div key={c.cohort_id} className="flex items-center justify-between border-b border-border px-4 py-2 text-sm last:border-b-0">
+                <div className="flex items-center gap-3">
+                  <span className="font-medium">{c.label}</span>
+                  {c.active ? (
+                    <Badge className="border-transparent bg-success text-success-foreground">Active</Badge>
+                  ) : (
+                    <Badge variant="secondary">Archived</Badge>
                   )}
+                  <span className="text-muted-foreground">
+                    {c.student_count} students · {formatDateTime(c.imported_at)}
+                  </span>
                 </div>
-              ))}
-            </div>
+                {!c.active && (
+                  <ConfirmDialog
+                    trigger={
+                      <Button variant="ghost" size="sm" className="text-destructive">
+                        <Trash2 className="size-3.5" />
+                        Delete
+                      </Button>
+                    }
+                    title={`Delete batch ${c.label}?`}
+                    description={`Permanently removes ${c.student_count} students, their activity and the batch's runs.`}
+                    confirmLabel="Delete"
+                    destructive
+                    onConfirm={() => handleDelete(c.cohort_id, c.label)}
+                  />
+                )}
+              </div>
+            ))}
           </div>
         </>
       )}
-
-      <CohortImportPanel
-        onImported={() => {
-          setSearchParams({})
-          void queryClient.invalidateQueries()
-        }}
-      />
     </div>
   )
 }
